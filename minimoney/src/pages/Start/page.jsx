@@ -7,7 +7,14 @@ import Button from '../../Components/Button/button';
 import ImgStart from '../../ImgStart.svg';
 import Logo from '../../logo192.png';
 
+import { useNavigate } from 'react-router-dom';
+
 function Start() {
+  const navigate = useNavigate();
+
+  const Cadastro =()=>{
+    navigate('/Cadastro');
+  };
   return (
     <div className="card-central">
       <div className="card-esquerda">
@@ -25,7 +32,7 @@ function Start() {
           aqui você tem tudo o que precisa em um só lugar, de forma prática e rápida.</p>
         
         <div className='card-botao'>
-          <Button children={'Cadastrar'}></Button>
+          <Button children={'Cadastrar'} onClick={Cadastro}></Button>
           <Button children={'Entrar'}></Button>          
         </div>
       </div>
