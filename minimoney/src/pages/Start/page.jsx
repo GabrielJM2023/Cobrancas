@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from '../../logo.svg';
-import '../../App.css';
+import './style.css';
+
+import Button from '../../Components/Button/button';
 
 import ImgStart from '../../ImgStart.svg';
 import Logo from '../../logo192.png';
@@ -23,10 +25,9 @@ function Start() {
           aqui você tem tudo o que precisa em um só lugar, de forma prática e rápida.</p>
         
         <div className='card-botao'>
-          <button className='botao'>Cadastrar</button>
-          <button className='botao'>Logar</button>
+          <Button children={'Cadastrar'}></Button>
+          <Button children={'Entrar'}></Button>          
         </div>
-
       </div>
     </div>
   );
