@@ -11,6 +11,11 @@
   margin: auto;
 }
 
+
+.Teste{
+    background-color: red;
+}
+
 .card-Central {
   background: var(--color-background);
   width: 100%;

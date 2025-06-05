@@ -15,6 +15,11 @@ function Start() {
   const Cadastro =()=>{
     navigate('/Cadastro');
   };
+
+  const Entrar=()=>{
+    navigate('/Login');
+  }
+
   return (
     <div className="card-central">
       <div className="card-esquerda">
@@ -33,7 +38,7 @@ function Start() {
         
         <div className='card-botao'>
           <Button children={'Cadastrar'} onClick={Cadastro}></Button>
-          <Button children={'Entrar'}></Button>          
+          <Button children={'Entrar'} onClick={Entrar}></Button>          
         </div>
       </div>
     </div>

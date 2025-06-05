@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Start from './pages/Start/page'
 import Cadastro from './pages/Cadastro/page';
+import Login from './pages/Login/page'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Start/>} />                
         <Route path='/Cadastro' element={<Cadastro/>}/>
+        <Route path='/Login' element={<Login/>}/>
       </Routes>
     </Router>
   </React.StrictMode>
