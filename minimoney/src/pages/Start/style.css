@@ -1,5 +1,5 @@
 .card-central{
-  background-color: #ffffff;
+  background-color: var(--color-background);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,29 +18,39 @@
     align-items: center;    
 }
 
-
 .card-direita{
     width: 40vw;
     height: 80vh;
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    
+    flex-direction: column;    
 }
 
 .card-logo{
-  
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .logo{
-  width: 10vw;
+  width: 14vw;
   border-radius: 10px;
+}
+
+.ImgStart{
+  width: 35vw;
 }
 
 .card-botao{
   display: flex;
   justify-content: center;
+}
+
+.card-direita > h1{
+  color: var(--color-primary);
+}
+
+p {
+  font-size: 1.1rem;
+  color: var(--color-primary);
 }

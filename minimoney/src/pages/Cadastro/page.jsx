@@ -10,37 +10,65 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 
+import { supabase } from '../../lib/supabaseCliente';
+import { useState } from 'react';
+
 function Cadastro() {
     const navigate = useNavigate();
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
     const Voltar = () => {
         navigate('/');
+    }
+
+    const CadastroUsuario = async({nome, email, senha}) => {
+        const{data, error} = await supabase.auth.signUp({
+            email: email,
+            password: senha,
+            options: {
+                data: {
+                    nome: nome,
+                }
+            }
+        })
+        if(error){
+            console.error('Erro ao criar usuário', error.message);
+            return
+        }
+
+        const user = data.user;
+
+        if(user){
+            navigate('/confirmarEmail');
+        }
     }
     return (
         <div className="card">
             <div className="card-Central">
                 <h1>Cadastrar</h1>
-
                 <div className="input-group">
                     <label>Nome</label>
                     <IoPersonCircleOutline className="icon"/>
-                    <input type="text" placeholder="Nome" />
+                    <input type="text" placeholder="Nome" value={nome} onChange={e=>setNome(e.target.value)}/>
                 </div>
 
                 <div className="input-group">
                     <label>Email</label>
                     <MdOutlineEmail className="icon"/>
-                    <input type="email" placeholder="Email" />
+                    <input type="email" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)}/>
                 </div>
 
                 <div className="input-group">
-                    <label>Nome</label>
+                    <label>Senha</label>
                     <FaLock className="icon"/>
-                    <input type="password" placeholder="Senha" />
+                    <input type="password" placeholder="Senha" value={senha} onChange={e=>setSenha(e.target.value)}/>
                 </div>
 
                 <div className='card-Button'>
                     <Button children={'Voltar'} onClick={Voltar}></Button>
-                    <Button children={'Cadastrar'}></Button>                    
+                    <Button children={'Cadastrar'} onClick={()=> CadastroUsuario({nome,email,senha})}></Button>                    
                 </div>
             </div>
         </div>

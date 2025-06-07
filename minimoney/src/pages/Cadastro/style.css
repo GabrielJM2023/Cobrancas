@@ -11,11 +11,6 @@
   margin: auto;
 }
 
-
-.Teste{
-    background-color: red;
-}
-
 .card-Central {
   background: var(--color-background);
   width: 100%;
@@ -37,6 +32,11 @@
   padding-bottom: 1.5rem;
 }
 
+.card-Central > p{
+  color: var(--color-primary);
+  font-size: 1.4rem;
+}
+
 .input-group {
   position: relative;
 }
@@ -53,6 +53,7 @@
 .input-group label {
   font-size: 1rem;
   color: var(--color-primary);
+  padding-left: 1rem;
 }
 
 .input-group input {
@@ -79,31 +80,5 @@
 
 .card-Button button {
   flex: 1;
-  min-width: 120px;
 }
 
-/* RESPONSIVO */
-@media (max-width: 768px) {
-  .card {
-    width: 90vw;
-    height: auto;
-  }
-
-  .card-Central > h1 {
-    font-size: 2rem;
-    text-align: center;
-  }
-
-  .input-group input {
-    font-size: 0.95rem;
-  }
-
-  .card-Button {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .card-Button button {
-    width: 100%;
-  }
-}

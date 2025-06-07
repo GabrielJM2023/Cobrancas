@@ -1,0 +1,81 @@
+.card-central.login  h1 {
+  font-size: 3.5rem;
+  text-align: center;
+  padding-bottom: 3.5rem;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group .icon {
+  position: absolute;
+  top: 65%;
+  left: 11px;
+  transform: translateY(-50%);
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.input-group label {
+  font-size: 1rem;
+  color: var(--color-primary);
+  padding-left: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 25px;
+  outline: none;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.input-group input::placeholder {
+  color: var(--color-primary);
+}
+
+.card-Button {
+  padding-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.card-Button button {
+  flex: 1;
+}
+
+.card-Button.login{
+    padding-top: 7rem;
+}
+
+.input-group.login{
+  padding-top: 1rem;
+  width: 95%;
+  align-items: flex-start;
+}
+
+
+.input-group.login .icon {
+  position: absolute;
+  top: 72%;
+  left: 13px;
+  transform: translateY(-50%);
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.LoginMensagemErro{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.LoginMensagemErro > p{
+  color: red;
+}
