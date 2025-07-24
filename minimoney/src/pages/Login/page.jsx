@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../../Components/Button/button";
 import { useNavigate } from "react-router-dom";
 
-import './style.css'
+import './Login.css'
 
 import { MdOutlineEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
