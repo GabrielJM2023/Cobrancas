@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './style.css';
+import './Cadastro.css';
 
 import Button from '../../Components/Button/button';
 
