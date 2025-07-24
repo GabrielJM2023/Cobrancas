@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../../logo.svg';
-import './style.css';
+import './Start.css';
 
 import Button from '../../Components/Button/button';
 

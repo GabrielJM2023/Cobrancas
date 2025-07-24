@@ -54,3 +54,33 @@ p {
   font-size: 1.1rem;
   color: var(--color-primary);
 }
+
+
+@media (max-width: 768px){
+  .card-esquerda{
+    display: none;
+  }
+
+  .card-direita{
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; 
+  }  
+  
+  .logo{
+    width: 24vw;
+  }
+
+  @media (max-width: 425px){
+    .card-botao{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;      
+    }
+  }
+
+}
+
