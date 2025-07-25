@@ -15,7 +15,7 @@ function Logar(){
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [erro, setMensagemErro] = useState('1');
+    const [erro, setMensagemErro] = useState('');
 
     const Voltar =()=>{
         navigate('/');
@@ -34,19 +34,13 @@ function Logar(){
         if (userError) {
             console.error("Erro ao buscar usuário:", userError.message);
             return;
-        }
-
-        const nome = userData.user?.user_metadata?.nome;
-
-        if (nome) {
-            setMensagemErro(nome);
         } else {
-            setMensagemErro("Nome não definido.");
-        }
+            navigate('/Home');
+        }        
     }
 
     return(
-        <div className="card">
+        <div className="card-Login">
             <div className="card-Central">
                 <h1>Login</h1>                
                 <div className="input-group login">

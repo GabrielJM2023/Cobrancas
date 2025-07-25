@@ -1,3 +1,11 @@
+.card-body{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
 .card-central{
   background-color: var(--color-background);
   display: flex;
@@ -8,6 +16,7 @@
   height: 85vh;
   
   border-radius: 10px;
+  
 }
 
 .card-esquerda{

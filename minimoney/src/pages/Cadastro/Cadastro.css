@@ -1,19 +1,19 @@
-.card {
+.card-Cadastro{
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: 40vw;
+  width: 30vw;
+  height: 60vh;
   
-  max-width: 500px;
-  min-width: 320px;
   margin: auto;
+  margin-top: 5%;
 }
 
 .card-Central {
   background: var(--color-background);
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
 
   padding: 2rem;
 
@@ -81,12 +81,22 @@
   flex: 1;
 }
 
-@media (max-width: 768px){
-  .card{    
+@media (max-width: 1024px){
+  .card-Cadastro{      
+    margin-top: 15%;
     width: 90vw;
+    height: 70vh;
   }
   .card-Central{
-    padding: 1.5rem;
+    padding: 2.5rem;
     margin: 0;
+  }
+}
+
+@media (max-width: 375px){
+  .card-Cadastro{      
+    margin-top: 20%;
+    width: 90vw;
+    height: 80vh;
   }
 }

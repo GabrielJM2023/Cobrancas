@@ -45,7 +45,7 @@ function Cadastro() {
         }
     }
     return (
-        <div className="card">
+        <div className="card-Cadastro">
             <div className="card-Central">
                 <h1>Cadastrar</h1>
                 <div className="input-group">

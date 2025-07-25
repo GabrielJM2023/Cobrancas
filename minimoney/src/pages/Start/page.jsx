@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../logo.svg';
 import './Start.css';
 
 import Button from '../../Components/Button/button';
@@ -44,24 +43,26 @@ function Start() {
   }, [session]); 
 
   return (
-    <div className="card-central">
-      <div className="card-esquerda">
-        <img src={ImgStart} alt='Start' className='ImgStart'/>
-      </div>
-      <div className="card-direita">
-        <div className='card-logo'>
-          <img src={Logo} className='logo'/>
+    <div className='card-body'>
+      <div className="card-central">
+        <div className="card-esquerda">
+          <img src={ImgStart} alt='Start' className='ImgStart'/>
         </div>
-        <h1>Bem-vindo ao Minimoney!</h1>
-        <p>Com o Minimoney, você acompanha seus gastos, organiza suas entradas e 
-          saídas, visualiza gráficos simples e toma decisões mais conscientes 
-          sobre seu dinheiro.</p>
-        <p>Seja para economizar, investir ou simplesmente entender melhor suas finanças,
-          aqui você tem tudo o que precisa em um só lugar, de forma prática e rápida.</p>
-        
-        <div className='card-botao'>
-          <Button children={'Cadastrar'} onClick={Cadastro}></Button>
-          <Button children={'Entrar'} onClick={Entrar}></Button>          
+        <div className="card-direita">
+          <div className='card-logo'>
+            <img src={Logo} className='logo'/>
+          </div>
+          <h1>Bem-vindo ao Minimoney!</h1>
+          <p>Com o Minimoney, você acompanha seus gastos, organiza suas entradas e 
+            saídas, visualiza gráficos simples e toma decisões mais conscientes 
+            sobre seu dinheiro.</p>
+          <p>Seja para economizar, investir ou simplesmente entender melhor suas finanças,
+            aqui você tem tudo o que precisa em um só lugar, de forma prática e rápida.</p>
+          
+          <div className='card-botao'>
+            <Button children={'Cadastrar'} onClick={Cadastro}></Button>
+            <Button children={'Entrar'} onClick={Entrar}></Button>          
+          </div>
         </div>
       </div>
     </div>
