@@ -12,8 +12,10 @@ function Home({children}){
     }
     return(
         <div className="CardHome">
-            <NavBar></NavBar>
-            <Button children={'Voltar'} onClick={Voltar}></Button>     
+            <NavBar/>
+            <div className="classChildren">
+                <Button children={'Voltar'} onClick={Voltar}></Button>     
+            </div>
         </div>
     )
 

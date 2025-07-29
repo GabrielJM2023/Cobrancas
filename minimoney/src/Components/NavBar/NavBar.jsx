@@ -4,8 +4,11 @@ import Teste from './favicon.ico';
 
 function NavBar(){
   return (
-    <div>
-        <img src={Teste} className='logo'/>
+    <div className='NavBar'>
+        <div  className='Cabecalho'>
+          <img src={Teste} className='logo'/>        
+          <h1>Minimoney</h1>
+        </div>
     </div>    
   );
 }

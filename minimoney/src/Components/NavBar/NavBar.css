@@ -1,0 +1,19 @@
+.NavBar{
+    width: 20vw;
+    height: 98vh;
+    position:absolute;
+    background-color: var(--color-primary);
+    padding-left: 1rem;
+    padding-top: 1rem;
+
+}
+
+.NavBar > .Cabecalho{
+    background-color: red;
+    display: flex;    
+}
+
+.logo{    
+  width: 5vw;
+  border-radius: 10px;
+}

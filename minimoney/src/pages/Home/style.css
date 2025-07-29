@@ -1,4 +1,14 @@
 .CardHome{
-    background-color: red;
     display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-secondary);   
+}
+
+.classChildren{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
