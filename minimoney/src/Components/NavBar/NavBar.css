@@ -3,17 +3,46 @@
     height: 98vh;
     position:absolute;
     background-color: var(--color-primary);
-    padding-left: 1rem;
     padding-top: 1rem;
 
 }
 
 .NavBar > .Cabecalho{
-    background-color: red;
-    display: flex;    
+  padding-left: 1rem;
+  display: flex;    
+}
+
+.NavBar > .Cabecalho > .central{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color:var(--color-secondary);
 }
 
 .logo{    
   width: 5vw;
   border-radius: 10px;
+}
+
+.NavBar > hr{
+  border: 2px solid var(--color-secondary);
+  width: 90%; 
+  margin: 20px auto;
+}
+
+.NavBar > .menu{
+  padding-left: 2rem;
+  display: flex;
+  align-items: center;
+  color:var(--color-secondary);
+  padding-bottom: 2rem;
+}
+
+.NavBar > .menu > .icone{
+  font-size: 3rem;
+}
+
+.NavBar > .menu > h1{
+  font-size: 20px;
+  padding-left: 1rem;
 }
