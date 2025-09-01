@@ -41,6 +41,32 @@ function Cadastro() {
         const user = data.user;
 
         if(user){
+            try {
+                const categoriasPadrao = [
+                    { nome: "Alimentação", tipo: "s" },
+                    { nome: "Transporte", tipo: "s" },
+                    { nome: "Saúde", tipo: "s" },
+                    { nome: "Lazer", tipo: "s" },
+                    { nome: "Salário", tipo: "e" },
+                    { nome: "Investimentos", tipo: "e" },
+                ];
+
+                // Inserir categorias para esse usuário
+                const { error: insertError } = await supabase
+                    .from("Categoria")
+                    .insert(categoriasPadrao.map((cat) => ({
+                    nome: cat.nome,
+                    tipo: cat.tipo,
+                    user_id: user.id, // FK do usuário
+                    })));
+
+                if (insertError) {
+                    console.error("Erro ao inserir categorias padrão", insertError.message);
+                }
+            } catch (e) {
+                console.error("Erro inesperado:", e);
+            }    
+
             navigate('/confirmarEmail');
         }
     }

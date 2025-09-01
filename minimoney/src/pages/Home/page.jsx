@@ -1,10 +1,10 @@
 import React from "react";
 import './style.css'
-import Button from "../../Components/Button/button";
 import NavBar from "../../Components/NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-function Home({children}){
+function Home(){
     const navigate = useNavigate();
 
     const Voltar =()=>{
@@ -14,7 +14,7 @@ function Home({children}){
         <div className="CardHome">
             <NavBar/>
             <div className="classChildren">
-                <Button children={'Voltar'} onClick={Voltar}></Button>     
+                <Outlet/>
             </div>
         </div>
     )

@@ -19,30 +19,27 @@ function NavBar(){
           </div>          
         </div>
         <hr/>
-
-        <div className='menu'>
-          <VscGraph className='icone' />
-          <h1>Dashboard</h1>
-        </div>
-
-        <div className='menu'>
-          <GrTransaction  className='icone' />
-          <h1>Transação</h1>
-        </div>
-
-        <div className='menu'>
-          <FaMoneyBillTransfer  className='icone' />
-          <h1>Nova Transação</h1>
-        </div>
-
-        <div className='menu'>
-          <CiBoxList  className='icone' />
-          <h1>Categorias</h1>
-        </div>
-
-        <div className='menu'>
-          <FaDoorOpen  className='icone' />
-          <h1>Sair</h1>
+        <div className='menus'>
+          <div className='menu'>
+            <VscGraph className='icone' />
+            <h1>Dashboard</h1>
+          </div>
+          <div className='menu'>
+            <GrTransaction  className='icone' />
+            <h1>Transação</h1>
+          </div>
+          <div className='menu'>
+            <FaMoneyBillTransfer  className='icone' />
+            <h1>Nova Transação</h1>
+          </div>
+          <div className='menu'>
+            <CiBoxList  className='icone' />
+            <h1>Categorias</h1>
+          </div>
+          <div className='menu menu-sair'>
+            <FaDoorOpen  className='icone' />
+            <h1>Sair</h1>
+          </div>
         </div>
     </div>    
   );

@@ -1,10 +1,22 @@
 .NavBar{
     width: 20vw;
-    height: 98vh;
+    height: 98.35vh;
     position:absolute;
     background-color: var(--color-primary);
     padding-top: 1rem;
 
+  display: flex;       
+  flex-direction: column;  
+}
+
+.NavBar > .menus{
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+   gap: 1rem;             /* espaçamento entre os itens */
+   flex: 1;
+  
 }
 
 .NavBar > .Cabecalho{
@@ -30,19 +42,41 @@
   margin: 20px auto;
 }
 
-.NavBar > .menu{
-  padding-left: 2rem;
+.NavBar > .menus > .menu{
+  margin-left: 1rem;  
   display: flex;
   align-items: center;
-  color:var(--color-secondary);
-  padding-bottom: 2rem;
+  justify-content: center;
+  color:var(--color-secondary); 
+  background-color:var(--color-menu);  
+  width: 70%; 
+  border-radius: 5rem;
+  cursor: pointer;      
+  transition: 0.3s ease;
 }
 
-.NavBar > .menu > .icone{
+.NavBar > .menus > .menu > .icone{
   font-size: 3rem;
 }
 
-.NavBar > .menu > h1{
+.NavBar > .menus > .menu > h1{
   font-size: 20px;
   padding-left: 1rem;
+}
+
+
+.NavBar > .menus > .menu-sair {
+  margin-top: auto;      
+  margin-bottom: 1rem;
+}
+
+.NavBar > .menus > .menu:hover {
+  background-color: var(--color-secondary); /* muda fundo */
+  color: var(--color-primary);              /* muda texto/ícone */
+}
+
+
+.NavBar > .menus > .menu-sair:hover {
+  background-color: #c91439;             /* muda texto/ícone */
+  color: var(--color-secondary);              /* muda texto/ícone */
 }
