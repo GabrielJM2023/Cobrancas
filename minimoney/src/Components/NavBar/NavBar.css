@@ -1,12 +1,12 @@
 .NavBar{
     width: 20vw;
+    min-width: 200px;
     height: 98.35vh;
-    position:absolute;
     background-color: var(--color-primary);
     padding-top: 1rem;
 
-  display: flex;       
-  flex-direction: column;  
+    display: flex;       
+    flex-direction: column;  
 }
 
 .NavBar > .menus{

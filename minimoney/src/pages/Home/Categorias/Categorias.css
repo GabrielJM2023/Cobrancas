@@ -1,0 +1,87 @@
+.Card-Categorias {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CC-card-central {
+  display: flex;
+  flex-direction: row;
+  width: 70vw;
+  height: 80vh;
+  gap: 1rem;
+  background-color: var(--color-primary);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.CC-card-esquerda {
+  width: 250px; /* largura fixa */
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  overflow-y: auto; /* scroll se passar */
+  padding: 1rem;
+}
+
+.CC-card-esquerda h2 {
+  font-size: 2rem;
+  text-align: center;  
+  margin: 1rem 0 1rem 0;
+  color: var(--color-primary);
+}
+
+.lista-categorias {
+  max-height: 85%;   /* altura suficiente pra ~10 itens */
+  overflow-y: auto;    /* ativa scroll quando passar do limite */
+  padding: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+.item-categoria {
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.CC-card-direita {
+  flex: 1; /* ocupa o resto do espaço */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.CC-card-direita h2 {
+  font-size: 2rem;
+  text-align: center;  
+  margin: 1rem 0 1rem 0;
+  color: var(--color-primary);
+}
+
+.CC-card-direita label{
+    font-size: 1.5rem;
+    color: var(--color-primary);
+}
+
+.CC-card-direita input, .CC-card-direita select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+    margin-bottom: 1rem;
+}
+
+.item-categoria:hover {    
+    background: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+.item-categoria.ativo {
+    background: var(--color-primary);
+    color: var(--color-secondary);
+}
