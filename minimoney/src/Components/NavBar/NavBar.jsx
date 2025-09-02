@@ -7,19 +7,35 @@ import { GrTransaction } from "react-icons/gr";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
 import { FaDoorOpen } from "react-icons/fa";
-
+import { useNavigate } from 'react-router-dom';
 
 function NavBar(){
+  const navigate = useNavigate();
+
+  const Home = () => {
+    navigate("/home");
+  }
+  
+  const Categorias = () => {
+    navigate("/home/categorias");
+  }
+
   return (
     <div className='NavBar'>
-        <div  className='Cabecalho'>
+      <div className='CabecalhoNavBar'>
+        <div className='Cabecalho'>
           <img src={Teste} className='logo'/>        
           <div className='central'>
             <h1>Minimoney</h1>
           </div>          
         </div>
+      </div>
         <hr/>
         <div className='menus'>
+          <div className='menu'  onClick={Home}>
+            <VscGraph className='icone' />
+            <h1>Home</h1>
+          </div> 
           <div className='menu'>
             <VscGraph className='icone' />
             <h1>Dashboard</h1>
@@ -32,7 +48,7 @@ function NavBar(){
             <FaMoneyBillTransfer  className='icone' />
             <h1>Nova Transação</h1>
           </div>
-          <div className='menu'>
+          <div className='menu' onClick={Categorias}>
             <CiBoxList  className='icone' />
             <h1>Categorias</h1>
           </div>

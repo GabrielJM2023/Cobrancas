@@ -14,17 +14,27 @@
   flex-direction: column; 
   align-items: center;
   justify-content: center;
-   gap: 1rem;             /* espaçamento entre os itens */
-   flex: 1;
-  
+  gap: 1rem; 
+  flex: 1;  
 }
 
-.NavBar > .Cabecalho{
-  padding-left: 1rem;
-  display: flex;    
+.NavBar > .CabecalhoNavBar{
+  display: flex;  
+  align-items: center;
+  justify-content: center;  
 }
 
-.NavBar > .Cabecalho > .central{
+.NavBar > .CabecalhoNavBar > .Cabecalho{
+  display: flex;  
+  width: 80%; 
+  border-radius: 5rem;
+  gap: 1rem; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.NavBar  > .CabecalhoNavBar > .Cabecalho > .central{
   width: 100%;
   display: flex;
   justify-content: center;
@@ -74,7 +84,6 @@
   background-color: var(--color-secondary); /* muda fundo */
   color: var(--color-primary);              /* muda texto/ícone */
 }
-
 
 .NavBar > .menus > .menu-sair:hover {
   background-color: #c91439;             /* muda texto/ícone */

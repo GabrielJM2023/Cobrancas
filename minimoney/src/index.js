@@ -23,9 +23,8 @@ root.render(
         <Route path="/" element={<Start/>} />                
         <Route path='/Cadastro' element={<Cadastro/>}/>
         <Route path='/Login' element={<Login/>}/>
-        <Route path="/home" element={<NavBar />}>
-          <Route index element={<Home />} />
-          <Route path='categorias' element={<Categorias />} />
+        <Route path="/home" element={<Home />}>
+          <Route path='/home/categorias' element={<Categorias />} />
           {/* outras páginas que precisam da navbar */}
           {/* ex: /home/transacoes */}
         </Route>
