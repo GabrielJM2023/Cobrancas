@@ -27,11 +27,7 @@ function Categorias(){
     ]);
 
     const [selecionada, setSelecionada] = useState(null);
-
-    const Voltar = () => {
-        navigate('/');
-    };
-
+    
     const handleChange = (e) => {
         setSelecionada({
             ...selecionada,
@@ -112,7 +108,6 @@ function Categorias(){
                     )}
 
                     <Button children="Nova Categoria" onClick={novaCategoria} />
-                    <Button children="Voltar" onClick={Voltar} />
                 </div>
             </div>
         </div>

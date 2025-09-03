@@ -32,10 +32,6 @@ function NavBar(){
       </div>
         <hr/>
         <div className='menus'>
-          <div className='menu'  onClick={Home}>
-            <VscGraph className='icone' />
-            <h1>Home</h1>
-          </div> 
           <div className='menu'>
             <VscGraph className='icone' />
             <h1>Dashboard</h1>

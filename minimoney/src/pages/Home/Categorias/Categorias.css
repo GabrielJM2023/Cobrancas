@@ -85,3 +85,7 @@
     background: var(--color-primary);
     color: var(--color-secondary);
 }
+
+.botoes{
+  display: flex;
+}
