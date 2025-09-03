@@ -43,12 +43,12 @@ function Cadastro() {
         if(user){
             try {
                 const categoriasPadrao = [
-                    { nome: "Alimentação", tipo: "s" },
-                    { nome: "Transporte", tipo: "s" },
-                    { nome: "Saúde", tipo: "s" },
-                    { nome: "Lazer", tipo: "s" },
-                    { nome: "Salário", tipo: "e" },
-                    { nome: "Investimentos", tipo: "e" },
+                    { nome: "Alimentação", tipo: "S" },
+                    { nome: "Transporte", tipo: "S" },
+                    { nome: "Saúde", tipo: "S" },
+                    { nome: "Lazer", tipo: "S" },
+                    { nome: "Salário", tipo: "E" },
+                    { nome: "Investimentos", tipo: "E" },
                 ];
 
                 // Inserir categorias para esse usuário
@@ -62,12 +62,14 @@ function Cadastro() {
 
                 if (insertError) {
                     console.error("Erro ao inserir categorias padrão", insertError.message);
-                }
+                }else{
+                    navigate('/confirmarEmail');
+                }                
             } catch (e) {
                 console.error("Erro inesperado:", e);
             }    
 
-            navigate('/confirmarEmail');
+            
         }
     }
     return (

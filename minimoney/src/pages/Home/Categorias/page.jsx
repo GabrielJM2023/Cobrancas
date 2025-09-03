@@ -1,117 +1,163 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Categorias.css';
 import Button from "../../../Components/Button/button";
-import { useNavigate } from "react-router-dom";
+import { supabase } from '../../../lib/supabaseCliente';
 
-function Categorias(){
-    const navigate = useNavigate();
+function Categorias() {
+  const [categorias, setCategorias] = useState([]); 
+  const [selecionada, setSelecionada] = useState(null); 
 
-    const [categorias, setCategorias] = useState([
-        { id: 1, nome: "Restaurante", tipo: "Gasto" },
-        { id: 2, nome: "Mercado", tipo: "Gasto" },
-        { id: 3, nome: "Salário", tipo: "Receita" },
-        { id: 4, nome: "Transporte", tipo: "Gasto" },
-        { id: 5, nome: "Saúde", tipo: "Gasto" },
-        { id: 6, nome: "Lazer", tipo: "Gasto" },
-        { id: 7, nome: "Educação", tipo: "Gasto" },
-        { id: 8, nome: "Investimentos", tipo: "Receita" },
-        { id: 9, nome: "Aluguel", tipo: "Receita" },
-        { id: 10, nome: "Outros", tipo: "Gasto" },
-        { id: 11, nome: "Outros", tipo: "Gasto" },
-        { id: 12, nome: "Outros", tipo: "Gasto" },
-        { id: 13, nome: "Outros", tipo: "Gasto" },
-        { id: 14, nome: "Outros", tipo: "Gasto" },
-        { id: 15, nome: "Outros", tipo: "Gasto" },
-        { id: 16, nome: "Outros", tipo: "Gasto" },
-        { id: 17, nome: "Outros", tipo: "Gasto" },
-    ]);
+  useEffect(() => {
+    CarregarCategorias();
+  }, []);
 
-    const [selecionada, setSelecionada] = useState(null);
-    
-    const handleChange = (e) => {
-        setSelecionada({
-            ...selecionada,
-            [e.target.name]: e.target.value
-        });
-    };
+  const CadastrarCategoria = async ({ Nome, Tipo }) => {
+    // pegar usuário logado
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-    const salvarCategoria = () => {
-        if (selecionada) {
-            setCategorias(categorias.map(c => 
-                c.id === selecionada.id ? selecionada : c
-            ));
-        }
-    };
+    if (userError || !user) {
+      console.error("Usuário não autenticado");
+      return;
+    }
 
-    const novaCategoria = () => {
-        const nova = { id: Date.now(), nome: "", tipo: "Gasto" };
-        setCategorias([...categorias, nova]);
-        setSelecionada(nova);
-    };
+    const { data, error } = await supabase
+      .from("Categoria")
+      .insert([
+        { Nome: Nome, Tipo: Tipo, FK_ID_Usuario: user.id }, // FK do usuário
+      ])
+      .select();
 
-    const excluirCategoria = (id) => {
-        setCategorias(categorias.filter(c => c.id !== id));
-        setSelecionada(null);
-    };
+    if (error) {
+      console.error("Erro ao cadastrar categoria", error.message);
+      return;
+    }
 
-    return (
-        <div className="Card-Categorias">
-            <div className="CC-card-central">
-                
-                {/* Lista à esquerda */}
-                <div className="CC-card-esquerda">
-                    <h2>Lista</h2>
-                    <div className="lista-categorias">
-                        {categorias.map(cat => (
-                            <div 
-                                key={cat.id} 
-                                className={`item-categoria ${selecionada?.id === cat.id ? "ativo" : ""}`}
-                                onClick={() => setSelecionada(cat)}
-                            >
-                                {cat.nome}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+    // recarregar lista
+    CarregarCategorias();
+  };
 
-                {/* Formulário à direita */}
-                <div className="CC-card-direita">
-                    <h2>Detalhes</h2>
-                    
-                    {selecionada ? (
-                        <>
-                            <label>Nome</label>
-                            <input 
-                                type="text" 
-                                name="nome"
-                                value={selecionada.nome}
-                                onChange={handleChange}
-                            />
+  const CarregarCategorias = async () => {
+    let { data, error } = await supabase.from("Categoria").select("*");
+    if (error) {
+      console.error("Erro ao carregar categorias", error.message);
+      return;
+    }
+    setCategorias(data);
+  };
 
-                            <label>Tipo</label>
-                            <select 
-                                name="tipo" 
-                                value={selecionada.tipo}
-                                onChange={handleChange}
-                            >
-                                <option value="Gasto">Gasto</option>
-                                <option value="Receita">Receita</option>
-                            </select>
+  const AlterarCategoria = async ({ Id, Nome, Tipo }) => {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .update({ Nome: Nome, Tipo: Tipo })
+      .eq("id", Id)
+      .select();
 
-                            <div className="botoes">
-                                <Button children="Salvar" onClick={salvarCategoria} />
-                                <Button children="Excluir" onClick={() => excluirCategoria(selecionada.id)} />
-                            </div>
-                        </>
-                    ) : (
-                        <p>Selecione uma categoria</p>
-                    )}
+    if (error) {
+      console.error("Erro ao alterar categoria", error.message);
+    }
 
-                    <Button children="Nova Categoria" onClick={novaCategoria} />
-                </div>
-            </div>
+    CarregarCategorias();
+  };
+
+  const excluirCategoria = async (id) => {
+    const { error } = await supabase
+      .from("Categoria")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Erro ao excluir categoria", error.message);
+    }
+
+    CarregarCategorias();
+  };
+
+  const handleChange = (e) => {
+    setSelecionada({
+      ...selecionada,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const salvarCategoria = () => {
+    if (selecionada?.id) {
+      AlterarCategoria(selecionada);
+    } else {
+      CadastrarCategoria(selecionada);
+    }
+  };
+
+  const novaCategoria = () => {
+    setSelecionada({ nome: "", tipo: "Gasto" });
+  };
+
+  return (
+    <div className="Card-Categorias">
+      <div className="CC-card-central">
+        <div className="CC-card-esquerda">
+          <h2>Lista</h2>
+          <div className="lista-categorias">
+            {categorias.map((cat) => (
+              <div
+                key={cat.id}
+                className={`item-categoria ${
+                  selecionada?.id === cat.id ? "ativo" : ""
+                }`}
+                onClick={() => setSelecionada(cat)}
+              >
+                {cat.Nome}
+              </div>
+            ))}
+          </div>
         </div>
-    );
+
+        <div className="CC-card-direita">
+          <h2>Detalhes</h2>
+
+          {selecionada ? (
+            <>
+              <label>Nome</label>
+              <input
+                type="text"
+                name="Nome"
+                value={selecionada.Nome}
+                onChange={handleChange}
+              />
+
+              <label>Tipo</label>
+              <select
+                name="Tipo"
+                value={selecionada.Tipo}
+                onChange={handleChange}
+              >
+                <option value="G">Gasto</option>
+                <option value="E">Receita</option>
+              </select>
+
+              <div className="botoes">
+                <Button children="Salvar" onClick={salvarCategoria} />
+                {selecionada.id && (
+                  <Button
+                    children="Excluir"
+                    onClick={() => excluirCategoria(selecionada.id)}
+                  />
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="nenhuma-selecionada">
+              <p>Selecione uma categoria</p>
+                  <Button children="Nova Categoria" onClick={novaCategoria} />
+            </div>
+
+            
+            
+          )}
+          
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Categorias;

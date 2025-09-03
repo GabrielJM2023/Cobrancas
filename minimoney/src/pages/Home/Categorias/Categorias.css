@@ -89,3 +89,17 @@
 .botoes{
   display: flex;
 }
+
+.nenhuma-selecionada {
+  text-align: center;
+  color: var(--color-secondary);
+}
+
+.nenhuma-selecionada > p{
+  font-size: 2rem;
+}
+
+.botao-nova-categoria {
+  display: flex;
+  justify-content: center;
+}
