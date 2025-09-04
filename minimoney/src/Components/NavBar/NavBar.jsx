@@ -20,6 +20,10 @@ function NavBar(){
     navigate("/home/categorias");
   }
 
+  const NovaTransacao = () => {
+    navigate("/home/novatransacao");
+  }
+
   return (
     <div className='NavBar'>
       <div className='CabecalhoNavBar'>
@@ -40,7 +44,7 @@ function NavBar(){
             <GrTransaction  className='icone' />
             <h1>Transação</h1>
           </div>
-          <div className='menu'>
+          <div className='menu' onClick={NovaTransacao}>
             <FaMoneyBillTransfer  className='icone' />
             <h1>Nova Transação</h1>
           </div>

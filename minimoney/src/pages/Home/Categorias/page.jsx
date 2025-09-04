@@ -135,13 +135,13 @@ function Categorias() {
               </select>
 
               <div className="botoes">
-                <Button children="Salvar" onClick={salvarCategoria} />
                 {selecionada.id && (
                   <Button
                     children="Excluir"
                     onClick={() => excluirCategoria(selecionada.id)}
                   />
                 )}
+                <Button children="Salvar" onClick={salvarCategoria} />                
               </div>
             </>
           ) : (
@@ -149,9 +149,6 @@ function Categorias() {
               <p>Selecione uma categoria</p>
                   <Button children="Nova Categoria" onClick={novaCategoria} />
             </div>
-
-            
-            
           )}
           
         </div>
