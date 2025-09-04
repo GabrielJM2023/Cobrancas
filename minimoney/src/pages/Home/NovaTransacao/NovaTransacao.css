@@ -1,0 +1,65 @@
+.NT-CardPrincipal {
+  background-color: var(--color-primary);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+  padding: 2rem;
+}
+
+.NT-Card {
+  background: var(--color-secondary);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.NT-Card h1 {
+  color: var(--color-primary);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.NT-Campos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.NT-CamposLinha {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.NT-CamposLinha label {
+  font-weight: 600;
+  
+    font-size: 1.2rem;
+    color: var(--color-primary);
+}
+
+.NT-CamposLinha input,
+.NT-CamposLinha select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.NT-CamposLinha input:focus,
+.NT-CamposLinha select:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.NT-Botoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
