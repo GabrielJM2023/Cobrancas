@@ -36,69 +36,8 @@ function Cadastro() {
         if(error){
             console.error('Erro ao criar usuário', error.message);
             return
-        }
-
-        const user = data.user;
-
-        console.log('Usuário criado com sucesso:', data);
-
-        if ("d217b870-9a86-4d1d-a5d8-928cae565389" !== user.id){
-            console.error("ID de usuário inesperado:", user.id);
-        }else{
-            console.log("ID de usuário verificado:", user.id);
-        }
-
-        if(user){
-            try {                
-              const { data: usuarioData, error } = await supabase
-                .from('Usuario')
-                .insert([{
-                    Nome: nome,
-                    FK_user_id: user.id,
-                }])
-                .select();
-
-                if (error) {
-                    console.error("Erro ao inserir usuário:", error);
-                    return;
-                }
-
-                const categoriasPadrao = [
-                    { nome: "Alimentação", tipo: "S" },
-                    { nome: "Transporte", tipo: "S" },
-                    { nome: "Saúde", tipo: "S" },
-                    { nome: "Lazer", tipo: "S" },
-                    { nome: "Salário", tipo: "E" },
-                    { nome: "Investimentos", tipo: "E" },
-                ];
-
-
-                // pega o id do usuário recém-criado
-                const usuario = usuarioData[0]; 
-
-                // agora insere as categorias padrão vinculadas ao usuário
-                const { error: insertError } = await supabase
-                .from("Categoria")
-                .insert(
-                    categoriasPadrao.map((cat) => ({
-                    Nome: cat.nome,
-                    Tipo: cat.tipo,
-                    FK_ID_Usuario: usuario.id, // FK do usuário
-                    }))
-                );
-
-                if (insertError) {
-                    console.error("Erro ao inserir categorias:", insertError);
-                }
-
-                if (insertError) {
-                    console.error("Erro ao inserir categorias padrão", insertError.message);
-                } else {
-                    navigate('/confirmarEmail');
-                }                
-            } catch (e) {
-                console.error("Erro inesperado:", e);
-            }                
+        } else {
+            navigate('/confirmarEmail');
         }
     }
 
