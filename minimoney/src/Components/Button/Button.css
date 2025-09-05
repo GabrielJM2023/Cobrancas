@@ -1,7 +1,7 @@
 .custom-button{
     width: 50%;
     padding: 16px 0px;
-    margin: 10px;
+    margin: 15px;
     border-radius: 8px;
     outline: none;
     text-transform: uppercase;
@@ -11,4 +11,15 @@
     color: var(--color-secondary);
     background:var(--color-primary);
     cursor:pointer;
+    transition: 0.3s ease;
+
+    border-color: var(--color-primary);
+}
+
+
+
+.custom-button:hover{
+  background-color: var(--color-secondary); /* muda fundo */
+  color: var(--color-primary);              /* muda texto/ícone */
+  border: var(--color-primary) solid 2px;
 }
