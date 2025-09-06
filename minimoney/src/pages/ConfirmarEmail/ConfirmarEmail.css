@@ -1,0 +1,60 @@
+.ConfirmarEmail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; /* garante respiro nas bordas */
+}
+
+.CE-CardCentral {
+    background: var(--color-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    width: 40%;
+    padding: 1.5rem;
+    border-radius: 10px;
+
+    flex-direction: column;
+    gap: 1rem;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* destaque leve */
+}
+
+.ImgConfirmarEmail {
+    width: 60%; /* relativo ao card */
+    max-width: 250px; /* trava tamanho exagerado */
+    height: auto;
+}
+
+.ConfirmarEmail > .CE-CardCentral > h1 {
+    color: var(--color-primary);
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.ConfirmarEmail > .CE-CardCentral > .textarea {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .CE-CardCentral {
+        width: 70%;
+        padding: 1rem;
+    }
+    .ImgConfirmarEmail {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .CE-CardCentral {
+        width: 90%;
+    }
+    .ConfirmarEmail > .CE-CardCentral > h1 {
+        font-size: 1.5rem;
+    }
+}

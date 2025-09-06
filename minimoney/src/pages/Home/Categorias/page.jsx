@@ -12,7 +12,6 @@ function Categorias() {
   }, []);
 
   const CadastrarCategoria = async ({ Nome, Tipo }) => {
-    // pegar usuário logado
     const { data: { user }, error: userError } = await supabase.auth.getUser();
 
     if (userError || !user) {
@@ -20,10 +19,12 @@ function Categorias() {
       return;
     }
 
+    console.log(user.id);
+
     const { data, error } = await supabase
       .from("Categoria")
       .insert([
-        { Nome: Nome, Tipo: Tipo, FK_ID_Usuario: user.id }, // FK do usuário
+        { Nome: Nome, Tipo: Tipo, FK_ID_Usuario: user.id }, 
       ])
       .select();
 
@@ -37,13 +38,23 @@ function Categorias() {
   };
 
   const CarregarCategorias = async () => {
-    let { data, error } = await supabase.from("Categoria").select("*");
+  try {
+    const { data: categorias, error } = await supabase
+      .from('Categoria')
+      .select('*'); // pega tudo
+
     if (error) {
       console.error("Erro ao carregar categorias", error.message);
       return;
     }
-    setCategorias(data);
-  };
+
+    console.log(categorias);
+    setCategorias(categorias); // atualiza o estado
+  } catch (e) {
+    console.error("Erro inesperado ao carregar categorias", e.message);
+  }
+};
+
 
   const AlterarCategoria = async ({ Id, Nome, Tipo }) => {
     const { data, error } = await supabase

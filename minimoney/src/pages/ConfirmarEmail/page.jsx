@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import './style.css'
+import './ConfirmarEmail.css'
 import Button from '../../Components/Button/button'
-import ConfirmarEmail from './ConfirmarEmail.svg'
+import ConfirmarEmailFoto from './ConfirmarEmail.svg'
 
-function SemConexao(){
+function ConfirmarEmail(){
     const navigate = useNavigate();
 
     const Entrar=()=>{
@@ -12,14 +12,18 @@ function SemConexao(){
     }
 
     return(
-        <div className="card-Central ConfirmarEmail">
-            <img src={ConfirmarEmail} alt="Confirmar Email" className="ImgConfirmarEmail"/>
-            <h1>Cadastro realizado com sucesso!</h1>
-            <p>Por favor, confirme seu e-mail através do link que enviamos para sua caixa de entrada.</p>
-            <Button children={'Entrar'} onClick={Entrar}></Button>
+        <div className="ConfirmarEmail">
+            <div className="CE-CardCentral">
+                <img src={ConfirmarEmailFoto} alt="Confirmar Email" className="ImgConfirmarEmail"/>
+                <h1>Cadastro realizado com sucesso!</h1>
+                <div className="textarea">
+                    <p>Por favor, antes de fazer o login, confirme seu e-mail através do link que enviamos para sua caixa de entrada.</p>
+                </div>
+                <Button children={'Entrar'} onClick={Entrar}></Button>
+            </div>
         </div>
     )
 
 }
 
-export default SemConexao;
+export default ConfirmarEmail;

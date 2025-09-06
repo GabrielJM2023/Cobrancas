@@ -1,9 +1,10 @@
 :root {
-  --color-primary: #00C853;
+  --color-primary: #3a7653;
   --color-secondary: #f5f5f5;
   --color-background: #f5f5f5;
   --color-text: #2d3436;
   --color-menu:#058d3e;
+  --color-exit:#a53838;
 }
 
 body {

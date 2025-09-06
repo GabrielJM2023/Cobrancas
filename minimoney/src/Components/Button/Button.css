@@ -7,7 +7,7 @@
     text-transform: uppercase;
     font-weight: 800;
     letter-spacing: 3px;
-
+    
     color: var(--color-secondary);
     background:var(--color-primary);
     cursor:pointer;
