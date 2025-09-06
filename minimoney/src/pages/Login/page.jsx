@@ -41,8 +41,10 @@ function Logar(){
 
     return(
         <div className="card-Login">
-            <div className="card-Central">
-                <h1>Login</h1>                
+            <div className="card-Central login">
+                <div className="Logar">
+                    <h1>Login</h1>                
+                </div>
                 <div className="input-group login">
                     <label>Email</label>
                     <MdOutlineEmail className="icon"/>

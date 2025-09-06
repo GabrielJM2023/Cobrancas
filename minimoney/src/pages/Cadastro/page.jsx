@@ -44,7 +44,9 @@ function Cadastro() {
     return (
         <div className="card-Cadastro">
             <div className="card-Central">
+                <div className='Cadastrar'>
                 <h1>Cadastrar</h1>
+                </div>
                 <div className="input-group">
                     <label>Nome</label>
                     <IoPersonCircleOutline className="icon"/>
