@@ -18,6 +18,7 @@ function Cadastro() {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [erro, setMensagemErro] = useState('');
 
     const Voltar = () => {
         navigate('/');
@@ -63,6 +64,9 @@ function Cadastro() {
                     <label>Senha</label>
                     <FaLock className="icon"/>
                     <input type="password" placeholder="Senha" value={senha} onChange={e=>setSenha(e.target.value)}/>
+                </div>
+                <div>
+                    <p>{erro}</p>
                 </div>
 
                 <div className='card-Button'>
