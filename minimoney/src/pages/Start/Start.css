@@ -1,61 +1,59 @@
-.card-body{
+.Start {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
-.card-central{
+
+.card-central {
   background-color: var(--color-background);
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 87vw;
   height: 85vh;
-  
   border-radius: 10px;
-  
 }
 
-.card-esquerda{
-    width: 50vw;
-    height: 85vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-}
-
-.card-direita{
-    width: 40vw;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;    
-}
-
-.card-logo{
+.card-esquerda {
+  width: 50vw;
+  height: 85vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.logo{
-  width: 14vw;
-  border-radius: 10px;
+.card-direita {
+  width: 40vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-right: 10px;
 }
 
-.ImgStart{
+.card-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Start-Logo {
+  width: 10vw;
+  border-radius: 11px;
+}
+
+.ImgStart {
   width: 35vw;
 }
 
-.card-botao{
+.card-botao {
   display: flex;
   justify-content: center;
 }
 
-.card-direita > h1{
+.card-direita > h1 {
   color: var(--color-primary);
 }
 
@@ -64,32 +62,113 @@ p {
   color: var(--color-primary);
 }
 
+/* Telas muito grandes */
+@media (max-width: 2560px) {
+  .Start > .card-central > .card-direita > h1 {
+    font-size: 4.5rem;
+  }
 
-@media (max-width: 768px){
-  .card-esquerda{
+  .Start > .card-central > .card-direita > p {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 2130px) {
+  .Start-Logo {
+    width: 10vw;
+  }
+
+  .Start > .card-central > .card-direita > h1 {
+    font-size: 3.5rem;
+  }
+
+  .Start > .card-central > .card-direita > p {
+    font-size: 2rem;
+  }
+}
+
+/* Telas padrão FullHD e acima */
+@media (min-width: 1440px) {
+  .Start-Logo {
+    width: 15vw;
+  }
+
+  .Start > .card-central > .card-direita > h1 {
+    font-size: 2.5rem;
+  }
+
+  .Start > .card-central > .card-direita > p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .card-esquerda {
     display: none;
   }
 
-  .card-direita{
+  .card-direita {
     width: 80%;
     height: 80vh;
-    display: flex;
     justify-content: center;
-    flex-direction: column; 
-  }  
-  
-  .logo{
-    width: 24vw;
+    flex-direction: column;
   }
 
-  @media (max-width: 425px){
-    .card-botao{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;      
-    }
+  .Start-Logo {
+    width: 30vw;
   }
 
+  .Start > .card-central > .card-direita > h1 {
+    font-size: 2.5rem;
+  }
+
+  .Start > .card-central > .card-direita > p {
+    font-size: 1rem;
+  }
 }
 
+
+/* Tablets */
+@media (max-width: 768px) {
+  .card-esquerda {
+    display: none;
+  }
+
+  .card-direita {
+    width: 80%;
+    height: 80vh;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .Start-Logo {
+    width: 30vw;
+  }
+
+  .Start > .card-central > .card-direita > h1 {
+    font-size: 2.5rem;
+  }
+
+  .Start > .card-central > .card-direita > p {
+    font-size: 1rem;
+  }
+}
+
+/* Celulares grandes */
+@media (max-width: 425px) {
+  .card-botao {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Start-Logo {
+    width: 30vw;
+  }
+}
+
+/* Celulares pequenos */
+@media (max-width: 375px) {
+  .Start-Logo {
+    width: 40vw;
+  }
+}

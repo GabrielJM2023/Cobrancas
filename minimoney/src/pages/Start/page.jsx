@@ -1,15 +1,12 @@
 import React from 'react';
 import './Start.css';
-
 import Button from '../../Components/Button/button';
-
 import ImgStart from '../../ImgStart.svg';
 import Logo from '../../logo192.png';
-
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
 import { supabase } from '../../lib/supabaseCliente';
+
 
 function Start() {
   const navigate = useNavigate();
@@ -36,21 +33,20 @@ function Start() {
     }, [])
     
     useEffect(() => {
-      //trocar false por "session" para ver se está logado
       if (false) {
         navigate('/Home')
       }
   }, [session]); 
 
   return (
-    <div className='card-body'>
+    <div className='Start'>
       <div className="card-central">
         <div className="card-esquerda">
           <img src={ImgStart} alt='Start' className='ImgStart'/>
         </div>
         <div className="card-direita">
           <div className='card-logo'>
-            <img src={Logo} className='logo'/>
+            <img src={Logo} className='Start-Logo' alt='Foto da direita'/>
           </div>
           <h1>Bem-vindo ao Minimoney!</h1>
           <p>Com o Minimoney, você acompanha seus gastos, organiza suas entradas e 
