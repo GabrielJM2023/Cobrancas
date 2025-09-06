@@ -25,20 +25,27 @@ function Cadastro() {
     }
 
     const CadastroUsuario = async({nome, email, senha}) => {
-        const{data, error} = await supabase.auth.signUp({
-            email: email,
-            password: senha,
-            options: {
-                data: {
-                    nome: nome,
+        try{
+            const{data, error} = await supabase.auth.signUp({
+                email: email,
+                password: senha,
+                options: {
+                    data: {
+                        nome: nome,
+                    }
                 }
+            })
+            if(error){
+                console.error('Erro ao criar usuário', error.message);
+                setMensagemErro(error.message);
+                return
+            } else {
+                navigate('/confirmarEmail');
             }
-        })
-        if(error){
-            console.error('Erro ao criar usuário', error.message);
-            return
-        } else {
-            navigate('/confirmarEmail');
+        }catch (e){
+            console.error('Erro ao criar usuário', e.message);
+            setMensagemErro(e.message);
+            return        
         }
     }
 

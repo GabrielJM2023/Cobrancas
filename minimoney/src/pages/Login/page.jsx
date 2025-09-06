@@ -22,21 +22,26 @@ function Logar(){
     }
 
     const Login = async({email, senha}) =>{
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: senha,
-        });
+        try{    
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: senha,
+            });
+                
+            const user = data.user;   
             
-        const user = data.user;   
-        
-        const { data: userData, error: userError } = await supabase.auth.getUser();
-
-        if (userError) {
-            console.error("Erro ao buscar usuário:", userError.message);
+            if (error) {
+                setMensagemErro(error.message);
+                console.error("Erro ao buscar usuário:", error.message);
+                return;
+            } else {
+                navigate('/Home');
+            }        
+        }catch (e){
+            setMensagemErro(e.message);
+            console.error("Erro ao buscar usuário:", e.message);
             return;
-        } else {
-            navigate('/Home');
-        }        
+        }
     }
 
     return(
