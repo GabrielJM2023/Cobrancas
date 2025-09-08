@@ -77,13 +77,13 @@
 }
 
 .item-categoria:hover {    
-    background: var(--color-secondary);
+    background: var(--color-background);
     color: var(--color-primary);
 }
 
 .item-categoria.ativo {
     background: var(--color-primary);
-    color: var(--color-secondary);
+    color: var(--color-background);
 }
 
 .botoes{
@@ -92,7 +92,7 @@
 
 .nenhuma-selecionada {
   text-align: center;
-  color: var(--color-secondary);
+  color: var(--color-background);
 }
 
 .nenhuma-selecionada > p{

@@ -38,7 +38,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  color:var(--color-secondary);
+  color:var(--color-background);
 }
 
 .logo{    
@@ -47,7 +47,7 @@
 }
 
 .NavBar > hr{
-  border: 2px solid var(--color-secondary);
+  border: 2px solid var(--color-background);
   width: 90%; 
   margin: 20px auto;
 }
@@ -57,7 +57,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color:var(--color-secondary); 
+  color:var(--color-background); 
   background-color:var(--color-menu);  
   width: 70%; 
   border-radius: 5rem;
@@ -81,11 +81,11 @@
 }
 
 .NavBar > .menus > .menu:hover {
-  background-color: var(--color-secondary); /* muda fundo */
+  background-color: var(--color-background); /* muda fundo */
   color: var(--color-primary);              /* muda texto/ícone */
 }
 
 .NavBar > .menus > .menu-sair:hover {
   background-color: #c91439;             /* muda texto/ícone */
-  color: var(--color-secondary);              /* muda texto/ícone */
+  color: var(--color-background);              /* muda texto/ícone */
 }

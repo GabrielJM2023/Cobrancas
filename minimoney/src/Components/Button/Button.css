@@ -8,7 +8,7 @@
     font-weight: 800;
     letter-spacing: 3px;
     
-    color: var(--color-secondary);
+    color: var(--color-background);
     background:var(--color-primary);
     cursor:pointer;
     transition: 0.3s ease;
@@ -19,7 +19,7 @@
 
 
 .custom-button:hover{
-  background-color: var(--color-secondary); /* muda fundo */
+  background-color: var(--color-background); /* muda fundo */
   color: var(--color-primary);              /* muda texto/ícone */
   border: var(--color-primary) solid 2px;
 }
