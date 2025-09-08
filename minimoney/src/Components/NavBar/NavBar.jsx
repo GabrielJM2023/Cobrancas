@@ -24,6 +24,11 @@ function NavBar(){
     navigate("/home/novatransacao");
   }
 
+  const Sair = () =>{
+    supabase.auth.signOut()
+    navigate("/");
+  }
+
   return (
     <div className='NavBar'>
       <div className='CabecalhoNavBar'>
@@ -52,7 +57,7 @@ function NavBar(){
             <CiBoxList  className='icone' />
             <h1>Categorias</h1>
           </div>
-          <div className='menu menu-sair'>
+          <div className='menu menu-sair' onClick={Sair}>
             <FaDoorOpen  className='icone' />
             <h1>Sair</h1>
           </div>
