@@ -39,12 +39,41 @@ function Categorias() {
 
   const CarregarCategorias = async () => {
   try {
-    const { data: categorias, error } = await supabase
-      .from('Categoria')
-      .select('*'); // pega tudo
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (error) {
-      console.error("Erro ao carregar categorias", error.message);
+    if (!user) {
+      console.error("Usuário não autenticado");
+      return;
+    }
+
+    console.log(user.id); 
+
+    const {data : usuario, errorUsuario } = await supabase
+      .from('Usuario')
+      .select('id, Nome')
+      .eq('FK_user_id', user.id)
+      .single();
+    
+    if (errorUsuario) {
+      console.error("Erro ao carregar usuário", errorUsuario.message);
+      return;
+    }
+
+    console.log(usuario.id);
+
+    const { data: categorias, errorCategorias } = await supabase
+      .from('Categoria')
+      .select('id,        '+
+              'Nome,      '+
+              'Tipo       ').eq('FK_ID_Usuario', usuario.id);
+
+    if (errorCategorias) {
+      console.error("Erro ao carregar categorias", errorCategorias.message);
+      return;
+    }
+
+    if (!categorias) {
+      console.log("Nenhuma categoria encontrada");
       return;
     }
 

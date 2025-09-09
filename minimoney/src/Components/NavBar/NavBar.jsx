@@ -25,7 +25,6 @@ function NavBar(){
   }
 
   const Sair = () =>{
-    supabase.auth.signOut()
     navigate("/");
   }
 

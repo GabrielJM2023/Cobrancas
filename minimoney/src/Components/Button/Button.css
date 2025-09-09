@@ -9,11 +9,11 @@
     letter-spacing: 3px;
     
     color: var(--color-background);
-    background:var(--color-primary);
+    background:var(--color-menu);
     cursor:pointer;
     transition: 0.3s ease;
 
-    border-color: var(--color-primary);
+    border-color: var(--color-menu);
 }
 
 
