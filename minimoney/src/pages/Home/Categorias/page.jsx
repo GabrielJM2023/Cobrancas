@@ -175,19 +175,17 @@ function Categorias() {
               </select>
 
               <div className="botoes">
-                {selecionada.id && (
-                  <Button
-                    children="Excluir"
-                    onClick={() => excluirCategoria(selecionada.id)}
-                  />
-                )}
-                <Button children="Salvar" onClick={salvarCategoria} />                
-              </div>
+                <Button
+                  children="Excluir"
+                  onClick={() => excluirCategoria(selecionada.id)}
+                />
+                <Button children="Salvar" onClick={salvarCategoria} />
+              </div>              
             </>
           ) : (
             <div className="nenhuma-selecionada">
               <p>Selecione uma categoria</p>
-                  <Button children="Nova Categoria" onClick={novaCategoria} />
+              <Button children="Nova Categoria" onClick={novaCategoria} />
             </div>
           )}
           
