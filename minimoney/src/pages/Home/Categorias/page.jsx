@@ -6,39 +6,13 @@ import { supabase } from '../../../lib/supabaseCliente';
 function Categorias() {
   const [categorias, setCategorias] = useState([]); 
   const [selecionada, setSelecionada] = useState(null); 
+  const [pErro, setMensagemErro] = useState('');
 
   useEffect(() => {
     CarregarCategorias();
   }, []);
 
   const CadastrarCategoria = async ({ Nome, Tipo }) => {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      console.error("Usuário não autenticado");
-      return;
-    }
-
-    console.log(user.id);
-
-    const { data, error } = await supabase
-      .from("Categoria")
-      .insert([
-        { Nome: Nome, Tipo: Tipo, FK_ID_Usuario: user.id }, 
-      ])
-      .select();
-
-    if (error) {
-      console.error("Erro ao cadastrar categoria", error.message);
-      return;
-    }
-
-    // recarregar lista
-    CarregarCategorias();
-  };
-
-  const CarregarCategorias = async () => {
-  try {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
@@ -61,39 +35,80 @@ function Categorias() {
 
     console.log(usuario.id);
 
-    const { data: categorias, errorCategorias } = await supabase
-      .from('Categoria')
-      .select('id,        '+
-              'Nome,      '+
-              'Tipo       ').eq('FK_ID_Usuario', usuario.id);
-
-    if (errorCategorias) {
-      console.error("Erro ao carregar categorias", errorCategorias.message);
-      return;
-    }
-
-    if (!categorias) {
-      console.log("Nenhuma categoria encontrada");
-      return;
-    }
-
-    console.log(categorias);
-    setCategorias(categorias); // atualiza o estado
-  } catch (e) {
-    console.error("Erro inesperado ao carregar categorias", e.message);
-  }
-};
-
-
-  const AlterarCategoria = async ({ Id, Nome, Tipo }) => {
     const { data, error } = await supabase
-      .from("Categoria")
-      .update({ Nome: Nome, Tipo: Tipo })
-      .eq("id", Id)
-      .select();
+    .from('Categoria')
+    .insert([
+      { Nome: selecionada.Nome, FK_ID_Usuario: usuario.id, Tipo: selecionada.Tipo },
+    ])
+    .select()
+
+    if(error){
+    console.log("Erro ao cadastrar nova categoria: " + error.message)  
+    }
+
+    CarregarCategorias();
+  };
+
+  const CarregarCategorias = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        console.error("Usuário não autenticado");
+        return;
+      }
+
+      console.log(user.id); 
+
+      const {data : usuario, errorUsuario } = await supabase
+        .from('Usuario')
+        .select('id, Nome')
+        .eq('FK_user_id', user.id)
+        .single();
+      
+      if (errorUsuario) {
+        console.error("Erro ao carregar usuário", errorUsuario.message);
+        return;
+      }
+
+      console.log(usuario.id);
+
+      const { data: categorias, errorCategorias } = await supabase
+        .from('Categoria')
+        .select('id,        '+
+                'Nome,      '+
+                'Tipo       ').eq('FK_ID_Usuario', usuario.id);
+
+      if (errorCategorias) {
+        console.error("Erro ao carregar categorias", errorCategorias.message);
+        return;
+      }
+
+      if (!categorias) {
+        console.log("Nenhuma categoria encontrada");
+        return;
+      }
+
+      console.log(categorias);
+      setCategorias(categorias); // atualiza o estado
+    } catch (e) {
+      console.error("Erro inesperado ao carregar categorias", e.message);
+    }
+  };
+
+
+  const AlterarCategoria = async ({ id, Nome, Tipo }) => {
+    console.log(id, Nome, Tipo);
+
+    const { data, error } = await supabase
+    .from('Categoria')
+    .update({ Nome: Nome, Tipo: Tipo })
+    .eq('id', id)
+    .select();
 
     if (error) {
       console.error("Erro ao alterar categoria", error.message);
+      return;
     }
 
     CarregarCategorias();
@@ -110,6 +125,7 @@ function Categorias() {
     }
 
     CarregarCategorias();
+    novaCategoria();
   };
 
   const handleChange = (e) => {
@@ -120,15 +136,22 @@ function Categorias() {
   };
 
   const salvarCategoria = () => {
+    if (!selecionada.Nome || selecionada.Nome.trim() === ""){
+      setMensagemErro("O nome da categoria é obrigatório");
+      return;
+    }
+
     if (selecionada?.id) {
       AlterarCategoria(selecionada);
     } else {
       CadastrarCategoria(selecionada);
     }
+
+    novaCategoria();
   };
 
-  const novaCategoria = () => {
-    setSelecionada({ nome: "", tipo: "Gasto" });
+  const novaCategoria = async () => {
+    setSelecionada({ id:"", Nome: "", Tipo: "S" });    
   };
 
   return (
@@ -174,6 +197,9 @@ function Categorias() {
                 <option value="E">Receita</option>
               </select>
 
+              <div className="mensagemErro">
+                <p>{pErro || ''}</p>
+              </div>
               <div className="botoes">
                 <Button
                   children="Excluir"
