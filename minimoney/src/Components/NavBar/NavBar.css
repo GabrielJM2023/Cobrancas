@@ -60,7 +60,7 @@
   color:var(--color-background); 
   background-color:var(--color-menu);  
   width: 70%; 
-  border-radius: 5rem;
+  border-radius: 1rem;
   cursor: pointer;      
   transition: 0.3s ease;
 }

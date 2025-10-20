@@ -148,6 +148,7 @@ function Categorias() {
     }
 
     novaCategoria();
+    setMensagemErro('');
   };
 
   const novaCategoria = async () => {

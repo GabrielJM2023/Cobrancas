@@ -103,3 +103,10 @@
   display: flex;
   justify-content: center;
 }
+
+.mensagemErro > p:empty {
+  background: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
