@@ -152,7 +152,7 @@ function Categorias() {
   };
 
   const novaCategoria = async () => {
-    setSelecionada({ id:"", Nome: "", Tipo: "S" });    
+    setSelecionada({ id:"", Nome: "", Tipo: "G" });    
   };
 
   return (

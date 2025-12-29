@@ -16,7 +16,7 @@
 }
 
 .CC-card-esquerda {
-  width: 250px; /* largura fixa */
+  width: 800px; /* largura fixa */
   background-color: #f5f5f5;
   border-radius: 8px;
   overflow-y: auto; /* scroll se passar */

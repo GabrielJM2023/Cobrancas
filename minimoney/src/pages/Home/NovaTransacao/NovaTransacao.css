@@ -1,65 +1,199 @@
-.NT-CardPrincipal {
+.Card-NovaTransacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.NT-card-central {
+  display: flex;
+  flex-direction: row;
+  width: 70vw;
+  height: 80vh;
+  gap: 1rem;
   background-color: var(--color-primary);
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;    
-  padding: 2rem;
+  border-radius: 10px;
+  padding: 1rem;
 }
 
-.NT-Card {
-  background: var(--color-background);
-  border-radius: 12px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.NT-card-esquerda {
+  width: 750px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  overflow-y: auto;
+  padding: 1rem;
 }
 
-.NT-Card h1 {
-  color: var(--color-primary);
+.NT-card-esquerda h2 {
   font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
+  text-align: center;  
+  margin: 1rem 0 1rem 0;
+  color: var(--color-primary);
 }
 
-.NT-Campos {
+.lista-NovaTransacao {
+  max-height: 85%;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.item-NovaTransacao {
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.NT-card-direita {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
 }
 
-.NT-CamposLinha {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.NT-card-direita h2 {
+  font-size: 2rem;
+  text-align: center;  
+  margin: 1rem 0 1rem 0;
+  color: var(--color-primary);
 }
 
-.NT-CamposLinha label {
-  font-weight: 600;
-  
-    font-size: 1.2rem;
+.NT-card-direita label {
+    font-size: 1.5rem;
     color: var(--color-primary);
 }
 
-.NT-CamposLinha input,
-.NT-CamposLinha select {
-  padding: 0.7rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.NT-CamposLinha input:focus,
-.NT-CamposLinha select:focus {
-  outline: none;
-  border-color: var(--color-background);
-  box-shadow: 0 0 4px rgba(0,0,0,0.1);
-}
-
-.NT-Botoes {
+/* DESCRIÇÃO */
+.NT-card-direita .campo-descricao {
   display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
+  flex-direction: column;
+}
+
+.NT-card-direita .campo-descricao label {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: 0.3rem;
+}
+
+.NT-card-direita .campo-descricao textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  resize: vertical;
+  min-height: 100px;
+  max-height: 200px;
+  box-sizing: border-box;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.NT-card-direita .campo-descricao textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
+  outline: none;
+}
+
+.NT-card-direita input, .NT-card-direita select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; 
+  margin-bottom: 1rem;
+}
+
+/* GRUPO LADO A LADO */
+.NT-Grupo {
+  display: flex;
   gap: 1rem;
+}
+
+.NT-Grupo .campo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CAMPO DE DATA */
+.campo-data label {
+  margin-bottom: 0.3rem;
+}
+
+.campo-data input[type="date"] {
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  background: white;
+  transition: border 0.2s, box-shadow 0.2s;
+  appearance: none;
+}
+
+.campo-data input[type="date"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
+  outline: none;
+}
+
+/* PREFIXO R$ */
+.campo-valor {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-valor {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  background: white;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input-valor:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
+}
+
+.input-valor span {
+  font-size: 1rem;
+  margin-right: 0.6rem;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.input-valor input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+.input-valor input::placeholder {
+  color: #aaa;
+}
+
+/* FOOTERS E COMPLEMENTOS */
+.botoes {
+  display: flex;
+  gap: 1rem;
+}
+
+.nenhuma-selecionada {
+  text-align: center;
+  color: var(--color-background);
+}
+
+.nenhuma-selecionada > p {
+  font-size: 2rem;
 }
