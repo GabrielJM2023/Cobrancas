@@ -142,9 +142,9 @@ function NovaTransacao() {
     if (error) {
       console.error("Erro ao excluir Transacao", error.message);
     }
-
-    CarregarTransacaos();
-    novaTransacao();
+ 
+    CarregarTransacao();
+    NovaTransacao(); 
   };
 
   return (
