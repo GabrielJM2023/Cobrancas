@@ -36,13 +36,38 @@
   padding: 0.5rem;
   background: #f5f5f5;
   border-radius: 8px;
+
+
+  display: grid;
+  grid-template-columns: repeat(1, 2fr); /* 2 colunas */
+  gap: 12px;
 }
 .item-categoria {
-    padding: 1rem;
-    background: white;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 1rem;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+
+  display: grid;
+  grid-template-columns: 1fr 100px; /* esquerda | direita */
+  align-items: center;
+  padding: 12px;
+  border-radius: 6px;
 }
+
+.tipo {
+  text-align: right;
+  font-weight: bold;
+}
+
+.tipo.gasto {
+  color: #e74c3c;
+}
+
+.tipo.receita {
+  color: #2ecc71;
+}
+
 
 .CC-card-direita {
   flex: 1; /* ocupa o resto do espaço */

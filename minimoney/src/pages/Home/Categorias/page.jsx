@@ -152,7 +152,7 @@ function Categorias() {
   };
 
   const novaCategoria = async () => {
-    setSelecionada({ id:"", Nome: "", Tipo: "G" });    
+    setSelecionada({ id:"", Nome: "", Tipo: "S" });
   };
 
   return (
@@ -169,7 +169,14 @@ function Categorias() {
                 }`}
                 onClick={() => setSelecionada(cat)}
               >
-                {cat.Nome}
+                <span className="nome">{cat.Nome}</span>
+                <span
+                  className={`tipo ${
+                    cat.Tipo === "E" ? "receita" : "gasto"
+                  }`}
+                >
+                  {cat.Tipo === "E" ? "Receita" : "Gasto"}
+                </span>  
               </div>
             ))}
           </div>
@@ -194,7 +201,7 @@ function Categorias() {
                 value={selecionada.Tipo}
                 onChange={handleChange}
               >
-                <option value="G">Gasto</option>
+                <option value="S">Gasto</option>
                 <option value="E">Receita</option>
               </select>
 
