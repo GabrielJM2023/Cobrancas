@@ -217,7 +217,7 @@ function Categorias() {
               </div>              
             </>
           ) : (
-            <div className="nenhuma-selecionada">
+            <div className="nenhuma-selecionada-Categoria">
               <p>Selecione uma categoria</p>
               <Button children="Nova Categoria" onClick={novaCategoria} />
             </div>

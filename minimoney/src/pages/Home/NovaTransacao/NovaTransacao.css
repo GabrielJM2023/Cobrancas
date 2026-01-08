@@ -1,12 +1,12 @@
 .Card-NovaTransacao {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* CONTAINER PRINCIPAL */
 .NT-card-central {
   display: flex;
-  flex-direction: row;
   width: 70vw;
   height: 80vh;
   gap: 1rem;
@@ -15,8 +15,9 @@
   padding: 1rem;
 }
 
+/* COLUNA ESQUERDA – LISTA */
 .NT-card-esquerda {
-  width: 750px;
+  width: 40%;
   background-color: #f5f5f5;
   border-radius: 8px;
   overflow-y: auto;
@@ -24,176 +25,127 @@
 }
 
 .NT-card-esquerda h2 {
-  font-size: 2rem;
-  text-align: center;  
-  margin: 1rem 0 1rem 0;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 1rem;
   color: var(--color-primary);
 }
 
 .lista-NovaTransacao {
-  max-height: 85%;
-  overflow-y: auto;
-  padding: 0.5rem;
-  background: #f5f5f5;
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.item-NovaTransacao {
-    padding: 1rem;
-    background: white;
-    border-radius: 5px;
-    cursor: pointer;
+/* ITEM DA LISTA */
+.lista-NovaTransacao > div {
+  padding: 0.8rem 1rem;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
 }
 
+.lista-NovaTransacao > div:hover {
+  background: #eaeaea;
+}
+
+.lista-NovaTransacao > div:active {
+  border-left-color: var(--color-primary);
+}
+
+/* COLUNA DIREITA – FORMULÁRIO */
 .NT-card-direita {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  background-color: #fff;
+  gap: 0.8rem;
+  background-color: #ffffff;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.2rem;
 }
 
 .NT-card-direita h2 {
-  font-size: 2rem;
-  text-align: center;  
-  margin: 1rem 0 1rem 0;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
   color: var(--color-primary);
 }
 
+/* LABELS */
 .NT-card-direita label {
-    font-size: 1.5rem;
-    color: var(--color-primary);
-}
-
-/* DESCRIÇÃO */
-.NT-card-direita .campo-descricao {
-  display: flex;
-  flex-direction: column;
-}
-
-.NT-card-direita .campo-descricao label {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--color-primary);
-  margin-bottom: 0.3rem;
 }
 
-.NT-card-direita .campo-descricao textarea {
+/* INPUTS E SELECTS */
+.NT-card-direita input,
+.NT-card-direita select,
+.NT-card-direita textarea {
   width: 100%;
-  padding: 0.7rem 1rem;
+  padding: 0.6rem 0.8rem;
   font-size: 1rem;
   border: 1px solid #cfcfcf;
   border-radius: 6px;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.NT-card-direita input:focus,
+.NT-card-direita select:focus,
+.NT-card-direita textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
+  outline: none;
+}
+
+/* TEXTAREA */
+.NT-card-direita textarea {
   resize: vertical;
   min-height: 100px;
   max-height: 200px;
-  box-sizing: border-box;
-  transition: border 0.2s ease-in-out, box-shadow 0.2s;
 }
 
-.NT-card-direita .campo-descricao textarea:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
-  outline: none;
-}
-
-.NT-card-direita input, .NT-card-direita select {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; 
-  margin-bottom: 1rem;
-}
-
-/* GRUPO LADO A LADO */
-.NT-Grupo {
+/* BOTÕES */
+.botoes {
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
+  margin-top: auto;
 }
 
-.NT-Grupo .campo {
+/* ESTADO SEM SELEÇÃO */
+.nenhuma-selecionada {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-/* CAMPO DE DATA */
-.campo-data label {
-  margin-bottom: 0.3rem;
-}
-
-.campo-data input[type="date"] {
-  width: 100%;
-  font-size: 1rem;
-  border: 1px solid #cfcfcf;
-  border-radius: 6px;
-  background: white;
-  transition: border 0.2s, box-shadow 0.2s;
-  appearance: none;
-}
-
-.campo-data input[type="date"]:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
-  outline: none;
-}
-
-/* PREFIXO R$ */
-.campo-valor {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-valor {
-  display: flex;
   align-items: center;
-  border: 1px solid #cfcfcf;
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-  background: white;
-  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.input-valor:focus-within {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
-}
-
-.input-valor span {
-  font-size: 1rem;
-  margin-right: 0.6rem;
-  color: var(--color-primary);
-  font-weight: bold;
-}
-
-.input-valor input {
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 1rem;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-}
-
-.input-valor input::placeholder {
-  color: #aaa;
-}
-
-/* FOOTERS E COMPLEMENTOS */
-.botoes {
-  display: flex;
+  justify-content: center;
   gap: 1rem;
+  color: #666;
 }
 
-.nenhuma-selecionada {
+.nenhuma-selecionada p {
+  font-size: 1.4rem;
+}
+
+/* MENSAGEM DE ERRO */
+.mensagemErro {
+  color: #c0392b;
+  font-weight: 600;
+  text-align: center;
+}
+.mensagemErro p {
+  margin: 0;
+}
+
+.nenhuma-selecionada-NovaTransacao {
   text-align: center;
   color: var(--color-background);
 }
 
-.nenhuma-selecionada > p {
+.nenhuma-selecionada-NovaTransacao > p{
   font-size: 2rem;
 }

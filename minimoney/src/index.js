@@ -10,6 +10,7 @@ import NovaTransacao from './pages/Home/NovaTransacao/page';
 import ConfirmarEmail from './pages/ConfirmarEmail/page';
 import SemConexao from './pages/SemConexao/page';
 import MonitorConexao from './lib/monitorConexao';
+import Dashboard from './pages/Home/DashBoard/page';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ root.render(
         <Route path="/home" element={<Home />}>
           <Route path='/home/categorias' element={<Categorias />} />
           <Route path='/home/novatransacao' element={<NovaTransacao />} />
-          {/* outras páginas que precisam da navbar */}
+          <Route path='/home/DashBoard' element={<Dashboard />} />
           {/* ex: /home/transacoes */}
         </Route>
         <Route path='/sem-conexao' element={<SemConexao/>}/>

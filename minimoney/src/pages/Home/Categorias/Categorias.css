@@ -115,12 +115,12 @@
   display: flex;
 }
 
-.nenhuma-selecionada {
+.nenhuma-selecionada-Categoria {
   text-align: center;
   color: var(--color-background);
 }
 
-.nenhuma-selecionada > p{
+.nenhuma-selecionada-Categoria > p{
   font-size: 2rem;
 }
 
