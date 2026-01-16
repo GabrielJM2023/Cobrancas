@@ -13,7 +13,7 @@ function NavBar(){
   const navigate = useNavigate();
 
   const Home = () => {
-    navigate("/home");
+    navigate("/home/DashBoard");
   }
   
   const Categorias = () => {

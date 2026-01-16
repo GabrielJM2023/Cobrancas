@@ -160,7 +160,6 @@ function NovaTransacao() {
   return (
     <div className="Card-NovaTransacao">
       <div className="NT-card-central">
-
         <div className="NT-card-esquerda">
           <h2>Lista</h2>
           <div className="lista-NovaTransacao">
