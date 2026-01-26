@@ -84,16 +84,6 @@
   font-size: 1.5rem;
 }
 
-.LoginMensagemErro{
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-.LoginMensagemErro > p{
-  color: red;
-}
-
 
 @media (max-width: 1024px){
   .card-Login{      

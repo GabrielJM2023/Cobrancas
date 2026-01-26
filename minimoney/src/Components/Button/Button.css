@@ -13,10 +13,8 @@
     cursor:pointer;
     transition: 0.3s ease;
 
-    border-color: var(--color-menu);
+    border: var(--color-menu) solid 2px;
 }
-
-
 
 .custom-button:hover{
   background-color: var(--color-background); /* muda fundo */

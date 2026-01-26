@@ -44,10 +44,6 @@ function NavBar(){
             <VscGraph className='icone'/>
             <h1>Dashboard</h1>
           </div>
-          <div className='menu'>
-            <GrTransaction  className='icone' />
-            <h1>Transação</h1>
-          </div>
           <div className='menu' onClick={NovaTransacao}>
             <FaMoneyBillTransfer  className='icone' />
             <h1>Nova Transação</h1>

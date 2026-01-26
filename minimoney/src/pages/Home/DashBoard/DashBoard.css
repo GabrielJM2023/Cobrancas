@@ -15,7 +15,10 @@
 }
 
 .Card-Filtros-DashBoard {
-  
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px;
 }
 
 .Card-Visual-DashBoard {

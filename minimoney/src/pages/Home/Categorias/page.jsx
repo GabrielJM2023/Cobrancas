@@ -209,10 +209,12 @@ function Categorias() {
                 <p>{pErro || ''}</p>
               </div>
               <div className="botoes">
+                {selecionada?.id && (
                 <Button
                   children="Excluir"
                   onClick={() => excluirCategoria(selecionada.id)}
                 />
+                )}
                 <Button children="Salvar" onClick={salvarCategoria} />
               </div>              
             </>

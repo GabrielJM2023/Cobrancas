@@ -99,8 +99,9 @@ function Logar(){
                     />
                 </div>
                 <div className="mensagemErro">
-                    <p>{erro}</p>
+                  {erro && <p>{erro}</p>}
                 </div>
+
                 <div className='card-Button login'>
                     <Button children={'Voltar'} onClick={Voltar}></Button>
                     <Button children={'Entrar'} onClick={()=>Login({email,senha})}></Button>

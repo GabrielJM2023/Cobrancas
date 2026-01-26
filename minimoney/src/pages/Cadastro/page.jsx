@@ -113,9 +113,10 @@ const CadastroUsuario = async () => {
                     <FaLock className="icon"/>
                     <input type="password" placeholder="Senha" value={senha} onChange={e=>setSenha(e.target.value)}/>
                 </div>
-                <div className='mensagemErro'>
-                    <p>{erro || ''}</p>
+                <div className="mensagemErro">
+                  {erro && <p>{erro}</p>}
                 </div>
+
 
                 <div className='card-Button'>
                     <Button onClick={Voltar}>Voltar</Button>
