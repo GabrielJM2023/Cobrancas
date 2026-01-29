@@ -8,7 +8,6 @@
   display: flex;
   width: 70vw;
   height: 80vh;
-  gap: 1rem;
   background-color: var(--color-primary);
   border-radius: 10px;
   padding: 1rem;
@@ -17,8 +16,17 @@
 .Card-Filtros-DashBoard {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   min-width: 200px;
+  width: 100%;
+}
+
+.Card-Filtros-DashBoard>.Titulo{
+}
+
+.Card-Filtros-DashBoard >
+.Filtros-DashBoard {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .Card-Visual-DashBoard {

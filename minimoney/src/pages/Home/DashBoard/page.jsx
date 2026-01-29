@@ -2,30 +2,16 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "../../../lib/supabaseCliente";
 import Button from "../../../Components/Button/button";
 import "./DashBoard.css";
-import {
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
 
 function Dashboard() {
-  const data = [
-    { name: "Page A", uv: 400 },
-    { name: "Page B", uv: 300 },
-    { name: "Page C", uv: 320 },
-    { name: "Page D", uv: 200 },
-    { name: "Page E", uv: 278 },
-    { name: "Page F", uv: 189 },
-  ];
 
   return (
     <div className="Card-DashBoard">
       <div className="Card-Central-DashBoard">
         <div className="Card-Filtros-DashBoard">
-          <h1>Dashboard</h1>
+          <div className="Titulo">
+            <h1>Dashboard</h1>
+          </div>
 
           <div className="Filtros-DashBoard">
             <div className="Filtro data-inicial"> 
@@ -60,14 +46,7 @@ function Dashboard() {
         </div>
 
         <div className="Card-Visual-DashBoard">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="uv" />
-            </LineChart>
-          </ResponsiveContainer>
+          
         </div>
       </div>
     </div>
