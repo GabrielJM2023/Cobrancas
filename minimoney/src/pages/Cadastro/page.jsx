@@ -58,7 +58,7 @@ const CadastroUsuario = async () => {
     }
 
     try {
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
             email,
             password: senha,
             options: {
@@ -69,7 +69,6 @@ const CadastroUsuario = async () => {
         if (error) {
             console.error('Erro ao criar usuário', error.message);
 
-            // Tratamento de erros mais específicos
             if (error.message.includes("already registered")) {
                 setMensagemErro("Este email já está cadastrado");
             } else if (error.message.includes("rate limit")) {

@@ -35,7 +35,7 @@ function Categorias() {
 
     console.log(usuario.id);
 
-    const { data, error } = await supabase
+    const {  error } = await supabase
     .from('Categoria')
     .insert([
       { Nome: selecionada.Nome, FK_ID_Usuario: usuario.id, Tipo: selecionada.Tipo },
@@ -102,7 +102,7 @@ function Categorias() {
   const AlterarCategoria = async ({ id, Nome, Tipo }) => {
     console.log(id, Nome, Tipo);
 
-    const { data, error } = await supabase
+    const {  error } = await supabase
     .from('Categoria')
     .update({ Nome: Nome, Tipo: Tipo })
     .eq('id', id)
