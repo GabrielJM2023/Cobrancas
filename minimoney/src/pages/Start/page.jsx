@@ -36,7 +36,7 @@ function Start() {
       if (false) {
         navigate('/Home')
       }
-  }, [session]); 
+  }, [session, navigate]); 
 
   return (
     <div className='Start'>
