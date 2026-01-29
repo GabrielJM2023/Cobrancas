@@ -239,7 +239,7 @@ function NovaTransacao() {
                 name="Descricao"
                 value={selecionada.Descricao}
                 onChange={handleChange}
-                rows={3}
+                rows={3} 
               />
 
               <div className="botoes">
