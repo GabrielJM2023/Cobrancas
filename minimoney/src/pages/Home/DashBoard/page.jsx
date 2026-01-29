@@ -1,5 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
-import { supabase } from "../../../lib/supabaseCliente";
 import { IoWallet } from "react-icons/io5";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";

@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function MonitorConexao() {
-  const [online, setOnline] = useState(navigator.onLine);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     function handleOnline() {
-      setOnline(true);
 
       const rotaSalva = sessionStorage.getItem("rota_interrompida");
       if (rotaSalva) {
@@ -18,7 +16,6 @@ export default function MonitorConexao() {
     }
 
     function handleOffline() {
-      setOnline(false);
       sessionStorage.setItem("rota_interrompida", location.pathname);
       navigate("/sem-conexao");
     }

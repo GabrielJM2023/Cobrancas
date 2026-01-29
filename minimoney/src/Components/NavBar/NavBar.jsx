@@ -3,7 +3,6 @@ import './NavBar.css'
 import Teste from './favicon.ico';
 
 import { VscGraph } from "react-icons/vsc";
-import { GrTransaction } from "react-icons/gr";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
 import { FaDoorOpen } from "react-icons/fa";
@@ -32,7 +31,7 @@ function NavBar(){
     <div className='NavBar'>
       <div className='CabecalhoNavBar'>
         <div className='Cabecalho'>
-          <img src={Teste} className='logo'/>        
+          <img src={Teste} className='logo' alt='Logo'/> 
           <div className='central'>
             <h1>Minimoney</h1>
           </div>          
