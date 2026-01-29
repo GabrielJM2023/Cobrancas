@@ -202,27 +202,34 @@ function NovaTransacao() {
                 ))}
               </select>
 
-              <label>Valor</label>
-              <input
-                type="text"
-                value={formatarValor(valorTexto)}
-                onChange={(e) => {
-                  const bruto = e.target.value.replace(/\D/g, "");
-                  setValorTexto(bruto);
-                  setSelecionada((prev) => ({
-                    ...prev,
-                    Valor: Number(bruto) / 100,
-                  }));
-                }}
-              />
+              <div className="linha-dupla">
+                <div className="campo">
+                  <label>Valor</label>
+                  <input
+                    type="text"
+                    value={formatarValor(valorTexto)}
+                    onChange={(e) => {
+                      const bruto = e.target.value.replace(/\D/g, "");
+                      setValorTexto(bruto);
+                      setSelecionada((prev) => ({
+                        ...prev,
+                        Valor: Number(bruto) / 100,
+                      }));
+                    }}
+                  />
+                </div>
 
-              <label>Data</label>
-              <input
-                type="date"
-                name="Data"
-                value={selecionada.Data}
-                onChange={handleChange}
-              />
+                <div className="campo">
+                  <label>Data</label>
+                  <input
+                    type="date"
+                    name="Data"
+                    value={selecionada.Data}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
 
               <label>Descrição</label>
               <textarea
