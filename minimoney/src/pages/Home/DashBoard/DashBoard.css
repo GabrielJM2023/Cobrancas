@@ -85,9 +85,17 @@
   border: 1px solid #ccc;  
   border-radius: 8px;
   width: 100%;
+  align-items: center;
+}
+.Card-Visual-DashBoard > .Card-Resumo > .Resumo-Item > .Resumo-Icone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 100%;
 }
 
-.Card-Visual-DashBoard > .Card-Resumo > .Resumo-Item > .Icone{
+.Card-Visual-DashBoard > .Card-Resumo > .Resumo-Item > .Resumo-Icone > .Icone{
   font-size: 5rem;
 }
 
@@ -101,11 +109,11 @@
 }
 
 .Card-Visual-DashBoard > .Card-Resumo >  .Positivo {
-  color: green;
+  color: var(--color-confirmation);
 }
 
 .Card-Visual-DashBoard > .Card-Resumo >  .Negativo {
-  color: red;
+  color: var(--color-exit);
 }
 
 .Card-Visual-DashBoard > .Card-Graficos-DashBoard {
@@ -120,9 +128,29 @@
 
 .Card-Visual-DashBoard > .Card-Graficos-DashBoard > .EvolucaoFinanceira {
   display: flex;
+  flex-direction: column;
   margin: 16px;
   background-color: white;
   border: 1px solid #ccc;  
   border-radius: 8px;
   width: 60%;
+}
+
+.Card-Visual-DashBoard > .Card-Graficos-DashBoard > .DistribuicaoCategorias {
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 40%;
+}
+
+.Card-Visual-DashBoard > .Card-Graficos-DashBoard > .EvolucaoFinanceira > .Titulo,
+.Card-Visual-DashBoard > .Card-Graficos-DashBoard > .DistribuicaoCategorias > .Titulo {
+  display: flex;
+  justify-content: center;
+  font-size: 1.0rem;
+  color: var(--color-primary);
+  margin-top: 8px;
 }

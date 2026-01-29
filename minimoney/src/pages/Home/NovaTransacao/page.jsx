@@ -2,28 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./NovaTransacao.css";
 import Button from "../../../Components/Button/button";
 import { supabase } from "../../../lib/supabaseCliente";
+import { NumericFormat } from 'react-number-format';
 
 function NovaTransacao() {
   const [transacoes, setTransacoes] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [selecionada, setSelecionada] = useState(null);
   const [pErro, setMensagemErro] = useState("");
-  const [valorTexto, setValorTexto] = useState("0");
 
   useEffect(() => {
     CarregarCategorias();
     CarregarTransacao();
   }, []);
-
-  /* =======================
-     HELPERS
-  ======================= */
-  const formatarValor = (valor) => {
-    valor = valor.replace(/\D/g, "");
-    valor = (Number(valor) / 100).toFixed(2);
-    return valor.replace(".", ",");
-  };
-
+  
   /* =======================
      FORM
   ======================= */
@@ -36,7 +27,6 @@ function NovaTransacao() {
       Descricao: "",
       FK_ID_Categoria: "",
     });
-    setValorTexto("0");
     setMensagemErro("");
   };
 
@@ -109,16 +99,17 @@ function NovaTransacao() {
         .insert([{ ...dados, FK_ID_Usuario: usuario.id }]);
     }
 
-    setSelecionada(null);
     CarregarTransacao();
+    setSelecionada(null);
     
     setMensagemErro(""); 
   };
 
   const excluirTransacao = async (id) => {
     await supabase.from("Transacao").delete().eq("id", id);
-    setSelecionada(null);
     CarregarTransacao();
+    setMensagemErro(""); 
+    setSelecionada(null);
   };
 
   const CarregarTransacao = async () => {
@@ -166,12 +157,21 @@ function NovaTransacao() {
             {transacoes.map((t) => (
               <div
                 key={t.id}
-                onClick={() => {
-                  setSelecionada(t);
-                  setValorTexto(String(Math.round(t.Valor * 100)));
-                }}
+                className={`item-NovaTransacao ${
+                  selecionada?.id === t.id ? "ativo" : ""
+                }`}
+                onClick={() => setSelecionada(t)}
               >
-                {t.Descricao} – R$ {t.Valor}
+                <div className="item-grid">
+                  <span className="descricao">{t.Descricao}</span>
+                  <span className="categoria">{t.Categoria.Nome}</span>
+                  <span className="data">{t.Data}</span>
+                  <span className={`tipo ${t.Tipo === "S" ? "gasto" : "receita"}`}>
+                    {t.Tipo === "S" ? "Gasto" : "Receita"}
+                  </span>
+                  <span className="valor">R$ {t.Valor.toFixed(2)}</span>
+              </div>
+ 
               </div>
             ))}
           </div>
@@ -205,15 +205,18 @@ function NovaTransacao() {
               <div className="linha-dupla">
                 <div className="campo">
                   <label>Valor</label>
-                  <input
-                    type="text"
-                    value={formatarValor(valorTexto)}
-                    onChange={(e) => {
-                      const bruto = e.target.value.replace(/\D/g, "");
-                      setValorTexto(bruto);
+                  <NumericFormat
+                    value={selecionada.Valor}
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    prefix="R$ "
+                    decimalScale={2}
+                    fixedDecimalScale
+                    allowNegative={false}
+                    onValueChange={(values) => {
                       setSelecionada((prev) => ({
                         ...prev,
-                        Valor: Number(bruto) / 100,
+                        Valor: values.floatValue || 0,
                       }));
                     }}
                   />

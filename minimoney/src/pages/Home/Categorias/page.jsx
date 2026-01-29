@@ -47,6 +47,7 @@ function Categorias() {
     }
 
     CarregarCategorias();
+    setSelecionada(null);
   };
 
   const CarregarCategorias = async () => {
@@ -77,7 +78,8 @@ function Categorias() {
         .from('Categoria')
         .select('id,        '+
                 'Nome,      '+
-                'Tipo       ').eq('FK_ID_Usuario', usuario.id);
+                'Tipo       ').eq('FK_ID_Usuario', usuario.id)
+                              .order('Nome', { ascending: true });
 
       if (errorCategorias) {
         console.error("Erro ao carregar categorias", errorCategorias.message);
@@ -125,7 +127,7 @@ function Categorias() {
     }
 
     CarregarCategorias();
-    novaCategoria();
+    setSelecionada(null);
   };
 
   const handleChange = (e) => {
@@ -147,11 +149,11 @@ function Categorias() {
       CadastrarCategoria(selecionada);
     }
 
-    novaCategoria();
+    setSelecionada(null);
     setMensagemErro('');
   };
 
-  const novaCategoria = async () => {
+  const novaCategoria = async () => {    
     setSelecionada({ id:"", Nome: "", Tipo: "S" });
   };
 
