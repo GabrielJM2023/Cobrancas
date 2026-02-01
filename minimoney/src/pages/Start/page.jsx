@@ -1,4 +1,3 @@
-import React from 'react';
 import './Start.css';
 import Button from '../../Components/Button/button';
 import ImgStart from '../../ImgStart.svg';
@@ -10,7 +9,8 @@ import { supabase } from '../../lib/supabaseCliente';
 
 function Start() {
   const navigate = useNavigate();
-   
+  const [session, setSession] = useState(null);
+
   const Cadastro =()=>{
     navigate('/Cadastro');
   };
@@ -18,24 +18,24 @@ function Start() {
   const Entrar=()=>{
     navigate('/Login');
   }  
+  
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
 
-  const [session, setSession] = useState()
-    useEffect(() => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-      })
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-      })
-      return () => subscription.unsubscribe()
-    }, [])
-    
-    useEffect(() => {
-      if (false) {
-        navigate('/Home')
-      }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+  
+  useEffect(() => {
+    if (session) {
+      navigate('/Home/Dashboard');
+    }
   }, [session, navigate]); 
 
   return (

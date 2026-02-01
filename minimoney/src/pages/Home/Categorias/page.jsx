@@ -59,8 +59,6 @@ function Categorias() {
         return;
       }
 
-      console.log(user.id); 
-
       const {data : usuario, errorUsuario } = await supabase
         .from('Usuario')
         .select('id, Nome')
@@ -71,8 +69,6 @@ function Categorias() {
         console.error("Erro ao carregar usuário", errorUsuario.message);
         return;
       }
-
-      console.log(usuario.id);
 
       const { data: categorias, errorCategorias } = await supabase
         .from('Categoria')
@@ -97,7 +93,6 @@ function Categorias() {
       console.error("Erro inesperado ao carregar categorias", e.message);
     }
   };
-
 
   const AlterarCategoria = async ({ id, Nome, Tipo }) => {
     console.log(id, Nome, Tipo);

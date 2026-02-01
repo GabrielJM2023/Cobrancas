@@ -7,8 +7,100 @@ import "./DashBoard.css";
 import {ResponsiveContainer, CartesianGrid, Legend, Line, LineChart, XAxis, YAxis, Tooltip} from 'recharts';
 import { Pie, PieChart} from 'recharts';
 
+import { supabase } from '../../../lib/supabaseCliente';
+import { useEffect, useState } from "react";
 
 function Dashboard() {
+  const [resumo, setResumo] = useState(null);
+  const [resumoMensal, setResumoMensal] = useState([]);
+
+  useEffect(() => {
+    Resumo();
+    ResumoMensal();
+  }, []);
+
+  const formatarMoeda = (valor) =>
+  new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(valor);
+
+  const formatarMes = (data) =>
+  new Intl.DateTimeFormat('pt-BR', {
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date(data));
+
+  const formatarPercentual = (valor) =>
+  `${(valor * 100).toFixed(2)}%`;
+
+  const ResumoMensal = async () =>{
+    try{
+      const {data:{user}} = await supabase.auth.getUser();
+      if(!user){
+        console.error("Usuário não autenticado");
+        return;
+      }
+      const {data : usuario, errorUsuario } = await supabase
+        .from('Usuario')
+        .select('id, Nome')
+        .eq('FK_user_id', user.id)
+        .single();
+      if (errorUsuario) {
+        console.error("Erro ao carregar usuário", errorUsuario.message);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .rpc('resumo_mensal', { p_usuario: usuario.id });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      setResumoMensal(data);
+    }catch(error){
+      console.error("Erro ao carregar resumo mensal: " + error.message)
+    }
+  }
+  
+  const Resumo = async () => {
+    try{
+      const {data:{user}} = await supabase.auth.getUser();
+      if(!user){
+        console.error("Usuário não autenticado");
+        return;
+      }
+      if (!user) {
+        console.error("Usuário não autenticado");
+        return;
+      }
+
+      const {data : usuario, errorUsuario } = await supabase
+        .from('Usuario')
+        .select('id, Nome')
+        .eq('FK_user_id', user.id)
+        .single();
+
+      if (errorUsuario) {
+        console.error("Erro ao carregar usuário", errorUsuario.message);
+        return;
+      }
+      const { data, error } = await supabase
+        .rpc('resumo_financeiro', { p_usuario: usuario.id }).single();
+
+      if (error) {
+        console.error(error);
+        return;
+      }     
+      
+      setResumo(data);
+    }catch(error){
+      console.error("Erro ao carregar resumo financeiro: " + error.message)
+    }
+  }
+
   const data = [
     { name: 'Janeiro', uv: 4000, pv: 2400 },
     { name: 'Fevereiro', uv: 3000, pv: 1398 },
@@ -35,37 +127,51 @@ function Dashboard() {
           </div>
           
           <div className="Filtros-DashBoard">
-            <div className="linha-filtros">
-              <div className="campo-filtro">
-                <label>Data Inicial</label>
-                <input type="date" />
-              </div>
+            <div className="Campo-Filtro">
+              <div className="linha-filtros">
+                <div className="campo-filtro">
+                  <label>Mes</label>
+                  <select>
+                    <option value="">Todos</option>
+                    <option value="J">Janeiro</option>
+                    <option value="F">Fevereiro</option>
+                    <option value="M">Março</option>
+                    <option value="A">Abril</option>
+                    <option value="M">Maio</option>
+                    <option value="J">Junho</option>                    
+                  </select>
+                </div>
 
-              <div className="campo-filtro">
-                <label>Data Final</label>
-                <input type="date" />
-              </div>
-            </div>
-            
-            <div className="linha-filtros">
-              <div className="campo-filtro">
-                <label>Tipo</label>
-                <select>
-                  <option value="">Todos</option>
-                  <option value="E">Receitas</option>
-                  <option value="S">Despesas</option>
-                </select>
+                <div className="campo-filtro">
+                  <label>Ano</label>
+                  <select>
+                    <option value="">Todos</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>                    
+                  </select>
+                </div>
               </div>
               
-              <div className="campo-filtro">
-                <label>Categoria</label>
-                <select>
-                  <option value="">Todas</option>
-                  <option value="A">Alimentação</option>
-                  <option value="T">Transporte</option>
-                  <option value="L">Lazer</option>
-                  <option value="O">Outras</option>
-                </select>
+              <div className="linha-filtros">
+                <div className="campo-filtro">
+                  <label>Tipo</label>
+                  <select>
+                    <option value="">Todos</option>
+                    <option value="E">Receitas</option>
+                    <option value="S">Despesas</option>
+                  </select>
+                </div>
+                
+                <div className="campo-filtro">
+                  <label>Categoria</label>
+                  <select>
+                    <option value="">Todas</option>
+                    <option value="A">Alimentação</option>
+                    <option value="T">Transporte</option>
+                    <option value="L">Lazer</option>
+                    <option value="O">Outras</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -80,7 +186,7 @@ function Dashboard() {
               </div>
               <div className="Informacoes">
                 <label>Receita do mês</label>
-                <span>R$ 6.200,00</span>
+                <span>{formatarMoeda(resumo?.total_receitas || 0)}</span>
               </div>
             </div>
             
@@ -90,7 +196,7 @@ function Dashboard() {
               </div>
               <div className="Informacoes">
                 <label>Despesas do Mês</label>
-                <span>R$ 2.750,00</span>
+                <span>{formatarMoeda(resumo?.total_despesas || 0)}</span>
               </div>
             </div>
 
@@ -99,8 +205,8 @@ function Dashboard() {
                 <IoWallet className="Icone"/>
               </div>
               <div className="Informacoes">
-                <label>Saldo Atual</label>
-                <span>R$ 3.450,00</span>
+                <label>Diferença</label>
+                <span>{formatarMoeda(resumo?.diferenca || 0)}</span>
               </div>
             </div>
 
@@ -110,7 +216,7 @@ function Dashboard() {
               </div>
               <div className="Informacoes">
                 <label>Economia</label>
-                <span>+12%</span>
+                <span>{formatarPercentual(resumo?.percentual_economia || 0)}</span>
               </div>              
             </div>
           </div>
@@ -121,13 +227,13 @@ function Dashboard() {
                 <h1>Evolução Financeira</h1>
               </div>
               <ResponsiveContainer width="100%" height="100%" >
-                <LineChart data={data}>
+                <LineChart data={resumoMensal}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="name" />
                     <YAxis width="auto"/>
                     <Legend />
-                    <Line name="Receitas" type="monotone" dataKey="pv" stroke="green" activeDot={{ r: 8 }} />
-                    <Line name="Despesas" type="monotone" dataKey="uv" stroke="red" activeDot={{ r: 8 }}/>
+                    <Line name="Receitas" type="monotone" dataKey="receitas" stroke="green" activeDot={{ r: 8 }} />
+                    <Line name="Despesas" type="monotone" dataKey="despesas" stroke="red" activeDot={{ r: 8 }}/>
                     <Tooltip />
                 </LineChart>
               </ResponsiveContainer>
