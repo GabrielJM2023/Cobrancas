@@ -38,7 +38,7 @@ export function useResumoFinanceiro(filtros) {
           console.error("Erro ao carregar resumo financeiro:", error);
           setResumo(null);
         } else {
-          setResumo(data);
+          setResumo(data?.[0] || null);
           console.log("Resumo financeiro:", data);
         }
       } catch (err) {
