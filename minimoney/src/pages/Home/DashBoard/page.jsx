@@ -19,18 +19,27 @@ function Dashboard() {
     ResumoMensal();
   }, []);
 
+  const formatarMes = (data) => {
+    const [ano, mes] = data.split('-');
+    return new Intl.DateTimeFormat('pt-BR', {
+      month: 'long'
+    }).format(new Date(ano, mes - 1, 1));
+  };
+
+
+  const resumoMensalFormatado = resumoMensal.map(item => ({
+    name: formatarMes(item.mes),
+    receitas: item.receitas,
+    despesas: item.despesas
+  }));
+
+
   const formatarMoeda = (valor) =>
   new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   }).format(valor);
-
-  const formatarMes = (data) =>
-  new Intl.DateTimeFormat('pt-BR', {
-    month: 'long',
-    year: 'numeric'
-  }).format(new Date(data));
-
+  
   const formatarPercentual = (valor) =>
   `${(valor * 100).toFixed(2)}%`;
 
@@ -50,7 +59,7 @@ function Dashboard() {
         console.error("Erro ao carregar usuário", errorUsuario.message);
         return;
       }
-
+      console.log("Usuário carregado:", usuario);
       const { data, error } = await supabase
         .rpc('resumo_mensal', { p_usuario: usuario.id });
 
@@ -100,16 +109,6 @@ function Dashboard() {
       console.error("Erro ao carregar resumo financeiro: " + error.message)
     }
   }
-
-  const data = [
-    { name: 'Janeiro', uv: 4000, pv: 2400 },
-    { name: 'Fevereiro', uv: 3000, pv: 1398 },
-    { name: 'Março', uv: 2000, pv: 9800 },
-    { name: 'Abril', uv: 4000, pv: 3908 },
-    { name: 'Maio', uv: 6000, pv: 4800 },
-    { name: 'Junho', uv: 1000, pv: 3800 },  
-    { name: 'Jul', uv: 3000, pv: 0},
-  ];
 
   const dataCategoria = [ 
     { name: 'Alimentação', value: 400, fill: '#8884d8' },
@@ -177,7 +176,6 @@ function Dashboard() {
           </div>
         </div>
 
-
         <div className="Card-Visual-DashBoard">          
           <div className="Card-Resumo">            
             <div className="Resumo-Item Positivo">
@@ -227,10 +225,10 @@ function Dashboard() {
                 <h1>Evolução Financeira</h1>
               </div>
               <ResponsiveContainer width="100%" height="100%" >
-                <LineChart data={resumoMensal}>
+                <LineChart data={resumoMensalFormatado}>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <XAxis dataKey="name" />
-                    <YAxis width="auto"/>
+                    <YAxis/>
                     <Legend />
                     <Line name="Receitas" type="monotone" dataKey="receitas" stroke="green" activeDot={{ r: 8 }} />
                     <Line name="Despesas" type="monotone" dataKey="despesas" stroke="red" activeDot={{ r: 8 }}/>

@@ -7,6 +7,7 @@ import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
 import { FaDoorOpen } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../lib/supabaseCliente';
 
 function NavBar(){
   const navigate = useNavigate();
@@ -23,7 +24,14 @@ function NavBar(){
     navigate("/home/novatransacao");
   }
 
-  const Sair = () =>{
+  const Sair = async () =>{
+    const { error } = await supabase.auth.signOut()
+    if (!error) {
+      console.log("Usuário deslogado com sucesso");
+    } else {
+      console.error("Erro ao deslogar usuário:", error.message);
+    }
+
     navigate("/");
   }
 
