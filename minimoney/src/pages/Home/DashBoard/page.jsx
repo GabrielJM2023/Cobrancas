@@ -99,7 +99,7 @@ function Dashboard() {
                   value={filtros.tipo}
                   onChange={(e) => filtros.setTipo(e.target.value)}
                 >
-                  <option value={null}>Todos</option>
+                  <option value="null">Todos</option>
                   <option value="E">Receitas</option>
                   <option value="S">Despesas</option>
                 </select>

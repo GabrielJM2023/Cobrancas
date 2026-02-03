@@ -4,8 +4,8 @@ export function useDashboardFilters() {
   const [periodo, setPeriodo] = useState('mes_atual');
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
-  const [tipo, setTipo] = useState('');
-  const [categoria, setCategoria] = useState('');
+  const [tipo, setTipo] = useState(null);
+  const [categoria, setCategoria] = useState(null);
 
   const aplicarPeriodo = (p) => {
     const hoje = new Date();

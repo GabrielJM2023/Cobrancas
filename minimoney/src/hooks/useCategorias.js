@@ -7,14 +7,19 @@ export function useCategorias() {
   useEffect(() => {
     const carregar = async () => {
       const { data: { user } } = await supabase.auth.getUser();
+      const { data: usuario } = await supabase
+            .from("USUARIO")
+            .select("ID")
+            .eq("USER_ID_FK", user.id)
+            .single();
+      console.log("Usuario ID (categorias):", usuario.ID);
 
-      const { data, error } = await supabase
-        .from('CATEGORIA')
-        .select('ID, DESCRICAO')
-        .eq('USER_ID_FK', user.id)
-        .order('DESCRICAO');
-
-      if (!error) setCategorias(data);
+      const { data } = await supabase
+        .from("CATEGORIA")
+        .select("ID, NOME, TIPO")
+        .eq("ID_USUARIO_FK", usuario.ID);
+      
+      setCategorias(data || []);
     };
 
     carregar();

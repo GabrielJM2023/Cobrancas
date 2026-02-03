@@ -17,17 +17,23 @@ export function useResumoFinanceiro(filtros) {
           console.error("Erro ao obter usuário:", userError);
           return;
         }
+        const { data: usuario } = await supabase
+                    .from("USUARIO")
+                    .select("ID")
+                    .eq("USER_ID_FK", user.id)
+                    .single();
+              console.log("Usuario ID (categorias):", usuario.ID);
+        console.log("Usuário autenticado:", usuario.ID);
 
         const { data, error } = await supabase
           .rpc("resumo_financeiro", {
-            p_usuario: usuario.id,
-            p_data_inicio: filtros.dataInicio,
-            p_data_fim: filtros.dataFim,
-            p_tipo: filtros.tipo || null,
             p_categoria: filtros.categoria || null,
-          })
-          .single();
-        console.log(filtros);    
+            p_data_fim: filtros.dataFim,
+            p_data_inicio: filtros.dataInicio,
+            p_tipo: filtros.tipo || null,
+            p_usuario: usuario.ID           
+          });
+
         if (error) {
           console.error("Erro ao carregar resumo financeiro:", error);
           setResumo(null);
@@ -41,7 +47,7 @@ export function useResumoFinanceiro(filtros) {
     };
 
     carregar();
-  }, [filtros]);
+  }, [filtros.dataInicio, filtros.dataFim, filtros.tipo, filtros.categoria, filtros.periodo]);
 
   return resumo;
 }

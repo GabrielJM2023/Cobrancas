@@ -5,6 +5,7 @@ export function useResumoMensal(filtros) {
   const [dados, setDados] = useState([]);
 
   useEffect(() => {
+    return;
     const carregar = async () => {
       const { data: { user } } = await supabase.auth.getUser();
 
