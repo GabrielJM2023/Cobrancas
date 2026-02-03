@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseCliente";
 import { useUsuario } from "./useUsuario";
 
-
-
-
 export function useResumoFinanceiro(filtros) {
   const [resumo, setResumo] = useState(null);
   const { usuario } = useUsuario();
@@ -30,7 +27,7 @@ export function useResumoFinanceiro(filtros) {
             p_categoria: filtros.categoria || null,
           })
           .single();
-
+        console.log(filtros);    
         if (error) {
           console.error("Erro ao carregar resumo financeiro:", error);
           setResumo(null);
