@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./NovaTransacao.css";
 import Button from "../../../Components/Button/button";
 import { supabase } from "../../../lib/supabaseCliente";
-import { NumericFormat } from 'react-number-format';
+import { NumericFormat } from "react-number-format";
 
 function NovaTransacao() {
   const [transacoes, setTransacoes] = useState([]);
@@ -12,20 +12,18 @@ function NovaTransacao() {
 
   useEffect(() => {
     CarregarCategorias();
-    CarregarTransacao();
+    CarregarTransacoes();
   }, []);
-  
-  /* =======================
-     FORM
-  ======================= */
+
+  /* ===================== FORM ===================== */
   const IncluirTransacao = () => {
     setSelecionada({
-      id: null,
-      Tipo: "S",
-      Valor: 0,
-      Data: "",
-      Descricao: "",
-      FK_ID_Categoria: "",
+      ID: null,
+      TIPO: "S",
+      VALOR: 0,
+      DATA: "",
+      DESCRICAO: "",
+      ID_CATEGORIA_FK: "",
     });
     setMensagemErro("");
   };
@@ -34,20 +32,20 @@ function NovaTransacao() {
     const { name, value } = e.target;
 
     setSelecionada((prev) => {
-      if (name === "Tipo") {
-        return { ...prev, Tipo: value, FK_ID_Categoria: "" };
+      if (name === "TIPO") {
+        return { ...prev, TIPO: value, ID_CATEGORIA_FK: "" };
       }
       return { ...prev, [name]: value };
     });
   };
 
   const salvarTransacao = () => {
-    if (!selecionada.Valor || selecionada.Valor <= 0) {
+    if (!selecionada.VALOR || selecionada.VALOR <= 0) {
       setMensagemErro("Informe um valor válido");
       return;
     }
 
-    if (!selecionada.FK_ID_Categoria) {
+    if (!selecionada.ID_CATEGORIA_FK) {
       setMensagemErro("Selecione uma categoria");
       return;
     }
@@ -55,123 +53,125 @@ function NovaTransacao() {
     SalvarOuAtualizar(selecionada);
   };
 
-  /* =======================
-     DADOS
-  ======================= */
+  /* ===================== DADOS ===================== */
   const CarregarCategorias = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data: usuario } = await supabase
-      .from("Usuario")
-      .select("id")
-      .eq("FK_user_id", user.id)
+      .from("USUARIO")
+      .select("ID")
+      .eq("USER_ID_FK", user.id)
       .single();
 
     const { data } = await supabase
-      .from("Categoria")
-      .select("id, Nome, Tipo")
-      .eq("FK_ID_Usuario", usuario.id);
+      .from("CATEGORIA")
+      .select("ID, NOME, TIPO")
+      .eq("ID_USUARIO_FK", usuario.ID);
 
     setCategorias(data || []);
   };
 
   const SalvarOuAtualizar = async (transacao) => {
-    const { id, Categoria, ...dados } = transacao;
+    const { ID, CATEGORIA, ...dados } = transacao;
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data: usuario } = await supabase
-      .from("Usuario")
-      .select("id")
-      .eq("FK_user_id", user.id)
+      .from("USUARIO")
+      .select("ID")
+      .eq("USER_ID_FK", user.id)
       .single();
+    console.log("Usuario ID:", usuario.ID);
+    console.log("Dados da transação:", dados);
 
-    if (id) {
+    if (ID) {
       await supabase
-        .from("Transacao")
+        .from("TRANSACAO")
         .update(dados)
-        .eq("id", id);
+        .eq("ID", ID);
     } else {
       await supabase
-        .from("Transacao")
-        .insert([{ ...dados, FK_ID_Usuario: usuario.id }]);
+        .from("TRANSACAO")
+        .insert({
+          ...dados,
+          ID_USUARIO_FK: usuario.ID,
+        });
     }
 
-    CarregarTransacao();
+    CarregarTransacoes();
     setSelecionada(null);
-    
-    setMensagemErro(""); 
+    setMensagemErro("");
   };
 
-  const excluirTransacao = async (id) => {
-    await supabase.from("Transacao").delete().eq("id", id);
-    CarregarTransacao();
-    setMensagemErro(""); 
+  const excluirTransacao = async (ID) => {
+    await supabase.from("TRANSACAO").delete().eq("ID", ID);
     setSelecionada(null);
+    CarregarTransacoes();
   };
 
-  const CarregarTransacao = async () => {
+  const CarregarTransacoes = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data: usuario } = await supabase
-      .from("Usuario")
-      .select("id")
-      .eq("FK_user_id", user.id)
+      .from("USUARIO")
+      .select("ID")
+      .eq("USER_ID_FK", user.id)
       .single();
 
+    console.log("Usuario ID:", usuario.ID);
+
     const { data } = await supabase
-      .from("Transacao")
+      .from("TRANSACAO")
       .select(`
-        id,
-        Tipo,
-        Valor,
-        Data,
-        Descricao,
-        FK_ID_Categoria,
-        Categoria:FK_ID_Categoria ( Nome )
+        ID,
+        TIPO,
+        VALOR,
+        DATA,
+        DESCRICAO,
+        ID_CATEGORIA_FK,
+        CATEGORIA:ID_CATEGORIA_FK ( NOME )
       `)
-      .eq("FK_ID_Usuario", usuario.id);
+      .eq("ID_USUARIO_FK", usuario.ID)
+      .order("DATA", { ascending: false });
 
     setTransacoes(data || []);
   };
 
-  /* =======================
-     DERIVADOS
-  ======================= */
+  /* ===================== DERIVADOS ===================== */
   const categoriasFiltradas = categorias.filter(
-    (c) => c.Tipo === selecionada?.Tipo
+    (c) => c.TIPO === selecionada?.TIPO
   );
 
-  /* =======================
-     UI
-  ======================= */
+  /* ===================== UI ===================== */
   return (
     <div className="Card-NovaTransacao">
       <div className="NT-card-central">
         <div className="NT-card-esquerda">
           <h2>Lista</h2>
+
           <div className="lista-NovaTransacao">
             {transacoes.map((t) => (
               <div
-                key={t.id}
+                key={t.ID}
                 className={`item-NovaTransacao ${
-                  selecionada?.id === t.id ? "ativo" : ""
+                  selecionada?.ID === t.ID ? "ativo" : ""
                 }`}
                 onClick={() => setSelecionada(t)}
               >
                 <div className="item-grid">
-                  <span className="descricao">{t.Descricao}</span>
-                  <span className="categoria">{t.Categoria.Nome}</span>
-                  <span className="data">{t.Data}</span>
-                  <span className={`tipo ${t.Tipo === "S" ? "gasto" : "receita"}`}>
-                    {t.Tipo === "S" ? "Gasto" : "Receita"}
+                  <span className="descricao">{t.DESCRICAO}</span>
+                  <span className="categoria">{t.CATEGORIA?.NOME}</span>
+                  <span className="data">{t.DATA}</span>
+                  <span className={`tipo ${t.TIPO === "S" ? "gasto" : "receita"}`}>
+                    {t.TIPO === "S" ? "Gasto" : "Receita"}
                   </span>
-                  <span className="valor">R$ {t.Valor.toFixed(2)}</span>
-              </div>
- 
+                  <span className="valor">
+                    R$ {t.VALOR.toFixed(2)}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -183,21 +183,21 @@ function NovaTransacao() {
           {selecionada ? (
             <>
               <label>Tipo</label>
-              <select name="Tipo" value={selecionada.Tipo} onChange={handleChange}>
+              <select name="TIPO" value={selecionada.TIPO} onChange={handleChange}>
                 <option value="S">Gasto</option>
                 <option value="E">Receita</option>
               </select>
 
               <label>Categoria</label>
               <select
-                name="FK_ID_Categoria"
-                value={selecionada.FK_ID_Categoria}
+                name="ID_CATEGORIA_FK"
+                value={selecionada.ID_CATEGORIA_FK}
                 onChange={handleChange}
               >
                 <option value="">Selecione</option>
                 {categoriasFiltradas.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.Nome}
+                  <option key={cat.ID} value={cat.ID}>
+                    {cat.NOME}
                   </option>
                 ))}
               </select>
@@ -206,7 +206,7 @@ function NovaTransacao() {
                 <div className="campo">
                   <label>Valor</label>
                   <NumericFormat
-                    value={selecionada.Valor}
+                    value={selecionada.VALOR}
                     thousandSeparator="."
                     decimalSeparator=","
                     prefix="R$ "
@@ -216,7 +216,7 @@ function NovaTransacao() {
                     onValueChange={(values) => {
                       setSelecionada((prev) => ({
                         ...prev,
-                        Valor: values.floatValue || 0,
+                        VALOR: values.floatValue || 0,
                       }));
                     }}
                   />
@@ -226,27 +226,26 @@ function NovaTransacao() {
                   <label>Data</label>
                   <input
                     type="date"
-                    name="Data"
-                    value={selecionada.Data}
+                    name="DATA"
+                    value={selecionada.DATA}
                     onChange={handleChange}
                   />
                 </div>
               </div>
 
-
               <label>Descrição</label>
               <textarea
-                name="Descricao"
-                value={selecionada.Descricao}
+                name="DESCRICAO"
+                value={selecionada.DESCRICAO}
                 onChange={handleChange}
-                rows={3} 
+                rows={3}
               />
 
               <div className="botoes">
-                {selecionada.id && (
+                {selecionada.ID && (
                   <Button
                     children="Excluir"
-                    onClick={() => excluirTransacao(selecionada.id)}
+                    onClick={() => excluirTransacao(selecionada.ID)}
                   />
                 )}
                 <Button children="Salvar" onClick={salvarTransacao} />
@@ -261,7 +260,6 @@ function NovaTransacao() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

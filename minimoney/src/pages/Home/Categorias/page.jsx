@@ -1,130 +1,77 @@
 import React, { useState, useEffect } from "react";
-import './Categorias.css';
+import "./Categorias.css";
 import Button from "../../../Components/Button/button";
-import { supabase } from '../../../lib/supabaseCliente';
+import { supabase } from "../../../lib/supabaseCliente";
 
 function Categorias() {
-  const [categorias, setCategorias] = useState([]); 
-  const [selecionada, setSelecionada] = useState(null); 
-  const [pErro, setMensagemErro] = useState('');
+  const [categorias, setCategorias] = useState([]);
+  const [selecionada, setSelecionada] = useState(null);
+  const [pErro, setMensagemErro] = useState("");
 
   useEffect(() => {
     CarregarCategorias();
   }, []);
 
-  const CadastrarCategoria = async ({ Nome, Tipo }) => {
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-      console.error("Usuário não autenticado");
-      return;
-    }
-
-    console.log(user.id); 
-
-    const {data : usuario, errorUsuario } = await supabase
-      .from('Usuario')
-      .select('id, Nome')
-      .eq('FK_user_id', user.id)
-      .single();
-    
-    if (errorUsuario) {
-      console.error("Erro ao carregar usuário", errorUsuario.message);
-      return;
-    }
-
-    console.log(usuario.id);
-
-    const {  error } = await supabase
-    .from('Categoria')
-    .insert([
-      { Nome: selecionada.Nome, FK_ID_Usuario: usuario.id, Tipo: selecionada.Tipo },
-    ])
-    .select()
-
-    if(error){
-    console.log("Erro ao cadastrar nova categoria: " + error.message)  
-    }
-
-    CarregarCategorias();
-    setSelecionada(null);
-  };
-
+  /* ===================== CARREGAR ===================== */
   const CarregarCategorias = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
 
-      if (!user) {
-        console.error("Usuário não autenticado");
-        return;
-      }
+    const { data: usuario, error } = await supabase
+      .from("USUARIO")
+      .select("ID")
+      .eq("USER_ID_FK", user.id)
+      .single();
 
-      const {data : usuario, errorUsuario } = await supabase
-        .from('Usuario')
-        .select('id, Nome')
-        .eq('FK_user_id', user.id)
-        .single();
-      
-      if (errorUsuario) {
-        console.error("Erro ao carregar usuário", errorUsuario.message);
-        return;
-      }
+    if (error) return;
 
-      const { data: categorias, errorCategorias } = await supabase
-        .from('Categoria')
-        .select('id,        '+
-                'Nome,      '+
-                'Tipo       ').eq('FK_ID_Usuario', usuario.id)
-                              .order('Nome', { ascending: true });
+    const { data, error: errorCategorias } = await supabase
+      .from("CATEGORIA")
+      .select("ID, NOME, TIPO")
+      .eq("ID_USUARIO_FK", usuario.ID)
+      .order("NOME", { ascending: true });
 
-      if (errorCategorias) {
-        console.error("Erro ao carregar categorias", errorCategorias.message);
-        return;
-      }
-
-      if (!categorias) {
-        console.log("Nenhuma categoria encontrada");
-        return;
-      }
-
-      console.log(categorias);
-      setCategorias(categorias); // atualiza o estado
-    } catch (e) {
-      console.error("Erro inesperado ao carregar categorias", e.message);
-    }
+    if (!errorCategorias) setCategorias(data);
   };
 
-  const AlterarCategoria = async ({ id, Nome, Tipo }) => {
-    console.log(id, Nome, Tipo);
+  /* ===================== CADASTRAR ===================== */
+  const CadastrarCategoria = async ({ NOME, TIPO }) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
 
-    const {  error } = await supabase
-    .from('Categoria')
-    .update({ Nome: Nome, Tipo: Tipo })
-    .eq('id', id)
-    .select();
+    const { data: usuario } = await supabase
+      .from("USUARIO")
+      .select("ID")
+      .eq("USER_ID_FK", user.id)
+      .single();
 
-    if (error) {
-      console.error("Erro ao alterar categoria", error.message);
-      return;
-    }
+    await supabase.from("CATEGORIA").insert({
+      NOME,
+      TIPO,
+      ID_USUARIO_FK: usuario.ID,
+    });
 
     CarregarCategorias();
   };
 
-  const excluirCategoria = async (id) => {
-    const { error } = await supabase
-      .from("Categoria")
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      console.error("Erro ao excluir categoria", error.message);
-    }
+  /* ===================== ALTERAR ===================== */
+  const AlterarCategoria = async ({ ID, NOME, TIPO }) => {
+    await supabase
+      .from("CATEGORIA")
+      .update({ NOME, TIPO })
+      .eq("ID", ID);
 
     CarregarCategorias();
+  };
+
+  /* ===================== EXCLUIR ===================== */
+  const excluirCategoria = async (ID) => {
+    await supabase.from("CATEGORIA").delete().eq("ID", ID);
     setSelecionada(null);
+    CarregarCategorias();
   };
 
+  /* ===================== FORM ===================== */
   const handleChange = (e) => {
     setSelecionada({
       ...selecionada,
@@ -133,47 +80,47 @@ function Categorias() {
   };
 
   const salvarCategoria = () => {
-    if (!selecionada.Nome || selecionada.Nome.trim() === ""){
+    if (!selecionada.NOME?.trim()) {
       setMensagemErro("O nome da categoria é obrigatório");
       return;
     }
 
-    if (selecionada?.id) {
-      AlterarCategoria(selecionada);
-    } else {
-      CadastrarCategoria(selecionada);
-    }
+    selecionada.ID
+      ? AlterarCategoria(selecionada)
+      : CadastrarCategoria(selecionada);
 
     setSelecionada(null);
-    setMensagemErro('');
+    setMensagemErro("");
   };
 
-  const novaCategoria = async () => {    
-    setSelecionada({ id:"", Nome: "", Tipo: "S" });
+  const novaCategoria = () => {
+    setSelecionada({ ID: null, NOME: "", TIPO: "S" });
   };
 
+  /* ===================== JSX ===================== */
   return (
     <div className="Card-Categorias">
       <div className="CC-card-central">
         <div className="CC-card-esquerda">
           <h2>Lista</h2>
+
           <div className="lista-categorias">
             {categorias.map((cat) => (
               <div
-                key={cat.id}
+                key={cat.ID}
                 className={`item-categoria ${
-                  selecionada?.id === cat.id ? "ativo" : ""
+                  selecionada?.ID === cat.ID ? "ativo" : ""
                 }`}
                 onClick={() => setSelecionada(cat)}
               >
-                <span className="nome">{cat.Nome}</span>
+                <span className="nome">{cat.NOME}</span>
                 <span
                   className={`tipo ${
-                    cat.Tipo === "E" ? "receita" : "gasto"
+                    cat.TIPO === "E" ? "receita" : "gasto"
                   }`}
                 >
-                  {cat.Tipo === "E" ? "Receita" : "Gasto"}
-                </span>  
+                  {cat.TIPO === "E" ? "Receita" : "Gasto"}
+                </span>
               </div>
             ))}
           </div>
@@ -187,33 +134,32 @@ function Categorias() {
               <label>Nome</label>
               <input
                 type="text"
-                name="Nome"
-                value={selecionada.Nome}
+                name="NOME"
+                value={selecionada.NOME}
                 onChange={handleChange}
               />
 
               <label>Tipo</label>
               <select
-                name="Tipo"
-                value={selecionada.Tipo}
+                name="TIPO"
+                value={selecionada.TIPO}
                 onChange={handleChange}
               >
                 <option value="S">Gasto</option>
                 <option value="E">Receita</option>
               </select>
 
-              <div className="mensagemErro">
-                <p>{pErro || ''}</p>
-              </div>
+              <div className="mensagemErro">{pErro}</div>
+
               <div className="botoes">
-                {selecionada?.id && (
-                <Button
-                  children="Excluir"
-                  onClick={() => excluirCategoria(selecionada.id)}
-                />
+                {selecionada.ID && (
+                  <Button
+                    children="Excluir"
+                    onClick={() => excluirCategoria(selecionada.ID)}
+                  />
                 )}
                 <Button children="Salvar" onClick={salvarCategoria} />
-              </div>              
+              </div>
             </>
           ) : (
             <div className="nenhuma-selecionada-Categoria">
@@ -221,7 +167,6 @@ function Categorias() {
               <Button children="Nova Categoria" onClick={novaCategoria} />
             </div>
           )}
-          
         </div>
       </div>
     </div>

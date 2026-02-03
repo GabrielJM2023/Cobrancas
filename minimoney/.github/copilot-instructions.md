@@ -16,9 +16,9 @@ High-level architecture
 Key integration points
 - Supabase client: `src/lib/supabaseCliente.js` exports `supabase` (used for auth and DB). Many files call `supabase.auth.getUser()` then query app tables.
   - Important tables (as found in the code):
-    - `Usuario` (query: `select id` where `FK_user_id` = supabase user id)
-    - `Categoria` (`id, Nome, Tipo, FK_ID_Usuario`)
-    - `Transacao` (`id, Tipo, Valor, Data, Descricao, FK_ID_Categoria, FK_ID_Usuario`)
+    - `USUARIO` (query: `select id` where `FK_user_id` = supabase user id)
+    - `CATEGORIA` (`ID, NOME, TIPO, ID_USUARIO_FK`)
+    - `TRANSACAO` (`ID, VALOR, DATA, DESCRICAO, TIPO, ID_CATEGORIA_FK, ID_USUARIO_FK`)
   - Auth patterns:
     - `supabase.auth.getUser()` — get current user
     - `supabase.auth.signInWithPassword({email, password})` — login
@@ -26,9 +26,8 @@ Key integration points
   - Example pattern (from `src/pages/Home/NovaTransacao/page.jsx`):
 
     const { data: { user } } = await supabase.auth.getUser();
-    const { data: usuario } = await supabase.from('Usuario').select('id').eq('FK_user_id', user.id).single();
-    const { data } = await supabase.from('Transacao').select(...).eq('FK_ID_Usuario', usuario.id);
-
+    const { data: usuario } = await supabase.from('USUARIO').select('ID').eq('USER_ID_FK', user.id).single();
+    const { data } = await supabase.from('TRANSACAO').select(...).eq('FK_ID_USUARIO', usuario.ID);
 - Connectivity: `src/lib/monitorConexao.js` listens for `online`/`offline` and redirects to `/sem-conexao` saving interrupted route in `sessionStorage`.
 
 Conventions / patterns an agent should follow
