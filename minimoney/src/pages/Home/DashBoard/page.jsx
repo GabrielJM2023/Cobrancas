@@ -22,13 +22,14 @@ import { useCategorias } from "../../../hooks/useCategorias";
 import { useResumoFinanceiro } from "../../../hooks/useResumoFinanceiro";
 import { useEvolucaoFinanceira } from "../../../hooks/useEvolucaoFinanceira";
 import { useDistribuicaoCategoria } from "../../../hooks/useDistribuicaoCategoria";
+import { useUserId } from "../../../hooks/useUserID";
 
 function Dashboard() {
   const filtros = useDashboardFilters();
-
+  const userId = useUserId();
   const categorias = useCategorias();
   const resumo = useResumoFinanceiro(filtros);
-  const evolucaoFinanceira = useEvolucaoFinanceira(filtros);
+  const evolucaoFinanceira = useEvolucaoFinanceira(filtros, userId);
   const distribuicaoCategoria = useDistribuicaoCategoria(filtros);
 
   const formatarMoeda = (valor) =>

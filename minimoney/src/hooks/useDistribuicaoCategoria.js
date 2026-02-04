@@ -8,7 +8,12 @@ export function useDistribuicaoCategoria(filtros) {
 
   useEffect(() => {
     const carregar = async () => {
-    try{      
+    try{   
+        if (!userID) {
+          console.error("Usuário não autenticado.");
+          return;
+        }
+
         const { data, error } = await supabase
           .rpc('distribuicao_categoria', {
             p_data_fim: filtros.dataFim,
