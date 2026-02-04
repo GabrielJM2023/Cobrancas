@@ -27,7 +27,7 @@ import { useUserId } from "../../../hooks/useUserID";
 function Dashboard() {
   const filtros = useDashboardFilters();
   const userId = useUserId();
-  const categorias = useCategorias();
+  const categorias = useCategorias(filtros.tipo);
   const resumo = useResumoFinanceiro(filtros, userId);
   const evolucaoFinanceira = useEvolucaoFinanceira(filtros, userId);
   const distribuicaoCategoria = useDistribuicaoCategoria(filtros);
@@ -100,10 +100,10 @@ function Dashboard() {
               <div className="campo-filtro">
                 <label>Tipo</label>
                 <select
-                  value={filtros.tipo}
-                  onChange={(e) => filtros.setTipo(e.target.value)}
+                  value={filtros.tipo || ""}
+                  onChange={(e) => filtros.setTipo(e.target.value || null)}
                 >
-                  <option value="null">Todos</option>
+                  <option value="">Todos</option>
                   <option value="E">Receitas</option>
                   <option value="S">Despesas</option>
                 </select>
@@ -118,7 +118,7 @@ function Dashboard() {
                   <option value={null}>Todas</option>
                   {categorias.map(cat => (
                     <option key={cat.ID} value={cat.ID}>
-                      {cat.DESCRICAO}
+                      {cat.NOME}
                     </option>
                   ))}
                 </select>

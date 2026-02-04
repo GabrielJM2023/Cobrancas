@@ -1,51 +1,78 @@
+/* ================= BASE ================= */
+:root {
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --radius: 10px;
+}
+
 .Card-NovaTransacao {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* CONTAINER PRINCIPAL */
+/* ================= CONTAINER PRINCIPAL ================= */
 .NT-card-central {
   display: flex;
+  flex-direction: column;
   width: 70vw;
   height: 80vh;
-  gap: 1rem;
-  background-color: var(--color-primary);
+  gap: 1.5rem;
+  border: 3px solid var(--color-primary);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
-/* COLUNA ESQUERDA – LISTA */
+/* ================= FILTROS ================= */
+.Card-Filtros-NovaTransacao {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.Filtros-NovaTransacao {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ================= CONTEÚDO ================= */
+.NT-card-conteudo {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 1.5rem;
+  min-height: 0; /* evita overflow invisível */
+}
+
+/* ================= COLUNA ESQUERDA ================= */
 .NT-card-esquerda {
   width: 60%;
-  background-color: var(--color-background);
+  background-color: #fff;
   border-radius: 8px;
-  overflow-y: auto;
-  padding: 1rem;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .NT-card-esquerda h2 {
-  font-size: 1.8rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
+  
   color: var(--color-primary);
 }
 
 .lista-NovaTransacao {
-  max-height: 85%;
   overflow-y: auto;
-  padding: 0.5rem;
-  background: var(--color-background);
   border-radius: 8px;
-
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 0.5rem;
 }
 
-/* ITEM */
+/* ================= ITEM ================= */
 .item-NovaTransacao {
-  padding: 12px;
   background: var(--color-background-alt);
   border-radius: 6px;
   cursor: pointer;
@@ -55,30 +82,25 @@
   align-items: center;
 
   border-left: 4px solid transparent;
+  padding: 0.5rem 1rem;
 }
 
 .item-NovaTransacao:hover {
   background: var(--color-background);
 }
 
-/* ESTADO ATIVO */
 .item-NovaTransacao.ativo {
   background: var(--color-primary);
   color: var(--color-background);
 }
 
-/* TEXTO */
+/* ================= GRID DO ITEM ================= */
 .item-grid {
   display: grid;
   grid-template-columns: 3fr 2fr 1.2fr 1fr 1.3fr;
-  
   align-items: center;
-  
-  border-radius: 6px;
-  cursor: pointer;
 }
 
-/* TEXTO */
 .item-grid .descricao {
   font-weight: 600;
   white-space: nowrap;
@@ -114,33 +136,32 @@
   font-weight: bold;
 }
 
-
-/* COLUNA DIREITA – FORMULÁRIO */
+/* ================= COLUNA DIREITA ================= */
 .NT-card-direita {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.5rem;
   background-color: #ffffff;
   border-radius: 8px;
-  padding: 1.2rem;
+  padding: 1.5rem;
+  min-height: 0;
 }
 
 .NT-card-direita h2 {
-  font-size: 1.8rem;
   text-align: center;
+  margin: 0;
   margin-bottom: 0.5rem;
   color: var(--color-primary);
 }
 
-/* LABELS */
+/* ================= FORM ================= */
 .NT-card-direita label {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-primary);
 }
 
-/* INPUTS E SELECTS */
 .NT-card-direita input,
 .NT-card-direita select,
 .NT-card-direita textarea {
@@ -161,55 +182,13 @@
   outline: none;
 }
 
-/* TEXTAREA */
 .NT-card-direita textarea {
   resize: vertical;
-  min-height: 250px;
+  min-height: 180px;
   max-height: 250px;
 }
 
-/* BOTÕES */
-.botoes {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: auto;
-}
-
-/* ESTADO SEM SELEÇÃO */
-.nenhuma-selecionada {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  color: #666;
-}
-
-.nenhuma-selecionada p {
-  font-size: 1.4rem;
-}
-
-/* MENSAGEM DE ERRO */
-.mensagemErro {
-  color: #c0392b;
-  font-weight: 600;
-  text-align: center;
-}
-.mensagemErro p {
-  margin: 0;
-}
-
-.nenhuma-selecionada-NovaTransacao {
-  text-align: center;
-  color: var(--color-background);
-}
-
-.nenhuma-selecionada-NovaTransacao > p{
-  font-size: 2rem;
-}
-
+/* ================= CAMPOS ================= */
 .linha-dupla {
   display: flex;
   gap: 16px;
@@ -218,9 +197,40 @@
 .campo {
   display: flex;
   flex-direction: column;
+  gap: 0.4rem;
   flex: 1;
 }
 
-.campo input {
+/* ================= BOTÕES ================= */
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* ================= ESTADOS ================= */
+.nenhuma-selecionada-NovaTransacao {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #666;
+}
+
+.nenhuma-selecionada-NovaTransacao {
+  text-align: center;
+  color: var(--color-background);
+}
+
+.nenhuma-selecionada-NovaTransacao > p {
+  font-size: 2rem;
+}
+
+.mensagemErro {
+  color: #c0392b;
+  font-weight: 600;
+  text-align: center;
 }
