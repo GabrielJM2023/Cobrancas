@@ -13,20 +13,23 @@ import {
   YAxis,
   Tooltip,
   Pie,
-  PieChart
+  PieChart,
+  Cell
 } from "recharts";
 
 import { useDashboardFilters } from "../../../hooks/useDashboardFilters";
 import { useCategorias } from "../../../hooks/useCategorias";
 import { useResumoFinanceiro } from "../../../hooks/useResumoFinanceiro";
-import { useResumoMensal } from "../../../hooks/useResumoMensal";
+import { useEvolucaoFinanceira } from "../../../hooks/useEvolucaoFinanceira";
+import { useDistribuicaoCategoria } from "../../../hooks/useDistribuicaoCategoria";
 
 function Dashboard() {
   const filtros = useDashboardFilters();
 
   const categorias = useCategorias();
   const resumo = useResumoFinanceiro(filtros);
-  const resumoMensal = useResumoMensal(filtros);
+  const evolucaoFinanceira = useEvolucaoFinanceira(filtros);
+  const distribuicaoCategoria = useDistribuicaoCategoria(filtros);
 
   const formatarMoeda = (valor) =>
     new Intl.NumberFormat("pt-BR", {
@@ -44,11 +47,12 @@ function Dashboard() {
     }).format(new Date(ano, mes - 1, 1));
   };
 
-  const resumoMensalFormatado = resumoMensal.map(item => ({
+  const evolucaoFinanceiraFormatado = (evolucaoFinanceira || []).map(item => ({
     name: formatarMes(item.mes),
     receitas: item.receitas,
     despesas: item.despesas
   }));
+
 
   return (
     <div className="Card-DashBoard">
@@ -131,7 +135,7 @@ function Dashboard() {
           <div className="Card-Resumo">
             <div className="Resumo-Item Positivo">
               <FaArrowUp className="Icone" />
-              <div>
+              <div className="Item">
                 <label>Receitas</label>
                 <span>{formatarMoeda(resumo?.total_receitas)}</span>
               </div>
@@ -139,7 +143,7 @@ function Dashboard() {
 
             <div className="Resumo-Item Negativo">
               <FaArrowDown className="Icone" />
-              <div>
+              <div className="Item">
                 <label>Despesas</label>
                 <span>{formatarMoeda(resumo?.total_despesas)}</span>
               </div>
@@ -147,7 +151,7 @@ function Dashboard() {
 
             <div className="Resumo-Item Positivo">
               <IoWallet className="Icone" />
-              <div>
+              <div className="Item">
                 <label>Diferença</label>
                 <span>{formatarMoeda(resumo?.diferenca)}</span>
               </div>
@@ -155,7 +159,7 @@ function Dashboard() {
 
             <div className="Resumo-Item Positivo">
               <FaArrowCircleUp className="Icone" />
-              <div>
+              <div className="Item">
                 <label>Economia</label>
                 <span>{formatarPercentual(resumo?.percentual_economia)}</span>
               </div>
@@ -168,14 +172,14 @@ function Dashboard() {
             <div className="EvolucaoFinanceira">
               <h1>Evolução Financeira</h1>
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={resumoMensalFormatado}>
+                <LineChart data={evolucaoFinanceiraFormatado}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Legend />
                   <Tooltip />
-                  <Line dataKey="receitas" name="Receitas" />
-                  <Line dataKey="despesas" name="Despesas" />
+                  <Line dataKey="receitas" name="Receitas" stroke="green" type="monotone"/>
+                  <Line dataKey="despesas" name="Despesas" stroke="red" type="monotone"/>
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -183,16 +187,30 @@ function Dashboard() {
             <div className="DistribuicaoCategorias">
               <h1>Distribuição por Categoria</h1>
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
+                <PieChart  
+                  barCategoryGap="10%"
+                  barGap={4}
+                  cx="50%"
+                  cy="50%"
+                >
                   <Pie
-                    data={resumo?.por_categoria || []}
+                    data={distribuicaoCategoria || []}
                     dataKey="valor"
-                    nameKey="categoria"
+                    nameKey="nome"                    
                     innerRadius={70}
-                    outerRadius={110}
+                    outerRadius={110}                    
                     label
-                  />
+                  >
+                    {distribuicaoCategoria?.map((entry, index) => (
+                      <Cell key={index} fill={entry.cor} />
+                    ))}
+                  </Pie>
                   <Tooltip />
+                  <Legend 
+                    align="right"
+                    layout="vertical"
+                    verticalAlign="middle"
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
