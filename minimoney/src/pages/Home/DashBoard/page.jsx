@@ -28,7 +28,7 @@ function Dashboard() {
   const filtros = useDashboardFilters();
   const userId = useUserId();
   const categorias = useCategorias();
-  const resumo = useResumoFinanceiro(filtros);
+  const resumo = useResumoFinanceiro(filtros, userId);
   const evolucaoFinanceira = useEvolucaoFinanceira(filtros, userId);
   const distribuicaoCategoria = useDistribuicaoCategoria(filtros);
 
@@ -53,7 +53,6 @@ function Dashboard() {
     receitas: item.receitas,
     despesas: item.despesas
   }));
-
 
   return (
     <div className="Card-DashBoard">

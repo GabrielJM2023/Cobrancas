@@ -14,7 +14,7 @@ export function useEvolucaoFinanceira(filtros, userId) {
   
   useEffect(() => {
     const carregar = async () => {
-      if (!userId) return;
+      //if (!userId) return;
 
       try {
         const { data, error } = await supabase.rpc('evolucao_financeira', {
