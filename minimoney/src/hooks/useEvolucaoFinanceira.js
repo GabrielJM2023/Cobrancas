@@ -4,7 +4,6 @@ import { supabase } from "../lib/supabaseCliente";
 export function useEvolucaoFinanceira(filtros, userId) {
   const [resumo, setResumo] = useState([]);
   
-  // Memoiza o objeto filtros para estabilizar a referência
   const filtrosMemo = useMemo(() => ({
     dataInicio: filtros.dataInicio,
     dataFim: filtros.dataFim,
@@ -14,7 +13,7 @@ export function useEvolucaoFinanceira(filtros, userId) {
   
   useEffect(() => {
     const carregar = async () => {
-      //if (!userId) return;
+      if (!userId) return;
 
       try {
         const { data, error } = await supabase.rpc('evolucao_financeira', {
@@ -38,7 +37,7 @@ export function useEvolucaoFinanceira(filtros, userId) {
     };
 
     carregar();
-  }, [filtrosMemo, userId]); // eslint agora não reclama
+  }, [filtrosMemo, userId]); 
 
   return resumo;
 }

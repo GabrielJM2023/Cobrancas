@@ -53,7 +53,7 @@ function NavBar(){
           </div>
           <div className='menu' onClick={NovaTransacao}>
             <FaMoneyBillTransfer  className='icone' />
-            <h1>Nova Transação</h1>
+            <h1>Transação</h1>
           </div>
           <div className='menu' onClick={Categorias}>
             <CiBoxList  className='icone' />

@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./NovaTransacao.css";
 import Button from "../../../Components/Button/button";
-import { supabase } from "../../../lib/supabaseCliente";
 import { NumericFormat } from "react-number-format";
+
 import { useDashboardFilters } from "../../../hooks/useDashboardFilters";
+import { useCategorias } from "../../../hooks/useCategorias";
+import { useTransacaoQuery } from "../../../hooks/useTransacaoQuery";
+import { useNovaTransacao } from "../../../hooks/useNovaTransacao";
 
 function NovaTransacao() {
-  const [transacoes, setTransacoes] = useState([]);
-  const [categorias, setCategorias] = useState([]);
-  const [selecionada, setSelecionada] = useState(null);
-  const [pErro, setMensagemErro] = useState("");
   const filtros = useDashboardFilters();
+  const [selecionada, setSelecionada] = useState(null);
+  const [pErro, setMensagemErro] = useState("");  
+  const categorias = useCategorias(filtros.tipo);
+  const transacaoGrid = useTransacaoQuery(filtros);
+  const transacaoCampo = useNovaTransacao(); 
 
-  useEffect(() => {
-    CarregarCategorias();
-    CarregarTransacoes();
-  }, []);
-
-  /* ===================== FORM ===================== */
   const IncluirTransacao = () => {
     setSelecionada({
       ID: null,
       TIPO: "S",
       VALOR: 0,
-      DATA: "",
+      DATA: "", 
       DESCRICAO: "",
       ID_CATEGORIA_FK: "",
     });
@@ -41,7 +39,7 @@ function NovaTransacao() {
     });
   };
 
-  const salvarTransacao = () => {
+  const salvarTransacao = async () => {
     if (!selecionada.VALOR || selecionada.VALOR <= 0) {
       setMensagemErro("Informe um valor válido");
       return;
@@ -52,100 +50,11 @@ function NovaTransacao() {
       return;
     }
 
-    SalvarOuAtualizar(selecionada);
-  };
+    await transacaoCampo.salvar(selecionada);    
 
-  /* ===================== DADOS ===================== */
-  const CarregarCategorias = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const { data: usuario } = await supabase
-      .from("USUARIO")
-      .select("ID")
-      .eq("USER_ID_FK", user.id)
-      .single();
-
-    const { data } = await supabase
-      .from("CATEGORIA")
-      .select("ID, NOME, TIPO")
-      .eq("ID_USUARIO_FK", usuario.ID);
-
-    setCategorias(data || []);
-  };
-
-  const SalvarOuAtualizar = async (transacao) => {
-    const { ID, CATEGORIA, ...dados } = transacao;
-
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const { data: usuario } = await supabase
-      .from("USUARIO")
-      .select("ID")
-      .eq("USER_ID_FK", user.id)
-      .single();
-    console.log("Usuario ID:", usuario.ID);
-    console.log("Dados da transação:", dados);
-
-    if (ID) {
-      await supabase
-        .from("TRANSACAO")
-        .update(dados)
-        .eq("ID", ID);
-    } else {
-      await supabase
-        .from("TRANSACAO")
-        .insert({
-          ...dados,
-          ID_USUARIO_FK: usuario.ID,
-        });
-    }
-
-    CarregarTransacoes();
     setSelecionada(null);
     setMensagemErro("");
   };
-
-  const excluirTransacao = async (ID) => {
-    await supabase.from("TRANSACAO").delete().eq("ID", ID);
-    setSelecionada(null);
-    CarregarTransacoes();
-  };
-
-  const CarregarTransacoes = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const { data: usuario } = await supabase
-      .from("USUARIO")
-      .select("ID")
-      .eq("USER_ID_FK", user.id)
-      .single();
-
-    console.log("Usuario ID:", usuario.ID);
-
-    const { data } = await supabase
-      .from("TRANSACAO")
-      .select(`
-        ID,
-        TIPO,
-        VALOR,
-        DATA,
-        DESCRICAO,
-        ID_CATEGORIA_FK,
-        CATEGORIA:ID_CATEGORIA_FK ( NOME )
-      `)
-      .eq("ID_USUARIO_FK", usuario.ID)
-      .order("DATA", { ascending: false });
-
-    setTransacoes(data || []);
-  };
-
-  /* ===================== DERIVADOS ===================== */
-  const categoriasFiltradas = categorias.filter(
-    (c) => c.TIPO === selecionada?.TIPO
-  );
 
   /* ===================== UI ===================== */
   return (
@@ -194,10 +103,10 @@ function NovaTransacao() {
               <div className="campo-filtro">
                 <label>Tipo</label>
                 <select
-                  value={filtros.tipo}
-                  onChange={(e) => filtros.setTipo(e.target.value)}
+                  value={filtros.tipo || ""}
+                  onChange={(e) => filtros.setTipo(e.target.value || null)}
                 >
-                  <option value="null">Todos</option>
+                  <option value="">Todos</option>
                   <option value="E">Receitas</option>
                   <option value="S">Despesas</option>
                 </select>
@@ -218,15 +127,15 @@ function NovaTransacao() {
                 </select>
               </div>
             </div>
-
           </div>
         </div>
+
         <div className="NT-card-conteudo">
           <div className="NT-card-esquerda">
             <h2>Lista</h2>
 
             <div className="lista-NovaTransacao">
-              {transacoes.map((t) => (
+              {transacaoGrid.map((t) => (
                 <div
                   key={t.ID}
                   className={`item-NovaTransacao ${
@@ -241,9 +150,7 @@ function NovaTransacao() {
                     <span className={`tipo ${t.TIPO === "S" ? "gasto" : "receita"}`}>
                       {t.TIPO === "S" ? "Gasto" : "Receita"}
                     </span>
-                    <span className="valor">
-                      R$ {t.VALOR.toFixed(2)}
-                    </span>
+                    <span className="valor">R$ {t.VALOR.toFixed(2)}</span>
                   </div>
                 </div>
               ))}
@@ -256,7 +163,11 @@ function NovaTransacao() {
             {selecionada ? (
               <>
                 <label>Tipo</label>
-                <select name="TIPO" value={selecionada.TIPO} onChange={handleChange}>
+                <select
+                  name="TIPO"
+                  value={selecionada.TIPO}
+                  onChange={handleChange}
+                >
                   <option value="S">Gasto</option>
                   <option value="E">Receita</option>
                 </select>
@@ -268,7 +179,7 @@ function NovaTransacao() {
                   onChange={handleChange}
                 >
                   <option value="">Selecione</option>
-                  {categoriasFiltradas.map((cat) => (
+                  {categorias.map(cat => (
                     <option key={cat.ID} value={cat.ID}>
                       {cat.NOME}
                     </option>
@@ -286,12 +197,12 @@ function NovaTransacao() {
                       decimalScale={2}
                       fixedDecimalScale
                       allowNegative={false}
-                      onValueChange={(values) => {
+                      onValueChange={(values) =>
                         setSelecionada((prev) => ({
                           ...prev,
                           VALOR: values.floatValue || 0,
-                        }));
-                      }}
+                        }))
+                      }
                     />
                   </div>
 
@@ -318,7 +229,7 @@ function NovaTransacao() {
                   {selecionada.ID && (
                     <Button
                       children="Excluir"
-                      onClick={() => excluirTransacao(selecionada.ID)}
+                      onClick={() => transacaoCampo.excluir(selecionada.ID)}
                     />
                   )}
                   <Button children="Salvar" onClick={salvarTransacao} />
