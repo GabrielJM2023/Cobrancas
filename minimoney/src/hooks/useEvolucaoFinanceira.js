@@ -29,7 +29,6 @@ export function useEvolucaoFinanceira(filtros, userId) {
           setResumo(null);
         } else {
           setResumo(data || []);
-          console.log("Evolucao financeira :", data);
         }
       } catch (err) {
         console.error("Erro inesperado ao carregar evolucao financeira:", err);

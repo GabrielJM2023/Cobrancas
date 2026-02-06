@@ -16,6 +16,10 @@ function NovaTransacao() {
   const transacaoGrid = useTransacaoQuery(filtros);
   const transacaoCampo = useNovaTransacao(); 
 
+  useEffect(() => {
+    transacaoGrid.carregar(filtros);
+  }, [filtros]);
+
   const IncluirTransacao = () => {
     setSelecionada({
       ID: null,
@@ -23,6 +27,7 @@ function NovaTransacao() {
       VALOR: 0,
       DATA: "", 
       DESCRICAO: "",
+      PARCELA: 1,
       ID_CATEGORIA_FK: "",
     });
     setMensagemErro("");
@@ -50,11 +55,32 @@ function NovaTransacao() {
       return;
     }
 
+    if (!selecionada.DATA) {
+      setMensagemErro("Informe uma data");
+      return;
+    }
+
+    if (selecionada.PARCELA < 1) {
+      setMensagemErro("A parcela deve ser no mínimo 1");
+      return;
+    }
+
+    if (selecionada.PARCELA > 99) {
+      setMensagemErro("A parcela deve ser no máximo 99");
+      return;
+    }
+
     await transacaoCampo.salvar(selecionada);    
 
     setSelecionada(null);
     setMensagemErro("");
   };
+
+  const excluirTransacao = async (id) => {
+    await transacaoCampo.excluir(id);
+    setSelecionada(null);
+    setMensagemErro("");
+  }
 
   /* ===================== UI ===================== */
   return (
@@ -135,7 +161,7 @@ function NovaTransacao() {
             <h2>Lista</h2>
 
             <div className="lista-NovaTransacao">
-              {transacaoGrid.map((t) => (
+              {transacaoGrid.transacoes.map((t) => (
                 <div
                   key={t.ID}
                   className={`item-NovaTransacao ${
@@ -187,8 +213,8 @@ function NovaTransacao() {
                 </select>
 
                 <div className="linha-dupla">
-                  <div className="campo">
-                    <label>Valor</label>
+                  <div className="campo valor-campo">
+                    <label>Valor da parcela</label>
                     <NumericFormat
                       value={selecionada.VALOR}
                       thousandSeparator="."
@@ -206,13 +232,24 @@ function NovaTransacao() {
                     />
                   </div>
 
-                  <div className="campo">
+                  <div className="campo data-campo">
                     <label>Data</label>
                     <input
                       type="date"
                       name="DATA"
                       value={selecionada.DATA}
                       onChange={handleChange}
+                    />
+                  </div>
+                  <div className="campo parcela-campo">
+                    <label>Parcela</label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={99}
+                      step={1}
+                      value={selecionada.PARCELA}
+                      onChange={(e) => setSelecionada({...selecionada, PARCELA: Number(e.target.value) || 1})}
                     />
                   </div>
                 </div>
@@ -229,7 +266,7 @@ function NovaTransacao() {
                   {selecionada.ID && (
                     <Button
                       children="Excluir"
-                      onClick={() => transacaoCampo.excluir(selecionada.ID)}
+                      onClick={excluirTransacao.bind(null, selecionada.ID)}
                     />
                   )}
                   <Button children="Salvar" onClick={salvarTransacao} />

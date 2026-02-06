@@ -30,7 +30,6 @@ export function useDistribuicaoCategoria(filtros) {
             cor: gerarCorAleatoriaUnica()
           }));
           setResumo(dataComCores);
-          console.log("Distribuicao categoria :", dataComCores);
         }
       } catch (err) {
         console.error("Erro inesperado ao carregar distribuicao categoria:", err);

@@ -27,7 +27,6 @@ export function useResumoFinanceiro(filtros, userID) {
           setResumo(null);
         } else {
           setResumo(data?.[0] || null);
-          console.log("Resumo financeiro:", data);
         }
       } catch (err) {
         console.error("Erro inesperado ao carregar resumo financeiro:", err);

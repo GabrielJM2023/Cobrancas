@@ -12,8 +12,7 @@ export function useTransacaoQuery(filtros) {
     categoria: filtros.categoria
   }), [filtros.dataInicio, filtros.dataFim, filtros.tipo, filtros.categoria]);
 
-  useEffect(() => {
-    const carregar = async () => {
+  const carregar = async (filtros) => {
       if (!userId) return;
   
       let query = supabase
@@ -24,26 +23,27 @@ export function useTransacaoQuery(filtros) {
           VALOR,
           DATA,
           DESCRICAO,
+          PARCELA,
           ID_CATEGORIA_FK,
           CATEGORIA:ID_CATEGORIA_FK ( NOME )
         `)
       .eq("ID_USUARIO_FK", userId)
       .order("DATA", { ascending: false });
     
-      if (filtrosMemo.tipo) {
-        query = query.eq("TIPO", filtrosMemo.tipo);
+      if (filtros.tipo) {
+        query = query.eq("TIPO", filtros.tipo);
       }
     
-      if (filtrosMemo.categoria) {
-        query = query.eq("ID_CATEGORIA_FK", filtrosMemo.categoria);
+      if (filtros.categoria) {
+        query = query.eq("ID_CATEGORIA_FK", filtros.categoria);
       }
     
-      if (filtrosMemo.dataInicio) {
-        query = query.gte("DATA", filtrosMemo.dataInicio);
+      if (filtros.dataInicio) {
+        query = query.gte("DATA", filtros.dataInicio);
       }
     
-      if (filtrosMemo.dataFim) {
-        query = query.lte("DATA", filtrosMemo.dataFim);
+      if (filtros.dataFim) {
+        query = query.lte("DATA", filtros.dataFim);
       }
     
       const { data, error } = await query;
@@ -51,7 +51,9 @@ export function useTransacaoQuery(filtros) {
       if (!error) setTransacao(data ?? []);
     }
 
-    carregar();
+  useEffect(() => {    
+    carregar(filtrosMemo);
   }, [filtrosMemo]);   
-    return transacoes; 
+
+    return { transacoes, carregar };
 }    
