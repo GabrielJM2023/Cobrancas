@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./NovaTransacao.css";
 import Button from "../../../Components/Button/button";
 import { NumericFormat } from "react-number-format";
@@ -15,10 +15,6 @@ function NovaTransacao() {
   const categorias = useCategorias(filtros.tipo);
   const transacaoGrid = useTransacaoQuery(filtros);
   const transacaoCampo = useNovaTransacao(); 
-
-  useEffect(() => {
-    transacaoGrid.carregar(filtros);
-  }, [filtros]);
 
   const IncluirTransacao = () => {
     setSelecionada({
