@@ -1,23 +1,39 @@
 .custom-button{
-    width: 50%;
+    width: 100%;
     padding: 16px 0px;
-    margin: 15px;
     border-radius: 8px;
     outline: none;
-    text-transform: uppercase;
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: 3px;
-    
-    color: var(--color-background);
-    background:var(--color-menu);
+    margin: 0px 10px;
+    color: var(--color-text);
+    background:var(--color-background-button);
     cursor:pointer;
     transition: 0.3s ease;
 
-    border: var(--color-menu) solid 2px;
+    border: var(--color-background) solid 2px;
 }
 
 .custom-button:hover{
-  background-color: var(--color-background); /* muda fundo */
-  color: var(--color-primary);              /* muda texto/ícone */
-  border: var(--color-primary) solid 2px;
+  background-color: var(--color-background-hover);
+  color: var(--color-text-hover);              
+  border: var(--color-text-hover) solid 2px;
+}
+
+@media (max-width: 2560px){
+  .custom-button{
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 1440px){
+  .custom-button{
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 425px){
+  .custom-button{
+    font-size: 0.6rem;
+  }
 }

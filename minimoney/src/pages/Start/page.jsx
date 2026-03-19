@@ -5,9 +5,10 @@ import Logo from '../../logo192.png';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseCliente';
+import  LightDark from '../../Components/LightDark/LitghtDark';
 
 
-function Start() {
+function Start() { 
   const navigate = useNavigate();
   const [session, setSession] = useState(null);
 
@@ -40,24 +41,31 @@ function Start() {
 
   return (
     <div className='Start'>
-      <div className="card-central">
-        <div className="card-esquerda">
-          <img src={ImgStart} alt='Start' className='ImgStart'/>
+      <div className="Start-card-central">
+        <div className="Start-card-esquerda">
+          <img src={ImgStart} alt='Start' className='Start-ImgStart'/>
         </div>
-        <div className="card-direita">
-          <div className='card-logo'>
+        <div className="Start-card-direita">
+          <div className='Start-card-logo'>
             <img src={Logo} className='Start-Logo' alt='Foto da direita'/>
+            <h1>Bem-vindo ao Minimoney!</h1>
           </div>
-          <h1>Bem-vindo ao Minimoney!</h1>
-          <p>Com o Minimoney, você acompanha seus gastos, organiza suas entradas e 
-            saídas, visualiza gráficos simples e toma decisões mais conscientes 
-            sobre seu dinheiro.</p>
-          <p>Seja para economizar, investir ou simplesmente entender melhor suas finanças,
-            aqui você tem tudo o que precisa em um só lugar, de forma prática e rápida.</p>
+          <div className='Start-card-texto'>
+            <p>Transforme o controle das suas finanças em algo simples e poderoso. Com o Minimoney, 
+              acompanhe cada gasto, organize receitas e despesas, visualize relatórios claros e 
+              tome decisões inteligentes sobre seu dinheiro — tudo em um só lugar.
+            </p>
+            <img src={ImgStart} alt='Start' className='Start-ImgStart-direita'/>
+            <p className='Start-texto-p'>Seja para economizar mais, investir com confiança ou entender melhor seus hábitos 
+              financeiros, nossa plataforma intuitiva e rápida está aqui para ajudar você a
+              alcançar seus objetivos. Comece agora e veja a diferença!
+            </p>
+          </div>
+          <LightDark></LightDark>
           
-          <div className='card-botao'>
-            <Button children={'Cadastrar'} onClick={Cadastro}></Button>
-            <Button children={'Entrar'} onClick={Entrar}></Button>          
+          <div className='Start-card-botao'>
+            <Button children={'Cadastro'} onClick={Cadastro}></Button>
+            <Button children={'Login'} onClick={Entrar}></Button>          
           </div>
         </div>
       </div>
