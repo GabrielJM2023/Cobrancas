@@ -2,7 +2,7 @@
     width: 20vw;
     min-width: 200px;
     height: 98.35vh;
-    background-color: var(--color-primary);
+    background-color: var(--color-card-background);
     padding-top: 1rem;
 
     display: flex;       
@@ -67,11 +67,20 @@
 
 .NavBar > .menus > .menu > .icone{
   font-size: 3rem;
+  color: var(--color-text);
 }
 
 .NavBar > .menus > .menu > h1{
   font-size: 20px;
   padding-left: 1rem;
+}
+
+.NavBar > .menus > .menu:hover > h1{
+  color: var(--color-primary);
+}
+
+.NavBar > .menus > .menu:hover > .icone{
+  color: var(--color-primary);
 }
 
 
@@ -81,11 +90,21 @@
 }
 
 .NavBar > .menus > .menu:hover {
-  background-color: var(--color-background); /* muda fundo */
-  color: var(--color-primary);              /* muda texto/ícone */
+  background-color: var(--color-background);
+  color: var(--color-primary);
 }
 
 .NavBar > .menus > .menu-sair:hover {
-  background-color: #c91439;             /* muda texto/ícone */
-  color: var(--color-background);              /* muda texto/ícone */
+  background-color: var(--color-menu-exit);
+  color: var(--color-background);
+}
+
+.NavBar > .menus > .menu-LightDark{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: var(--color-text);
+  width: 70%;
+  margin-top: auto;   
 }

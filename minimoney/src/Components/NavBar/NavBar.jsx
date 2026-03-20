@@ -8,6 +8,7 @@ import { CiBoxList } from "react-icons/ci";
 import { FaDoorOpen } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseCliente';
+import  LightDark from '../../Components/LightDark/LitghtDark';
 
 function NavBar(){
   const navigate = useNavigate();
@@ -58,6 +59,9 @@ function NavBar(){
           <div className='menu' onClick={Categorias}>
             <CiBoxList  className='icone' />
             <h1>Categorias</h1>
+          </div>          
+          <div className='menu menu-LightDark'>
+            <LightDark className='icone' />
           </div>
           <div className='menu menu-sair' onClick={Sair}>
             <FaDoorOpen  className='icone' />

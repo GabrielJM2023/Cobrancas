@@ -10,7 +10,9 @@
   
   /* Text */
   --color-text: #07253f;
-  --color-text-hover: #247f82; 
+  --color-text-hover: #247f82;
+  
+  --color-menu-exit: #c91439;
 }
 
 .dark {
@@ -26,6 +28,8 @@
   /* Text */
   --color-text: #edf2f7;
   --color-text-hover: #041d31;
+ 
+  --color-menu-exit: #c91439;  
 }
 
 body {

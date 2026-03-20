@@ -8,6 +8,12 @@
   
   margin: auto;
   margin-top: 5%;
+  background-color: var(--color-card-background);
+  border-radius: 10px;
+}
+
+.card-Central{
+  background-color: var(--color-card-background);
 }
 
 .Logar{
@@ -17,7 +23,6 @@
 }
 
 .card-Central > .Logar > h1 {
-  color: var(--color-primary);
   font-size: 2.5rem;
   text-align: left;
 }
@@ -37,7 +42,7 @@
 
 .input-group label {
   font-size: 1rem;
-  color: var(--color-primary);
+  color: var(--color-text);
   padding-left: 1rem;
 }
 
@@ -45,15 +50,11 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-text);
   border-radius: 25px;
   outline: none;
   font-size: 1rem;
   color: var(--text-color);
-}
-
-.input-group input::placeholder {
-  color: var(--color-primary);
 }
 
 .card-Button {
@@ -74,7 +75,6 @@
   align-items: flex-start;
 }
 
-
 .input-group.login .icon {
   position: absolute;
   top: 72%;
@@ -82,25 +82,4 @@
   transform: translateY(-50%);
   color: var(--color-primary);
   font-size: 1.5rem;
-}
-
-
-@media (max-width: 1024px){
-  .card-Login{      
-    margin-top: 15%;
-    width: 90vw;
-    height: 70vh;
-  }
-  .card-Central{
-    padding: 2.5rem;
-    margin: 0;
-  }
-}
-
-@media (max-width: 375px){
-  .card-Login{      
-    margin-top: 20%;
-    width: 90vw;
-    height: 70vh;
-  }
 }
