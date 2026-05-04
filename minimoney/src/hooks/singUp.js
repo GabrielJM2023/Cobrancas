@@ -55,7 +55,7 @@ export function useCadastro() {
         return false;
       }
 
-      navigate("/home/dashboard");
+      navigate("/ConfirmarEmail");
       return true;
     } catch (e) {
       console.error("Erro inesperado", e.message);
