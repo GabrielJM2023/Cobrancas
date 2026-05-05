@@ -7,6 +7,8 @@
   --color-card-background: #efeeee;
   --color-background-hover: #c9fdff;
   --color-background-button: #e2e1e1;
+
+  --color-grid-background: #6dccd1;
   
   /* Text */
   --color-text: #07253f;
@@ -22,8 +24,9 @@
   /* Background */
   --color-background: #041d31;   
   --color-card-background: #253037;  
-  --color-background-hover: #4fb2b2;
+  --color-background-hover: #c9fdff;
   --color-background-button: #324c5c;
+  --color-grid-background: #6dccd1;
   
   /* Text */
   --color-text: #edf2f7;
