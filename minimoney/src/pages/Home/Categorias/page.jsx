@@ -16,11 +16,11 @@ function Categorias() {
   const CarregarCategorias = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
-
+    
     const { data: usuario, error } = await supabase
       .from("USUARIO")
-      .select("ID")
-      .eq("USER_ID_FK", user.id)
+      .select("ID_AUTH_FK")
+      .eq("ID_AUTH_FK", user.id)
       .single();
 
     if (error) return;
@@ -28,7 +28,7 @@ function Categorias() {
     const { data, error: errorCategorias } = await supabase
       .from("CATEGORIA")
       .select("ID, NOME, TIPO")
-      .eq("ID_USUARIO_FK", usuario.ID)
+      .eq("ID_USUARIO_FK", usuario.ID_AUTH_FK)
       .order("NOME", { ascending: true });
 
     if (!errorCategorias) setCategorias(data);
@@ -41,14 +41,14 @@ function Categorias() {
 
     const { data: usuario } = await supabase
       .from("USUARIO")
-      .select("ID")
-      .eq("USER_ID_FK", user.id)
+      .select("ID_AUTH_FK")
+      .eq("ID_AUTH_FK", user.id)
       .single();
 
     await supabase.from("CATEGORIA").insert({
       NOME,
       TIPO,
-      ID_USUARIO_FK: usuario.ID,
+      ID_USUARIO_FK: usuario.ID_AUTH_FK,
     });
 
     CarregarCategorias();
