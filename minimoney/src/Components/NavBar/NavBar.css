@@ -57,8 +57,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color:var(--color-background); 
-  background-color:var(--color-menu);  
+  border: 2px solid var(--color-primary);
   width: 70%; 
   border-radius: 1rem;
   cursor: pointer;      
@@ -76,11 +75,11 @@
 }
 
 .NavBar > .menus > .menu:hover > h1{
-  color: var(--color-primary);
+  color: var(--color-text-hover);
 }
 
 .NavBar > .menus > .menu:hover > .icone{
-  color: var(--color-primary);
+  color: var(--color-text-hover);
 }
 
 
@@ -90,8 +89,7 @@
 }
 
 .NavBar > .menus > .menu:hover {
-  background-color: var(--color-background);
-  color: var(--color-primary);
+  background-color: var(--color-background-hover);
 }
 
 .NavBar > .menus > .menu-sair:hover {

@@ -15,7 +15,7 @@ export function useDistribuicaoCategoria(filtros) {
         }
 
         const { data, error } = await supabase
-          .rpc('distribuicao_categoria', {
+          .rpc('Distribution_Category', {
             p_data_fim: filtros.dataFim,
             p_data_inicio: filtros.dataInicio,
             p_usuario: userID           
