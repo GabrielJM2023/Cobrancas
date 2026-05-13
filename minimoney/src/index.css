@@ -15,6 +15,7 @@
   --color-text-hover: #0fa5ad;
   --color-shadow: #0fa5ad;
   --color-menu-exit: #c91439;
+  --url-imagem-background: url("../public/image_fundo.png");  
 }
 
 .dark {
@@ -33,6 +34,7 @@
   --color-text-hover: #041d31;
   --color-shadow: #2ae4ee; 
   --color-menu-exit: #c91439;  
+  --url-imagem-background: url("../public/image_fundoDark.png");
 }
 
 body {
@@ -42,7 +44,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-background);
+  background-image: var(--url-imagem-background);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   
 }
 
@@ -66,3 +72,5 @@ h2{
 p {
   font-size: 1.3rem;
 }
+
+

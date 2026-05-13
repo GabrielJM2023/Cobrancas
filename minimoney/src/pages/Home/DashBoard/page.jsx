@@ -23,6 +23,7 @@ import { useResumoFinanceiro } from "../../../hooks/useResumoFinanceiro";
 import { useEvolucaoFinanceira } from "../../../hooks/useEvolucaoFinanceira";
 import { useDistribuicaoCategoria } from "../../../hooks/useDistribuicaoCategoria";
 import { useUserId } from "../../../hooks/useUserID";
+import { ThreeDot, Riple } from "react-loading-indicators";
 
 function Dashboard() {
   const filtros = useDashboardFilters();
@@ -48,7 +49,7 @@ function Dashboard() {
     }).format(new Date(ano, mes - 1, 1));
   };
 
-  const evolucaoFinanceiraFormatado = (evolucaoFinanceira || []).map(item => ({
+  const evolucaoFinanceiraFormatado = (evolucaoFinanceira.resumo || []).map(item => ({
     name: formatarMes(item.mes),
     receitas: item.receitas,
     despesas: item.despesas
@@ -133,86 +134,167 @@ function Dashboard() {
 
           {/* ===== RESUMO ===== */}
           <div className="Card-Resumo">
-            <div className="Resumo-Item Positivo">
-              <FaArrowUp className="Icone" />
-              <div className="Item">
-                <label>Receitas</label>
-                <span>{formatarMoeda(resumo?.total_receitas)}</span>
-              </div>
+            <div className="Resumo-Item Positivo">              
+              {resumo.carregando ? (
+                <div className="Carregando-Resumo">
+                  <ThreeDot 
+                    variant="pulsate" 
+                    color="#2f9e9e"
+                    size="medium"
+                    text=""
+                    textColor="" 
+                  />
+                </div>
+              ) : (
+              <>
+                <FaArrowUp className="Icone" />
+                <div className="Item">
+                  <label>Receitas</label>
+                  <span>{formatarMoeda(resumo?.total_receitas)}</span>
+                </div>
+              </>
+              )}
             </div>
 
             <div className="Resumo-Item Negativo">
-              <FaArrowDown className="Icone" />
-              <div className="Item">
-                <label>Despesas</label>
-                <span>{formatarMoeda(resumo?.total_despesas)}</span>
-              </div>
+              {resumo.carregando ? (
+                <div className="Carregando-Resumo">
+                  <ThreeDot 
+                    variant="pulsate" 
+                    color="#2f9e9e"
+                    size="medium"
+                    text=""
+                    textColor="" 
+                  />
+                </div>
+              ) : (
+              <>
+                <FaArrowDown className="Icone" />
+                <div className="Item">
+                  <label>Despesas</label>
+                  <span>{formatarMoeda(resumo?.total_despesas)}</span>
+                </div>
+              </>
+              )}
             </div>
 
             <div className="Resumo-Item Positivo">
-              <IoWallet className="Icone" />
-              <div className="Item">
-                <label>Diferença</label>
-                <span>{formatarMoeda(resumo?.diferenca)}</span>
-              </div>
+              {resumo.carregando ? (
+                <div className="Carregando-Resumo">
+                  <ThreeDot 
+                    variant="pulsate" 
+                    color="#2f9e9e"
+                    size="medium"
+                    text=""
+                    textColor="" 
+                  />
+                </div>
+              ) : (
+              <>
+                <IoWallet className="Icone" />
+                <div className="Item">
+                  <label>Diferença</label>
+                  <span>{formatarMoeda(resumo?.diferenca)}</span>
+                </div>
+              </>
+              )}
             </div>
 
             <div className="Resumo-Item Positivo">
-              <FaArrowCircleUp className="Icone" />
-              <div className="Item">
-                <label>Economia</label>
-                <span>{formatarPercentual(resumo?.percentual_economia)}</span>
-              </div>
+              {resumo.carregando ? (
+                <div className="Carregando-Resumo">
+                  <ThreeDot 
+                    variant="pulsate" 
+                    color="#2f9e9e"
+                    size="medium"
+                    text=""
+                    textColor="" 
+                  />
+                </div>
+              ) : (
+              <>
+                <FaArrowCircleUp className="Icone" />
+                <div className="Item">
+                  <label>Economia</label>
+                  <span>{formatarPercentual(resumo?.percentual_economia)}</span>
+                </div>
+              </>
+              )}
             </div>
           </div>
 
           {/* ===== GRÁFICOS ===== */}
           <div className="Card-Graficos-DashBoard">
-
             <div className="EvolucaoFinanceira">
               <h1>Evolução Financeira</h1>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={evolucaoFinanceiraFormatado}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Legend />
-                  <Tooltip />
-                  <Line dataKey="receitas" name="Receitas" stroke="green" type="monotone"/>
-                  <Line dataKey="despesas" name="Despesas" stroke="red" type="monotone"/>
-                </LineChart>
-              </ResponsiveContainer>
+              {evolucaoFinanceira.carregando ? (
+                <div className="Carregando-Resumo">
+                  <Riple
+                    color= "#2f9e9e"
+                    size="large"
+                    text=""
+                    textColor="#32cd32"
+                  />
+                </div>
+              ) : (
+              <>              
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={evolucaoFinanceiraFormatado}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Legend />
+                    <Tooltip />
+                    <Line dataKey="receitas" name="Receitas" stroke="green" type="monotone"/>
+                    <Line dataKey="despesas" name="Despesas" stroke="red" type="monotone"/>
+                  </LineChart>
+                </ResponsiveContainer>
+              </>
+              )}
             </div>
 
             <div className="DistribuicaoCategorias">
               <h1>Distribuição por Categoria</h1>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart  
-                  barCategoryGap="10%"
-                  barGap={4}
-                  cx="50%"
-                  cy="50%"
-                >
-                  <Pie
-                    data={distribuicaoCategoria || []}
-                    dataKey="valor"
-                    nameKey="nome"                    
-                    innerRadius={70}
-                    outerRadius={110}                    
-                    label
-                  >
-                    {distribuicaoCategoria?.map((entry, index) => (
-                      <Cell key={index} fill={entry.cor} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend 
-                    align="right"
-                    layout="vertical"
-                    verticalAlign="middle"
+              {evolucaoFinanceira.carregando ? (
+                <div className="Carregando-Resumo">
+                  <Riple
+                    color= "#2f9e9e"
+                    size="large"
+                    text=""
+                    textColor="#32cd32"
                   />
-                </PieChart>
-              </ResponsiveContainer>
+                </div>
+              ) : (
+              <>              
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart  
+                    barCategoryGap="10%"
+                    barGap={4}
+                    cx="50%"
+                    cy="50%"
+                  >
+                    <Pie
+                      data={distribuicaoCategoria || []}
+                      dataKey="valor"
+                      nameKey="nome"                    
+                      innerRadius={70}
+                      outerRadius={110}                    
+                      label
+                    >
+                      {distribuicaoCategoria?.map((entry, index) => (
+                        <Cell key={index} fill={entry.cor} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend 
+                      align="right"
+                      layout="vertical"
+                      verticalAlign="middle"
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </>
+              )}
             </div>
 
           </div>

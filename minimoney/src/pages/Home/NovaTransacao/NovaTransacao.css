@@ -1,7 +1,5 @@
 /* ================= BASE ================= */
 :root {
-  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.12);
   --radius: 10px;
 }
 
@@ -135,6 +133,19 @@
 .item-grid .valor {
   text-align: right;
   font-weight: bold;
+}
+
+.carregando-NovaTransacao{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.carregando-NovaTransacao p {
+  font-size: 1.2rem;
+  color: var(--color-primary);
 }
 
 /* ================= COLUNA DIREITA ================= */

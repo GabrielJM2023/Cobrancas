@@ -69,6 +69,13 @@
   color: var(--color-confirmation);
 }
 
+.carregando-Categoria{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;  
+}
+
 
 .CC-card-direita {
   flex: 1; /* ocupa o resto do espaço */

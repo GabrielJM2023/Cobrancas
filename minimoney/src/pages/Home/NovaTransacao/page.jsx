@@ -7,6 +7,7 @@ import { useDashboardFilters } from "../../../hooks/useDashboardFilters";
 import { useCategorias } from "../../../hooks/useCategorias";
 import { useTransacaoQuery } from "../../../hooks/useTransacaoQuery";
 import { useNovaTransacao } from "../../../hooks/useNovaTransacao";
+import { Riple } from "react-loading-indicators";
 
 function NovaTransacao() {
   const filtros = useDashboardFilters();
@@ -70,12 +71,14 @@ function NovaTransacao() {
 
     setSelecionada(null);
     setMensagemErro("");
+    transacaoGrid.carregar();
   };
 
   const excluirTransacao = async (id) => {
     await transacaoCampo.excluir(id);
     setSelecionada(null);
     setMensagemErro("");
+    transacaoGrid.carregar();
   }
 
   /* ===================== UI ===================== */
@@ -140,7 +143,7 @@ function NovaTransacao() {
                   value={filtros.categoria}
                   onChange={(e) => filtros.setCategoria(e.target.value)}
                 >
-                  <option value={null}>Todas</option>
+                  <option value="">Todas</option>
                   {categorias.map(cat => (
                     <option key={cat.ID} value={cat.ID}>
                       {cat.NOME}
@@ -156,27 +159,44 @@ function NovaTransacao() {
           <div className="NT-card-esquerda">
             <h2>Lista</h2>
 
-            <div className="lista-NovaTransacao">
-              {transacaoGrid.transacoes.map((t) => (
-                <div
-                  key={t.ID}
-                  className={`item-NovaTransacao ${
-                    selecionada?.ID === t.ID ? "ativo" : ""
-                  }`}
-                  onClick={() => setSelecionada(t)}
-                >
-                  <div className="item-grid">
-                    <span className="categoria">{t.CATEGORIA?.NOME}</span>
-                    <span className="descricao">{t.DESCRICAO}</span>
-                    <span className="data">{t.DATA}</span>
-                    <span className={`tipo ${t.TIPO === "S" ? "gasto" : "receita"}`}>
-                      {t.TIPO === "S" ? "Gasto" : "Receita"}
-                    </span>
-                    <span className="valor">R$ {t.VALOR.toFixed(2)}</span>
-                  </div>
+            
+              {transacaoGrid.carregando ? (
+                <div className="carregando-NovaTransacao">  
+                  <Riple
+                    color= "#2f9e9e"
+                    size="large"
+                    text=""
+                    textColor="#32cd32"
+                  />
                 </div>
-              ))}
-            </div>
+              ) : transacaoGrid.transacoes.length > 0 ? (
+                <div className="lista-NovaTransacao">
+                {transacaoGrid.transacoes.map((t) => (
+                  <div
+                    key={t.ID}
+                    className={`item-NovaTransacao ${
+                      selecionada?.ID === t.ID ? "ativo" : ""
+                    }`}
+                    onClick={() => setSelecionada(t)}
+                  >
+                    <div className="item-grid">
+                      <span className="categoria">{t.CATEGORIA?.NOME}</span>
+                      <span className="descricao">{t.DESCRICAO}</span>
+                      <span className="data">{t.DATA}</span>
+                      <span className={`tipo ${t.TIPO === "S" ? "gasto" : "receita"}`}>
+                        {t.TIPO === "S" ? "Gasto" : "Receita"}
+                      </span>
+                      <span className="valor">R$ {t.VALOR.toFixed(2)}</span>
+                    </div>
+                  </div>                  
+                ))}
+                </div>                
+              ) : (  
+                <div className="carregando-NovaTransacao">  
+                  <p>Nenhuma transação encontrada</p>
+                </div>
+              )}
+            
           </div>
 
           <div className="NT-card-direita">

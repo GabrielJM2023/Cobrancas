@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabaseCliente";
 
 export function useResumoFinanceiro(filtros, userID) {
   const [resumo, setResumo] = useState(null);
+  const [carregando, setCarregando] = useState(false);
   const filtrosMemo = useMemo(() => ({
       dataInicio: filtros.dataInicio,
       dataFim: filtros.dataFim,
@@ -12,6 +13,7 @@ export function useResumoFinanceiro(filtros, userID) {
     
   useEffect(() => {    
     const carregar = async () => {
+      setCarregando(true);
       try {        
         const { data, error } = await supabase
           .rpc("resumo_financeiro", {
@@ -30,11 +32,13 @@ export function useResumoFinanceiro(filtros, userID) {
         }
       } catch (err) {
         console.error("Erro inesperado ao carregar resumo financeiro:", err);
+      } finally {
+        setCarregando(false);
       }
     };
 
     carregar();
   }, [filtrosMemo, userID]);
 
-  return resumo;
+  return {resumo, carregando};
 }

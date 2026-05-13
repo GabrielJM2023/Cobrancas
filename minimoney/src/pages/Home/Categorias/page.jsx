@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Categorias.css";
 import Button from "../../../Components/Button/button";
 import { supabase } from "../../../lib/supabaseCliente";
+import { Riple } from "react-loading-indicators";
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
   const [selecionada, setSelecionada] = useState(null);
   const [pErro, setMensagemErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
 
   useEffect(() => {
     CarregarCategorias();
@@ -14,24 +16,29 @@ function Categorias() {
 
   /* ===================== CARREGAR ===================== */
   const CarregarCategorias = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-    
-    const { data: usuario, error } = await supabase
-      .from("USUARIO")
-      .select("ID_AUTH_FK")
-      .eq("ID_AUTH_FK", user.id)
-      .single();
+    setCarregando(true);
+    try{
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const { data: usuario, error } = await supabase
+        .from("USUARIO")
+        .select("ID_AUTH_FK")
+        .eq("ID_AUTH_FK", user.id)
+        .single();
 
-    if (error) return;
+      if (error) return;
 
-    const { data, error: errorCategorias } = await supabase
-      .from("CATEGORIA")
-      .select("ID, NOME, TIPO")
-      .eq("ID_USUARIO_FK", usuario.ID_AUTH_FK)
-      .order("NOME", { ascending: true });
+      const { data, error: errorCategorias } = await supabase
+        .from("CATEGORIA")
+        .select("ID, NOME, TIPO")
+        .eq("ID_USUARIO_FK", usuario.ID_AUTH_FK)
+        .order("NOME", { ascending: true });
 
-    if (!errorCategorias) setCategorias(data);
+      if (!errorCategorias) setCategorias(data || []);
+    }finally {
+      setCarregando(false);
+    }
   };
 
   /* ===================== CADASTRAR ===================== */
@@ -103,27 +110,42 @@ function Categorias() {
       <div className="CC-card-central">
         <div className="CC-card-esquerda">
           <h2>Lista</h2>
-
-          <div className="lista-categorias">
-            {categorias.map((cat) => (
-              <div
-                key={cat.ID}
-                className={`item-categoria ${
-                  selecionada?.ID === cat.ID ? "ativo" : ""
-                }`}
-                onClick={() => setSelecionada(cat)}
-              >
-                <span className="nome">{cat.NOME}</span>
-                <span
-                  className={`tipo ${
-                    cat.TIPO === "E" ? "receita" : "gasto"
+          {carregando ? (
+            <div className="carregando-Categoria">  
+              <Riple
+                color= "#2f9e9e"
+                size="large"
+                text=""
+                textColor="#32cd32"
+              />
+            </div>
+          ) : categorias.length > 0 ? (
+            <div className="lista-categorias">
+              {categorias.map((cat) => (
+                <div
+                  key={cat.ID}
+                  className={`item-categoria ${
+                    selecionada?.ID === cat.ID ? "ativo" : ""
                   }`}
+                  onClick={() => setSelecionada(cat)}
                 >
-                  {cat.TIPO === "E" ? "Receita" : "Gasto"}
-                </span>
-              </div>
-            ))}
-          </div>
+                  <span className="nome">{cat.NOME}</span>
+
+                  <span
+                    className={`tipo ${
+                      cat.TIPO === "E" ? "receita" : "gasto"
+                    }`}
+                  >
+                    {cat.TIPO === "E" ? "Receita" : "Gasto"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="nenhuma-categoria">
+              <p>Nenhuma categoria encontrada</p>
+            </div>
+          )}
         </div>
 
         <div className="CC-card-direita">

@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabaseCliente";
 
 export function useEvolucaoFinanceira(filtros, userId) {
   const [resumo, setResumo] = useState([]);
+  const [carregando, setCarregando] = useState(false);
   
   const filtrosMemo = useMemo(() => ({
     dataInicio: filtros.dataInicio,
@@ -13,6 +14,7 @@ export function useEvolucaoFinanceira(filtros, userId) {
   
   useEffect(() => {
     const carregar = async () => {
+      setCarregando(true);
       if (!userId) return;
 
       try {
@@ -28,15 +30,17 @@ export function useEvolucaoFinanceira(filtros, userId) {
           console.error("Erro ao carregar evolucao financeira:", error);
           setResumo(null);
         } else {
-          setResumo(data || []);
+          setResumo(data ?? []);
         }
       } catch (err) {
         console.error("Erro inesperado ao carregar evolucao financeira:", err);
+      } finally {
+        setCarregando(false);
       }
     };
 
     carregar();
   }, [filtrosMemo, userId]); 
 
-  return resumo;
+  return { resumo, carregando };
 }
