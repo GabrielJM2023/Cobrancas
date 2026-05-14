@@ -29,7 +29,7 @@ function Dashboard() {
   const filtros = useDashboardFilters();
   const userId = useUserId();
   const categorias = useCategorias(filtros.tipo);
-  const resumo = useResumoFinanceiro(filtros, userId);
+  const { resumo, carregando } = useResumoFinanceiro(filtros, userId);
   const evolucaoFinanceira = useEvolucaoFinanceira(filtros, userId);
   const distribuicaoCategoria = useDistribuicaoCategoria(filtros);
 
@@ -135,7 +135,7 @@ function Dashboard() {
           {/* ===== RESUMO ===== */}
           <div className="Card-Resumo">
             <div className="Resumo-Item Positivo">              
-              {resumo.carregando ? (
+              {carregando ? (
                 <div className="Carregando-Resumo">
                   <ThreeDot 
                     variant="pulsate" 
@@ -157,7 +157,7 @@ function Dashboard() {
             </div>
 
             <div className="Resumo-Item Negativo">
-              {resumo.carregando ? (
+              {carregando ? (
                 <div className="Carregando-Resumo">
                   <ThreeDot 
                     variant="pulsate" 
@@ -179,7 +179,7 @@ function Dashboard() {
             </div>
 
             <div className="Resumo-Item Positivo">
-              {resumo.carregando ? (
+              {carregando ? (
                 <div className="Carregando-Resumo">
                   <ThreeDot 
                     variant="pulsate" 
@@ -201,7 +201,7 @@ function Dashboard() {
             </div>
 
             <div className="Resumo-Item Positivo">
-              {resumo.carregando ? (
+              {carregando ? (
                 <div className="Carregando-Resumo">
                   <ThreeDot 
                     variant="pulsate" 

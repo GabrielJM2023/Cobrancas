@@ -12,10 +12,14 @@
   
   /* Text */
   --color-text: #07253f;
-  --color-text-hover: #0fa5ad;
+  --color-text-hover: #0a5559;
   --color-shadow: #0fa5ad;
   --color-menu-exit: #c91439;
   --url-imagem-background: url("../public/image_fundo.png");  
+  --color-confirmation: #4fb2b2;
+  --color-negation: #c91439;
+  --color-hover: #c9e4e4;
+  --color-selected: #2f9e9e;
 }
 
 .dark {

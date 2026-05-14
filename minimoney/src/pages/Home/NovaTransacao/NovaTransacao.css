@@ -85,12 +85,11 @@
 }
 
 .item-NovaTransacao:hover {
-  background: var(--color-background);
+  background: var(--color-hover);
 }
 
 .item-NovaTransacao.ativo {
-  background: var(--color-primary);
-  color: var(--color-background);
+  background: var(--color-selected);
 }
 
 /* ================= GRID DO ITEM ================= */

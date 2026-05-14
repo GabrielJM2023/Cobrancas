@@ -144,3 +144,8 @@
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
 }
+
+.nenhuma-selecionada-Categoria > p{
+  text-align: center;
+  color: var(--color-background);
+}

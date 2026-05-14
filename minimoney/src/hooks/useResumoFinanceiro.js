@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { supabase } from "../lib/supabaseCliente";
 
 export function useResumoFinanceiro(filtros, userID) {
-  const [resumo, setResumo] = useState(null);
+  const [resumo, setResumo] = useState({});
   const [carregando, setCarregando] = useState(false);
   const filtrosMemo = useMemo(() => ({
       dataInicio: filtros.dataInicio,
@@ -15,6 +15,7 @@ export function useResumoFinanceiro(filtros, userID) {
     const carregar = async () => {
       setCarregando(true);
       try {        
+        console.log("Carregando resumo financeiro com filtros:", filtrosMemo, "e userID:", userID);
         const { data, error } = await supabase
           .rpc("resumo_financeiro", {
             p_categoria: filtrosMemo.categoria || null,
@@ -28,7 +29,8 @@ export function useResumoFinanceiro(filtros, userID) {
           console.error("Erro ao carregar resumo financeiro:", error);
           setResumo(null);
         } else {
-          setResumo(data?.[0] || null);
+          console.log(data);
+          setResumo(data?.[0] || {});
         }
       } catch (err) {
         console.error("Erro inesperado ao carregar resumo financeiro:", err);

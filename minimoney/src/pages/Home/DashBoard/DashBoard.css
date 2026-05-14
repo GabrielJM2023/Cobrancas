@@ -126,7 +126,7 @@
 }
 
 .Resumo-Item.Negativo {
-  color: var(--color-exit);
+  color: var(--color-negation);
 }
 
 .Resumo-Item .Item {

@@ -45,7 +45,7 @@ function NovaTransacao() {
     if (!selecionada.VALOR || selecionada.VALOR <= 0) {
       setMensagemErro("Informe um valor válido");
       return;
-    }
+    }    
 
     if (!selecionada.ID_CATEGORIA_FK) {
       setMensagemErro("Selecione uma categoria");

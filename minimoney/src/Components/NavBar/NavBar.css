@@ -2,7 +2,6 @@
     width: 20vw;
     min-width: 200px;
     height: 98.35vh;
-    background-color: var(--color-card-background);
     padding-top: 1rem;
 
     display: flex;       
