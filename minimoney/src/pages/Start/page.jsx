@@ -55,7 +55,6 @@ function Start() {
               acompanhe cada gasto, organize receitas e despesas, visualize relatórios claros e 
               tome decisões inteligentes sobre seu dinheiro — tudo em um só lugar.
             </p>
-            <img src={ImgStart} alt='Start' className='Start-ImgStart-direita'/>
             <p className='Start-texto-p'>Seja para economizar mais, investir com confiança ou entender melhor seus hábitos 
               financeiros, nossa plataforma intuitiva e rápida está aqui para ajudar você a
               alcançar seus objetivos. Comece agora e veja a diferença!

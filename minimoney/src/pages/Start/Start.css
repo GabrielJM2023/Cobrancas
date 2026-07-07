@@ -1,42 +1,45 @@
 .Start {
-  width: 100vw;
-  height: 100vh;
+  min-height:100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .Start-card-central {
-  background-color: var(--color-card-background);
+  width: 100%;
+  max-height: 1300px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 87vw;
-  height: 85vh;
+  width:100%;
+  max-width:1400px;
+  padding:2rem;
   border-radius: 10px;
 }
 
 .Start-card-esquerda {
-  width: 50vw;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .Start-card-direita {
-  width: 50vw;
+  width: 100%;
   display: flex;
   height: 100%;
-  margin-top: 5rem;
   flex-direction: column;
-  padding-right: 10px;
+  display:flex;
+  gap:1rem;
 }
 
 .Start-card-logo {
-  display: flex;
   flex-direction: column;
+  display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .Start-card-texto {
@@ -44,122 +47,55 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  text-align:center;
   padding: 5px;
-  width: 90%;
+  width: 100%;
 }
 
 .Start-Logo {
-  width: 10vw;
+   width: clamp(120px, 10vw, 220px);
   border-radius: 11px;
 }
 
 .Start-ImgStart {
-  width: 35vw;
+  max-width:500px;
 }
 
 .Start-card-botao {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
-  width: 95%;
+  flex-direction:column;
+  width: 100%;
+  gap: 1rem;
 }
 
-.Start-ImgStart-direita {
-  display: none;
-}
-
-@media (max-width: 2560px){
-  .Start-card-direita {
-    margin-top: 7rem; 
-  }
-  .Start-Logo {
-    width: 12vw;
-  }
-
-  h1{
-    font-size: 3rem;
-  }
-
-  p{
-    font-size: 1.7rem;
-  }
-}
-
-@media (max-width: 2300px){
-  .Start-card-direita {
-    margin-top: 3rem; 
-  }
-  .Start-Logo {
-    width: 10vw;
-  }
-
-  h1{
-    font-size: 2rem;
-  }
-
-  p{
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 948px){
-  .Start-card-direita {
-    margin-top: 10rem; 
-  }
-  h1{
-    font-size: 1.5rem;
-  }
-  .Start-texto-p{
+.Start-card-esquerda{
     display: none;
-  }  
-  .Start-Logo {
-    width: 20vw;
-  }
 }
 
-@media (max-width: 504px){
-  .Start-card-central {
-    flex-direction: column; 
-  }
+.Start h1{
+    font-size: clamp(1.6rem, 2vw, 3rem);
+}
 
-  .Start-card-esquerda {
-    order: 2; /* Imagem vai para baixo */
-  }
+.Start p{
+    font-size: clamp(1rem, 1.5vw, 1.4rem);
+}
 
-  .Start-card-direita {
-    order: 1; /* Texto/botões primeiro */
-  }
-
-  .Start-card-direita {
-    margin-top: 1rem; 
-  }
-
-  .Start-card-logo {
-    flex-direction: row;
-  }
-
-  .Start-ImgStart{    
-    display: none;
-  }
-  .Start-ImgStart-direita {
-    display: block;
-    width: 50vw;
-    margin-top: 1rem;
-  }
-
-  h1{
-    font-size: 1rem;
-  }
-  p{
-    font-size: 0.8rem;
-  }
-  .Start-texto-p{
-    display: none;
-  }  
-  .Start-Logo {
-    width: 30vw;
-    border-radius: 10px;
-    padding: 0px 10px;
-  }
+@media (min-width: 768px) {
+    .Start-card-central {
+      flex-direction: row;
+      background-color: var(--color-card-background);
+     }
+    .Start-card-esquerda{
+       display: flex;
+    }
+    .Start-card-direita{
+      width: 50%;
+      gap:2rem;
+    }
+    .Start-card-botao{
+        display: flex;
+        flex-direction: row;
+    }
 }

@@ -29,6 +29,7 @@ export default function Cadastro() {
         <div className="card-Central">
           <div className="Cadastrar">
             <h1>Cadastrar</h1>
+            <p>Crie sua conta para começar a controlar suas finanças.</p>
           </div>
 
           <div className="input-group">
