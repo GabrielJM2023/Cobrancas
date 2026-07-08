@@ -1,11 +1,20 @@
 .NavBar{
-    width: 20vw;
-    min-width: 200px;
-    height: 98.35vh;
-    padding-top: 1rem;
 
-    display: flex;       
-    flex-direction: column;  
+    width:280px;
+
+    height:100dvh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    padding:1.5rem;
+
+    box-sizing:border-box;
+
+    background:var(--color-card-background);
+
+    transition:.3s;
 }
 
 .NavBar > .menus{
@@ -41,7 +50,8 @@
 }
 
 .logo{    
-  width: 5vw;
+  width:52px;
+height:52px;
   border-radius: 10px;
 }
 
@@ -52,19 +62,21 @@
 }
 
 .NavBar > .menus > .menu{
-  margin-left: 1rem;  
+  padding-inline:1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: 2px solid var(--color-primary);
-  width: 70%; 
+  justify-content: flex-start;
+  border: 1px solid var(--color-primary);
+  width:100%;
   border-radius: 1rem;
   cursor: pointer;      
   transition: 0.3s ease;
+  min-height:56px;
+  gap:1rem;
 }
 
 .NavBar > .menus > .menu > .icone{
-  font-size: 3rem;
+  font-size: 1.4rem;
   color: var(--color-text);
 }
 
@@ -75,10 +87,12 @@
 
 .NavBar > .menus > .menu:hover > h1{
   color: var(--color-text-hover);
+  transform:translateX(4px);
 }
 
 .NavBar > .menus > .menu:hover > .icone{
   color: var(--color-text-hover);
+  transform:translateX(4px);
 }
 
 
@@ -104,4 +118,64 @@
   color: var(--color-text);
   width: 70%;
   margin-top: auto;   
+}
+
+.menu.active{
+  background:var(--color-primary);
+  color:white;
+}
+
+.menu-mobile{
+  display:none;
+  position:fixed;
+  top:15px;
+  left:15px;
+  z-index:1200;
+  border:none;
+  background:var(--color-primary);
+  color:white;
+  width:45px;
+  height:45px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.35);
+
+    backdrop-filter:blur(2px);
+
+    z-index:999;
+}
+
+@media(max-width:768px){
+
+  .menu-mobile{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .NavBar{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+    width:280px;
+    transform:translateX(-100%);
+    box-shadow:0 0 20px rgba(0,0,0,.2);
+  }
+
+  .NavBar.aberta{
+    transform:translateX(0);
+  }
+
+  .menu-mobile.fechado{
+    display:none;
+  }
 }
