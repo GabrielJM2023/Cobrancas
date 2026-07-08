@@ -1,11 +1,13 @@
 .NavBar{
-    width:280px;
-    height:100dvh;
-    display:flex;
-    flex-direction:column;
-    padding:1.5rem;
-    box-sizing:border-box;
-    transition:.3s;
+  width:280px;
+  height:100dvh;
+  display:flex;
+  flex-direction:column;
+  padding:1.5rem;
+  box-sizing:border-box;
+  transition:.3s;
+  backdrop-filter: blur(5px);
+  border-right: 1px solid rgba(255,255,255,.08);
 }
 
 .NavBar > .menus{
@@ -47,9 +49,10 @@ height:52px;
 }
 
 .NavBar > hr{
-  border: 2px solid var(--color-background);
-  width: 90%; 
-  margin: 20px auto;
+  border: none;
+  height: 1px;
+  width: 90%;
+  background: rgba(255,255,255,.08);
 }
 
 .NavBar > .menus > .menu{
@@ -57,7 +60,8 @@ height:52px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  border: 1px solid var(--color-primary);
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.05);
   width:100%;
   border-radius: 1rem;
   cursor: pointer;      
@@ -86,14 +90,14 @@ height:52px;
   transform:translateX(4px);
 }
 
-
 .NavBar > .menus > .menu-sair {
   margin-top: auto;      
   margin-bottom: 1rem;
 }
 
 .NavBar > .menus > .menu:hover {
-  background-color: var(--color-background-hover);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
 }
 
 .NavBar > .menus > .menu-sair:hover {
@@ -132,16 +136,11 @@ height:52px;
 }
 
 .overlay{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.35);
-
-    backdrop-filter:blur(2px);
-
-    z-index:999;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(2px);
+  z-index:999;
 }
 
 @media(max-width:768px){
