@@ -47,9 +47,10 @@ function Start() {
         </div>
         <div className="Start-card-direita">
           <div className='Start-card-logo'>
-            <img src={Logo} className='Start-Logo' alt='Foto da direita'/>
+            <img src={Logo} className='Start-Logo' alt='Foto da esquerda'/>
             <h1>Bem-vindo ao Minimoney!</h1>
           </div>
+          <img src={ImgStart} alt='Start' className='Start-ImgStart'/>
           <div className='Start-card-texto'>
             <p>Transforme o controle das suas finanças em algo simples e poderoso. Com o Minimoney, 
               acompanhe cada gasto, organize receitas e despesas, visualize relatórios claros e 

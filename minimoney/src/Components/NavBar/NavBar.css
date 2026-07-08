@@ -1,19 +1,10 @@
 .NavBar{
-
     width:280px;
-
     height:100dvh;
-
     display:flex;
-
     flex-direction:column;
-
     padding:1.5rem;
-
     box-sizing:border-box;
-
-    background:var(--color-card-background);
-
     transition:.3s;
 }
 

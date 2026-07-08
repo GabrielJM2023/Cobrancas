@@ -83,48 +83,6 @@
   opacity: 0.9;
 }
 
-.input-group {
-  position: relative;
-  width: 100%;
-}
-
-.input-group .icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-primary);
-  left: 0.95rem;
-  font-size: 1.2rem;
-  pointer-events: none;
-}
-
-.input-group label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  display: block;
-   color: var(--color-text);
-}
-
-.input-group input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.9rem 0.9rem 0.9rem 2.7rem;
-  border: 1.5px solid rgba(0, 0, 0, 0.14);
-  border-radius: 999px;
-  outline: none;
-  font-size: 1rem;
-  color: var(--text-color);
-  background: rgba(255, 255, 255, 0.78);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.input-group input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
-  transform: translateY(-1px);
-}
-
 .card-Button {
   padding-top: 1rem;
   display: flex;
@@ -144,15 +102,6 @@
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
   box-shadow: none;
-}
-
-.input-group input::placeholder{
-    color: var(--color-text-secondary);
-    opacity:.8;
-}
-
-.input-group input:hover{
-    border-color: var(--color-primary);
 }
 
 @media (max-width: 768px) {

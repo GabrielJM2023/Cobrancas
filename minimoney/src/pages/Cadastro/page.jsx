@@ -35,35 +35,41 @@ export default function Cadastro() {
 
             <div className="input-group">
               <label>Nome</label>
-              <IoPersonCircleOutline className="icon" />
-              <input
-                type="text"
-                placeholder="Nome"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-              />
+              <div className="input-wrapper">
+                <IoPersonCircleOutline className="icon" />
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="input-group">
               <label>Email</label>
-              <MdOutlineEmail className="icon" />
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <div className="input-wrapper">
+                <MdOutlineEmail className="icon" />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="input-group">
               <label>Senha</label>
-              <FaLock className="icon" />
-              <input
-                type="password"
-                placeholder="Senha"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-              />
+              <div className="input-wrapper">
+                <FaLock className="icon" />
+                <input
+                  type="password"
+                  placeholder="Senha"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
+                />
+              </div>
             </div>
 
             {error && (

@@ -77,9 +77,89 @@ p {
   font-size: 1.3rem;
 }
 
-input:-webkit-autofill{
-    -webkit-box-shadow: 0 0 0 1000px transparent inset;
-    -webkit-text-fill-color: var(--color-text);
-    transition: background-color 9999s;
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-background-hover) inset;
 }
 
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.input-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper .icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.7rem;
+  color: var(--color-primary);
+  pointer-events: none;
+  transition: color .2s;
+}
+
+.input-wrapper input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 3.2rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-input-background);
+  color: var(--color-text);
+
+  font-size: 1rem;
+
+  outline: none;
+
+  transition:
+    border-color .2s,
+    box-shadow .2s,
+    background .2s;
+}
+
+.input-wrapper input::placeholder {
+  color: var(--color-primary);
+}
+
+.input-wrapper input:hover {
+  border-color: var(--color-primary);
+}
+
+.input-wrapper input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(0,0,0,.05);
+}
+
+.input-wrapper input:focus + .icon,
+.input-wrapper:focus-within .icon {
+  color: var(--color-primary);
+}
+
+.input-wrapper input:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+@media (max-width:480px){
+  .input-wrapper input{
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    font-size: 0.95rem;
+  }
+  .input-wrapper .icon {
+    left: 0.9rem;
+    font-size: 1.1rem;
+  }
+
+}

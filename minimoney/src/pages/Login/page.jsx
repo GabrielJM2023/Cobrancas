@@ -37,23 +37,27 @@ function Logar(){
               </div>
               <div className="input-group login">
                 <label>Email</label>
-                <MdOutlineEmail className="icon"/>
-                <input 
-                  type="email" 
-                  placeholder="Email" 
-                  value={email} 
-                  onChange={e=>setEmail(e.target.value)}
-                />
+                <div className="input-wrapper">
+                  <MdOutlineEmail className="icon"/>
+                  <input 
+                    type="email" 
+                    placeholder="Email" 
+                    value={email} 
+                    onChange={e=>setEmail(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="input-group login">
                 <label>Senha</label>                    
-                <FaLock className="icon"/>
-                <input 
-                  type="password" 
-                  placeholder="Senha" 
-                  value={senha} 
-                  onChange={e=>setSenha(e.target.value)}
-                />
+                <div className="input-wrapper">
+                  <FaLock className="icon"/>
+                  <input 
+                    type="password" 
+                    placeholder="Senha" 
+                    value={senha} 
+                    onChange={e=>setSenha(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="mensagemErro">
                 {error && <p>{error}</p>}
