@@ -1,21 +1,32 @@
+.CadastroPage{
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:1rem;
+}
+
 .card-Cadastro{
   display: flex;
   justify-content: center;
   align-items: center;
 
   width: min(100%, 540px);
-  min-height: 70vh;
+  height: 100%;
+  min-height: 90vh;
+  padding: 1.25rem;
+  margin: 0 auto;
   padding: 1.25rem;
   margin: 0 auto;
   box-sizing: border-box;
 }
 
 .mensagemErro {
-  min-height: 1.5rem; /* reserva espaço */
+  min-height: 1.5rem; 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -0.5rem; /* ajusta espaçamento */
+  margin-top: -0.5rem; 
 }
 
 .mensagemErro > p {
@@ -31,14 +42,16 @@
   box-shadow: 0 4px 10px rgba(255, 0, 0, 0.08);
 }
 
-.card-Central {
-  background: var(--color-background);
+.card-Central-Cadastro {
   width: 100%;
+  
   min-height: 90%;
   padding: 2rem;
   border-radius: 18px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1.2rem;
   box-sizing: border-box;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
@@ -54,14 +67,14 @@
   margin-bottom: 0.5rem;
 }
 
-.card-Central > .Cadastrar > h1 {
+.card-Central-Cadastro > .Cadastrar > h1 {
   color: var(--color-primary);
   font-size: clamp(1.8rem, 3.2vw, 2.5rem);
   text-align: center;
   margin: 0;
 }
 
-.card-Central > .Cadastrar > p{
+.card-Central-Cadastro > .Cadastrar > p{
   color: var(--color-primary);
   font-size: 1rem;
   text-align: center;
@@ -72,6 +85,7 @@
 
 .input-group {
   position: relative;
+  width: 100%;
 }
 
 .input-group .icon {
@@ -81,6 +95,7 @@
   color: var(--color-primary);
   left: 0.95rem;
   font-size: 1.2rem;
+  pointer-events: none;
 }
 
 .input-group label {
@@ -88,6 +103,7 @@
   font-weight: 600;
   margin-bottom: 0.4rem;
   display: block;
+   color: var(--color-text);
 }
 
 .input-group input {
@@ -130,20 +146,29 @@
   box-shadow: none;
 }
 
+.input-group input::placeholder{
+    color: var(--color-text-secondary);
+    opacity:.8;
+}
+
+.input-group input:hover{
+    border-color: var(--color-primary);
+}
+
 @media (max-width: 768px) {
   .card-Cadastro {
     min-height: auto;
     padding: 0.75rem;
   }
 
-  .card-Central {
+  .card-Central-Cadastro {
     padding: 1.4rem;
     gap: 1rem;
     border-radius: 14px;
   }
 
   .card-Button {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .card-Button button {
@@ -156,7 +181,7 @@
     padding: 0.5rem;
   }
 
-  .card-Central {
+  .card-Central-Cadastro {
     padding: 1.1rem;
     border-radius: 12px;
   }
@@ -166,11 +191,11 @@
     font-size: 0.95rem;
   }
 
-  .card-Central > .Cadastrar > h1 {
+  .card-Central-Cadastro > .Cadastrar > h1 {
     font-size: 1.7rem;
   }
 
-  .card-Central > .Cadastrar > p {
+  .card-Central-Cadastro > .Cadastrar > p {
     font-size: 0.95rem;
   }
 }

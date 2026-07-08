@@ -24,61 +24,63 @@ export default function Cadastro() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="card-Cadastro">
-        <div className="card-Central">
-          <div className="Cadastrar">
-            <h1>Cadastrar</h1>
-            <p>Crie sua conta para começar a controlar suas finanças.</p>
-          </div>
-
-          <div className="input-group">
-            <label>Nome</label>
-            <IoPersonCircleOutline className="icon" />
-            <input
-              type="text"
-              placeholder="Nome"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-            />
-          </div>
-
-          <div className="input-group">
-            <label>Email</label>
-            <MdOutlineEmail className="icon" />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="input-group">
-            <label>Senha</label>
-            <FaLock className="icon" />
-            <input
-              type="password"
-              placeholder="Senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
-          </div>
-
-          {error && (
-            <div className="mensagemErro">
-              <p>{error}</p>
+    <div className="CadastroPage">
+      <form onSubmit={handleSubmit}>
+        <div className="card-Cadastro">
+          <div className="card-Central-Cadastro">
+            <div className="Cadastrar">
+              <h1>Cadastrar</h1>
+              <p>Crie sua conta para começar a controlar suas finanças.</p>
             </div>
-          )}
 
-          <div className="card-Button">
-            <Button onClick={handleVoltar}>Voltar</Button>
-            <Button type="submit" disabled={loading}>
-              {loading ? "Cadastrando..." : "Cadastrar"}
-            </Button>
+            <div className="input-group">
+              <label>Nome</label>
+              <IoPersonCircleOutline className="icon" />
+              <input
+                type="text"
+                placeholder="Nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Email</label>
+              <MdOutlineEmail className="icon" />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Senha</label>
+              <FaLock className="icon" />
+              <input
+                type="password"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+            </div>
+
+            {error && (
+              <div className="mensagemErro">
+                <p>{error}</p>
+              </div>
+            )}
+
+            <div className="card-Button">
+              <Button onClick={handleVoltar}>Voltar</Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? "Cadastrando..." : "Cadastrar"}
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

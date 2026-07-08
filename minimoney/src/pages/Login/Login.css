@@ -1,34 +1,61 @@
-.card-Login{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 30vw;
-  height: 60vh;
-  
-  margin: auto;
-  margin-top: 5%;
-  background-color: var(--color-card-background);
-  border-radius: 10px;
+.LoginPage{
+  min-height:100dvh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:1rem;
 }
 
-.card-Central{
-  background-color: var(--color-card-background);
+.card-Login{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:min(100%,640px);
+    padding:1.25rem;
+    box-sizing:border-box;
+}
+
+.card-Central-Login{
+    width:100%;
+    padding:2rem;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:1.2rem;
+    box-sizing:border-box;
+    box-shadow:0 8px 24px rgba(15,23,42,.10);
+    border:1px solid rgba(0,0,0,.06);
 }
 
 .Logar{
-  display: flex;
-  justify-content: center;
-  align-items: center;  
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:.4rem;
+    margin-bottom:.5rem;
 }
 
-.card-Central > .Logar > h1 {
-  font-size: 2.5rem;
-  text-align: left;
+.Logar h1{
+    margin:0;
+    font-size:clamp(1.8rem,3vw,2.5rem);
+    color:var(--color-primary);
 }
 
+.Logar p{
+  color: var(--color-primary);
+  font-size: 1rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+  
 .input-group {
   position: relative;
+  width:100%;
 }
 
 .input-group .icon {
@@ -58,28 +85,24 @@
 }
 
 .card-Button {
-  padding-top: 2rem;
+  padding-top: 1rem;
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
   width: 100%;
 }
 
 .card-Button button {
-  flex: 1;
+  flex: 1 1 45%;
+  min-height: 48px;
+  border-radius: 999px;
 }
 
-.input-group.login{
-  padding-top: 1rem;
-  width: 95%;
-  align-items: flex-start;
-}
+.input-group input{
+    width:100%;
+    padding:.9rem .9rem .9rem 2.7rem;
 
-.input-group.login .icon {
-  position: absolute;
-  top: 72%;
-  left: 13px;
-  transform: translateY(-50%);
-  color: var(--color-primary);
-  font-size: 1.5rem;
+    border-radius:999px;
+
+    transition:.2s;
 }
