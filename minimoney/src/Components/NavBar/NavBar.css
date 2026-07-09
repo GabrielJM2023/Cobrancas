@@ -7,7 +7,7 @@
   box-sizing:border-box;
   transition:.3s;
   backdrop-filter: blur(5px);
-  border-right: 1px solid rgba(255,255,255,.08);
+  border-right: 1px solid var(--color-border);
 }
 
 .NavBar > .menus{
@@ -42,9 +42,13 @@
   color:var(--color-background);
 }
 
+.NavBar  > .CabecalhoNavBar > .Cabecalho > .central > h1{
+  font-size: 1.7rem;
+  color:var(--color-text);
+}
 .logo{    
   width:52px;
-height:52px;
+  height:52px;
   border-radius: 10px;
 }
 
@@ -52,7 +56,7 @@ height:52px;
   border: none;
   height: 1px;
   width: 90%;
-  background: rgba(255,255,255,.08);
+  background: var(--color-border);
 }
 
 .NavBar > .menus > .menu{
@@ -60,14 +64,13 @@ height:52px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.05);
+  background: var(--color-card-background);
+  border: 1px solid var(--color-border);
   width:100%;
   border-radius: 1rem;
   cursor: pointer;      
   transition: 0.3s ease;
   min-height:56px;
-  gap:1rem;
 }
 
 .NavBar > .menus > .menu > .icone{
@@ -96,8 +99,8 @@ height:52px;
 }
 
 .NavBar > .menus > .menu:hover {
-  background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.15);
+  background: var(--color-hover);
+  border-color: var(--color-confirmation);
 }
 
 .NavBar > .menus > .menu-sair:hover {
@@ -113,11 +116,6 @@ height:52px;
   color: var(--color-text);
   width: 70%;
   margin-top: auto;   
-}
-
-.menu.active{
-  background:var(--color-primary);
-  color:white;
 }
 
 .menu-mobile{
@@ -144,7 +142,6 @@ height:52px;
 }
 
 @media(max-width:768px){
-
   .menu-mobile{
     display:flex;
     justify-content:center;
@@ -156,7 +153,7 @@ height:52px;
     top:0;
     left:0;
     z-index:1000;
-    width:280px;
+    width:220px;
     transform:translateX(-100%);
     box-shadow:0 0 20px rgba(0,0,0,.2);
   }
@@ -167,5 +164,5 @@ height:52px;
 
   .menu-mobile.fechado{
     display:none;
-  }
+  }  
 }

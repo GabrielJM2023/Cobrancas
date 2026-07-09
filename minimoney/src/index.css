@@ -7,7 +7,7 @@
   --color-card-background: #efeeee;
   --color-background-hover: #c9e4e4;
   --color-background-button: #e2e1e1;
-
+  --color-border: #4c4b4b14;
   --color-grid-background: #2e8388;
   
   /* Text */
@@ -20,6 +20,7 @@
   --color-negation: #c91439;
   --color-hover: #c9e4e4;
   --color-selected: #2f9e9e;
+  --color-border: #4c4b4b14;
 }
 
 .dark {
@@ -31,6 +32,7 @@
   --color-card-background: #253037;  
   --color-background-hover: #c9fdff;
   --color-background-button: #324c5c;
+  --color-border: #4c4b4b14;
   --color-grid-background: #6dccd1;
   
   /* Text */
@@ -39,6 +41,9 @@
   --color-shadow: #2ae4ee; 
   --color-menu-exit: #c91439;  
   --url-imagem-background: url("../public/image_fundoDark.png");
+  --color-confirmation: #4fb2b2;
+  --color-negation: #c91439;
+  --color-border: #ffffff14;
 }
 
 body {
