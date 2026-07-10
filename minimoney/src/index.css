@@ -168,3 +168,21 @@ input:-webkit-autofill {
   }
 
 }
+
+.scroll-custom{
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.2) transparent;
+}
+
+.scroll-custom::-webkit-scrollbar{
+  width:8px;
+}
+
+.scroll-custom::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,.15);
+  border-radius:999px;
+}

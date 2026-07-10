@@ -3,16 +3,49 @@ import "./Categorias.css";
 import Button from "../../../Components/Button/button";
 import { supabase } from "../../../lib/supabaseCliente";
 import { Riple } from "react-loading-indicators";
+import { FaFilePen } from "react-icons/fa6";
+import { IoMdAdd } from "react-icons/io";
 
 function Categorias() {
   const [categorias, setCategorias] = useState([]);
-  const [selecionada, setSelecionada] = useState(null);
   const [pErro, setMensagemErro] = useState("");
   const [carregando, setCarregando] = useState(false);
+  const [categoriaEditando, setCategoriaEditando] = useState(null);
+  const [modalAberto, setModalAberto] = useState(false);
 
   useEffect(() => {
     CarregarCategorias();
   }, []);
+
+  const fecharModal = () => {
+    setCategoriaEditando(null);
+    setModalAberto(false);
+    setMensagemErro("");
+  };
+
+  const novaCategoria = () => {
+  setCategoriaEditando({
+    ID: null,
+    NOME: "",
+    TIPO: "S",
+  });
+
+  setModalAberto(true);
+  setMensagemErro("");
+};
+
+const editarCategoria = (categoria) => {
+  setCategoriaEditando({ ...categoria });
+  setModalAberto(true);
+  setMensagemErro("");
+};
+
+const handleChange = (e) => {
+  setCategoriaEditando({
+    ...categoriaEditando,
+    [e.target.name]: e.target.value,
+  });
+};
 
   /* ===================== CARREGAR ===================== */
   const CarregarCategorias = async () => {
@@ -58,7 +91,7 @@ function Categorias() {
       ID_USUARIO_FK: usuario.ID_AUTH_FK,
     });
 
-    CarregarCategorias();
+    await CarregarCategorias();
   };
 
   /* ===================== ALTERAR ===================== */
@@ -68,131 +101,150 @@ function Categorias() {
       .update({ NOME, TIPO })
       .eq("ID", ID);
 
-    CarregarCategorias();
+    await CarregarCategorias();
   };
 
   /* ===================== EXCLUIR ===================== */
   const excluirCategoria = async (ID) => {
     await supabase.from("CATEGORIA").delete().eq("ID", ID);
-    setSelecionada(null);
-    CarregarCategorias();
+    fecharModal();
+    await CarregarCategorias();
   };
 
   /* ===================== FORM ===================== */
-  const handleChange = (e) => {
-    setSelecionada({
-      ...selecionada,
-      [e.target.name]: e.target.value,
-    });
-  };
+  
+  const salvarCategoria = async () => {
+  if (!categoriaEditando.NOME.trim()) {
+    setMensagemErro("O nome da categoria é obrigatório");
+    return;
+  }
 
-  const salvarCategoria = () => {
-    if (!selecionada.NOME?.trim()) {
-      setMensagemErro("O nome da categoria é obrigatório");
-      return;
-    }
+  if (categoriaEditando.ID)
+    await AlterarCategoria(categoriaEditando);
+  else
+    await CadastrarCategoria(categoriaEditando);
 
-    selecionada.ID
-      ? AlterarCategoria(selecionada)
-      : CadastrarCategoria(selecionada);
-
-    setSelecionada(null);
-    setMensagemErro("");
-  };
-
-  const novaCategoria = () => {
-    setSelecionada({ ID: null, NOME: "", TIPO: "S" });
-  };
+  fecharModal();
+};
 
   /* ===================== JSX ===================== */
   return (
     <div className="Card-Categorias">
-      <div className="CC-card-central">
-        <div className="CC-card-esquerda">
-          <h2>Lista</h2>
-          {carregando ? (
-            <div className="carregando-Categoria">  
-              <Riple
-                color= "#2f9e9e"
-                size="large"
-                text=""
-                textColor="#32cd32"
-              />
+      <div className="categorias-card">
+        <div className="categorias-header">
+          <div  className="categorias-header-info">
+            <h1>Categorias</h1>
+          </div>
+          <div className="categorias-acoes">
+            <div className="categorias-search">
+              <input placeholder="Pesquisar categoria..." />
+            </div>      
+            <div className="categorias-container-btn-nova">  
+              <Button
+                  onClick={novaCategoria}
+                  className="btn-nova-categoria">
+                <IoMdAdd className="categoria-Icone"/>
+              </Button>                
             </div>
-          ) : categorias.length > 0 ? (
-            <div className="lista-categorias">
-              {categorias.map((cat) => (
-                <div
-                  key={cat.ID}
-                  className={`item-categoria ${
-                    selecionada?.ID === cat.ID ? "ativo" : ""
-                  }`}
-                  onClick={() => setSelecionada(cat)}
-                >
-                  <span className="nome">{cat.NOME}</span>
-
-                  <span
-                    className={`tipo ${
-                      cat.TIPO === "E" ? "receita" : "gasto"
-                    }`}
-                  >
-                    {cat.TIPO === "E" ? "Receita" : "Gasto"}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="nenhuma-categoria">
-              <p>Nenhuma categoria encontrada</p>
-            </div>
-          )}
+          </div>        
         </div>
-
-        <div className="CC-card-direita">
-          <h2>Detalhes</h2>
-
-          {selecionada ? (
-            <>
-              <label>Nome</label>
-              <input
-                type="text"
-                name="NOME"
-                value={selecionada.NOME}
-                onChange={handleChange}
-              />
-
-              <label>Tipo</label>
-              <select
-                name="TIPO"
-                value={selecionada.TIPO}
-                onChange={handleChange}
-              >
-                <option value="S">Gasto</option>
-                <option value="E">Receita</option>
-              </select>
-
-              <div className="mensagemErro">{pErro}</div>
-
-              <div className="botoes">
-                {selecionada.ID && (
-                  <Button
-                    children="Excluir"
-                    onClick={() => excluirCategoria(selecionada.ID)}
+            {carregando ?
+              (
+                <div className="carregando-Categoria">
+                  <Riple
+                    color="#2f9e9e"
+                    size="large"
                   />
-                )}
-                <Button children="Salvar" onClick={salvarCategoria} />
-              </div>
-            </>
-          ) : (
-            <div className="nenhuma-selecionada-Categoria">
-              <p>Selecione uma categoria</p>
-              <Button children="Nova Categoria" onClick={novaCategoria} />
+                </div>
+              ) : (
+                <div className="lista-categorias scroll-custom">
+                  {categorias.map(cat => (
+                    <div
+                      key={cat.ID}
+                      className="item-categoria"                      
+                    >                      
+                      <h3>{cat.NOME}</h3>
+                      <span
+                        className={`badge ${
+                                    cat.TIPO === "E"
+                                      ? "receita"
+                                      : "gasto"
+                              }`}
+                      >
+                        {cat.TIPO === "E"
+                                ? "Receita"
+                                : "Gasto"}
+                      </span>
+                      <FaFilePen className="editar-categoria" onClick={() => editarCategoria(cat)}/>
+                    </div>
+                  ))}
             </div>
-          )}
-        </div>
-      </div>
+          )
+        }
     </div>
-  );
+    {modalAberto && (
+        <div className="modal-overlay">
+            <div className="modal">
+                <h2>
+                    {categoriaEditando.ID
+                        ? "Editar Categoria"
+                        : "Nova Categoria"}
+                </h2>
+                <label>Nome</label>
+                <input
+                    name="NOME"
+                    value={categoriaEditando.NOME}
+                    onChange={handleChange}
+                />
+
+                <label>Tipo</label>
+
+                <select
+                    name="TIPO"
+                    value={categoriaEditando.TIPO}
+                    onChange={handleChange}
+                >
+                    <option value="S">Gasto</option>
+                    <option value="E">Receita</option>
+                </select>
+
+                <p className="mensagemErro">
+
+                    {pErro}
+
+                </p>
+
+                <div className="botoes">
+
+                    {categoriaEditando.ID && (
+
+                        <Button
+                            children="Excluir"
+                            onClick={() => excluirCategoria(categoriaEditando.ID)}
+                        />
+
+                    )}
+
+                    <Button
+                        children="Cancelar"
+                        onClick={fecharModal}
+                    />
+
+                    <Button
+                        children="Salvar"
+                        onClick={salvarCategoria}
+                    />
+
+                </div>
+
+            </div>
+
+        </div>
+
+    )}
+
+</div>
+)
 }
 
 export default Categorias;
