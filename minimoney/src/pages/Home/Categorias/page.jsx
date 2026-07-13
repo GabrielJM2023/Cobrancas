@@ -190,23 +190,30 @@ const handleChange = (e) => {
                         ? "Editar Categoria"
                         : "Nova Categoria"}
                 </h2>
-                <label>Nome</label>
-                <input
-                    name="NOME"
-                    value={categoriaEditando.NOME}
-                    onChange={handleChange}
-                />
+                <div className="input-group">
+                    <label>Nome</label>
+                    <div className="input-wrapper input-Categoria">
+                      <input
+                          name="NOME"
+                          value={categoriaEditando.NOME}
+                          onChange={handleChange}
+                      />
+                    </div>
+                </div>
 
                 <label>Tipo</label>
 
-                <select
+                <div className="select-wrapper">
+                  <select
                     name="TIPO"
                     value={categoriaEditando.TIPO}
                     onChange={handleChange}
-                >
+                    className="categoria-select"
+                  >
                     <option value="S">Gasto</option>
                     <option value="E">Receita</option>
-                </select>
+                  </select>
+                </div>
 
                 <p className="mensagemErro">
 

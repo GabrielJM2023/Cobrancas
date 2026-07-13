@@ -21,6 +21,8 @@
   --color-hover: #c9e4e4;
   --color-selected: #2f9e9e;
   --color-border: #4c4b4b14;
+
+  --color-card: #f5f5f5;
 }
 
 .dark {
@@ -44,6 +46,10 @@
   --color-confirmation: #4fb2b2;
   --color-negation: #c91439;
   --color-border: #ffffff14;
+
+  --color-hover: #c9e4e4;
+  --color-selected: #4fb2b2;
+  --color-card: #253037;
 }
 
 body {
@@ -156,19 +162,6 @@ input:-webkit-autofill {
   cursor: not-allowed;
 }
 
-@media (max-width:480px){
-  .input-wrapper input{
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    font-size: 0.95rem;
-  }
-  .input-wrapper .icon {
-    left: 0.9rem;
-    font-size: 1.1rem;
-  }
-
-}
-
 .scroll-custom{
   scrollbar-width:thin;
   scrollbar-color:rgba(255,255,255,.2) transparent;
@@ -185,4 +178,75 @@ input:-webkit-autofill {
 .scroll-custom::-webkit-scrollbar-thumb{
   background:rgba(255,255,255,.15);
   border-radius:999px;
+}
+
+label {
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+}
+
+.categoria-select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  width:100%;
+  padding:14px 18px;
+  border:1px solid var(--color-border);
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  color:var(--color-text);
+  font-size:1rem;
+  outline:none;
+  cursor:pointer;
+  transition:
+      border-color .2s ease,
+      box-shadow .2s ease,
+      background-color .2s ease;
+}
+
+.categoria-select:hover{
+  border-color:var(--color-primary);
+  background:rgba(255,255,255,.06);
+}
+
+.categoria-select:focus{
+  border-color:var(--color-primary);
+  box-shadow:0 0 0 3px rgba(47,158,158,.15);
+}
+
+.select-wrapper{
+  position:relative;  
+}
+
+.select-wrapper::after{
+  content:"⌄";
+  position:absolute;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--color-text-secondary);
+  pointer-events:none;
+  font-size:1rem;
+}
+
+
+@media (max-width:768px){
+  .input-wrapper input{
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    font-size: 0.95rem;
+  }
+  .input-wrapper .icon {
+    left: 0.9rem;
+    font-size: 1.1rem;
+  }
+
+  label {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+  }
 }

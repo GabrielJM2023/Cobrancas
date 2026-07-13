@@ -188,11 +188,16 @@
 .modal{
   width:420px;
   background:var(--color-card);
+  box-shadow: var(--color-shadow) 0px 1px 12px;
   border-radius:20px;
   padding:2rem;
   display:flex;
   flex-direction:column;
   gap:1rem;
+}
+
+.input-Categoria input{
+  padding: 0.9rem 1rem 0.9rem 1rem;
 }
 
 @media(max-width:768px){
@@ -214,5 +219,8 @@
     width: 30px;
     font-size: 0.75rem;
     padding:4px 10px;
+  }
+  .modal{
+    width: 240px;
   }
 }
