@@ -43,6 +43,7 @@
 }
 
 .categorias-search input{
+  box-sizing: border-box;  
   width:100%;
   padding:14px 18px;
   border-radius:14px;
@@ -200,6 +201,22 @@
   padding: 0.9rem 1rem 0.9rem 1rem;
 }
 
+.modal select{
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+model select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 128, 0, 0.15);
+  outline: none;
+}
+
 @media(max-width:768px){
   .categorias-header{
     display: flex;
@@ -222,5 +239,8 @@
   }
   .modal{
     width: 240px;
+  }
+  .botoes-Categoria{
+    display: flex;
   }
 }

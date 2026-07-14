@@ -202,26 +202,20 @@ const handleChange = (e) => {
                 </div>
 
                 <label>Tipo</label>
-
-                <div className="select-wrapper">
                   <select
                     name="TIPO"
                     value={categoriaEditando.TIPO}
                     onChange={handleChange}
-                    className="categoria-select"
                   >
                     <option value="S">Gasto</option>
                     <option value="E">Receita</option>
                   </select>
-                </div>
-
+                
                 <p className="mensagemErro">
-
                     {pErro}
-
                 </p>
 
-                <div className="botoes">
+                <div className="botoes-Categoria">
 
                     {categoriaEditando.ID && (
 
