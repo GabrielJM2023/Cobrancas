@@ -1,185 +1,269 @@
-/* ================= BASE ================= */
-:root {
-  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 6px 20px rgba(0, 0, 0, 0.12);
-  --radius: 10px;
-}
-
-/* ================= CONTAINER ================= */
 .Card-DashBoard {
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.Card-Central-DashBoard {
-  width: 70vw;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-
-  border: 3px solid var(--color-primary);
-  border-radius: var(--radius);
-}
-
-/* ================= FILTROS ================= */
-.Card-Filtros-DashBoard {
-  background-color: #fff;
-  padding: 12px;
-  border-radius: var(--radius);
-  box-shadow: var(--color-shadow) 0px 1px 12px;
-}
-
-.Filtros-DashBoard {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.linha-filtros {
-  display: flex;
-  gap: 16px;
-}
-
-.campo-filtro {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.campo-filtro label {
-  font-size: 0.75rem;
-  margin-bottom: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-primary);
-}
-
-.campo-filtro input,
-.campo-filtro select {
-  background-color: #f6f6f6;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-
-.campo-filtro input:focus,
-.campo-filtro select:focus {
-  outline: 2px solid var(--color-primary);
-}
-
-/* ================= VISUAL ================= */
-.Card-Visual-DashBoard {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;  
-}
-
-/* ================= RESUMO ================= */
-.Card-Resumo {
-  display: flex;
-  gap: 16px;
-  height: 110px;
-}
-
-.Resumo-Item {
-  flex: 1;
-  background: linear-gradient(135deg, #ffffff, #f9f9f9);
-  border-radius: var(--radius);
-  box-shadow: var(--color-shadow) 0px 1px 12px;
-
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px;
-
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.Resumo-Item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--color-shadow) 0px 4px 12px;
-}
-
-.Resumo-Item .Icone {
-  font-size: 3.2rem;
-}
-
-.Resumo-Item label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  opacity: 0.7;
-  letter-spacing: 0.06em;
-}
-
-.Resumo-Item span {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
-.Resumo-Item.Positivo {
-  color: var(--color-confirmation);
-}
-
-.Resumo-Item.Negativo {
-  color: var(--color-negation);
-}
-
-.Resumo-Item .Item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.Carregando-Resumo{
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
 }
 
-/* ================= GRÁFICOS ================= */
-.Card-Graficos-DashBoard {
-  flex: 1;
-  display: flex;
-  gap: 16px;
-}
-
-.EvolucaoFinanceira,
-.DistribuicaoCategorias {
-  background-color: #fff;
-  border-radius: var(--radius);
-  box-shadow: var(--color-shadow) 0px 1px 12px;
-
-  padding: 12px;
+.dashboard-card {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  width: 80%;
+  height: 85vh;
+  padding: 2rem;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  box-sizing: border-box;
+  backdrop-filter: blur(16px);
 }
 
-.EvolucaoFinanceira {
-  flex: 3;
+.dashboard-header h1 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 2rem;
 }
 
-.DistribuicaoCategorias {
-  flex: 2;
+.dashboard-header p {
+  margin: 0.3rem 0 0;
+  color: var(--color-text);
+  font-size: 1rem;
+  opacity: 0.72;
 }
 
-.EvolucaoFinanceira h1,
-.DistribuicaoCategorias h1 {
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 600;
+.dashboard-filtros {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dashboard-campo-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.dashboard-campo-filtro label {
+  margin: 0;
   color: var(--color-primary);
-  margin-bottom: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-/* ESSENCIAL PARA O RECHARTS */
-.EvolucaoFinanceira > div,
-.DistribuicaoCategorias > div {
+.dashboard-campo-filtro input,
+.dashboard-campo-filtro select {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text);
+  font: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.dashboard-campo-filtro input:hover,
+.dashboard-campo-filtro select:hover {
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.dashboard-campo-filtro input:focus,
+.dashboard-campo-filtro select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(47, 158, 158, 0.15);
+}
+
+.dashboard-resumo {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.resumo-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 104px;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text);
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.resumo-item:hover {
+  border-color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.resumo-icone {
+  flex: 0 0 auto;
+  font-size: 2.4rem;
+}
+
+.resumo-item.receita .resumo-icone {
+  color: #18b566;
+}
+
+.resumo-item.despesa .resumo-icone {
+  color: #ff4d4d;
+}
+
+.resumo-item.saldo .resumo-icone {
+  color: var(--color-primary);
+}
+
+.resumo-item-conteudo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0.25rem;
+}
+
+.resumo-item-conteudo span {
+  color: var(--color-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.resumo-item-conteudo strong {
+  overflow: hidden;
+  color: var(--color-text);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.carregando-resumo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard-graficos {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  flex: 1;
+  gap: 1rem;
+  min-height: 0;
+}
+
+.dashboard-grafico {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.dashboard-grafico h2 {
+  margin: 0 0 0.75rem;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.dashboard-grafico-conteudo {
   flex: 1;
   min-height: 260px;
+}
+
+.dashboard-grafico .recharts-text,
+.dashboard-grafico .recharts-legend-item-text {
+  fill: var(--color-text);
+  color: var(--color-text);
+}
+
+@media (max-width: 1100px) {
+  .dashboard-card {
+    width: 90%;
+  }
+
+  .dashboard-filtros {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dashboard-resumo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-graficos {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grafico-conteudo {
+    flex: none;
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Card-DashBoard {
+    align-items: flex-start;
+    padding: 4.75rem 1rem 1rem;
+    box-sizing: border-box;
+  }
+
+  .dashboard-card {
+    width: 100%;
+    height: auto;
+    min-height: calc(100dvh - 5.75rem);
+    padding: 1.25rem;
+    overflow: visible;
+    border-radius: 16px;
+  }
+
+  .dashboard-filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-card {
+    padding: 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .dashboard-filtros,
+  .dashboard-resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .resumo-item {
+    min-height: 88px;
+  }
+
+  .dashboard-grafico {
+    padding: 0.75rem;
+  }
+
+  .dashboard-grafico-conteudo {
+    min-height: 240px;
+    height: 240px;
+  }
 }

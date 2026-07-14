@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Categorias.css";
 import Button from "../../../Components/Button/button";
-import { supabase } from "../../../lib/supabaseCliente";
 import { Riple } from "react-loading-indicators";
 import { FaFilePen } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
+import { useCategoriaQuery } from "../../../hooks/useCategoriaQuery";
+import { useNovaCategoria } from "../../../hooks/useNovaCategoria";
 
 function Categorias() {
-  const [categorias, setCategorias] = useState([]);
   const [pErro, setMensagemErro] = useState("");
-  const [carregando, setCarregando] = useState(false);
   const [categoriaEditando, setCategoriaEditando] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
-
-  useEffect(() => {
-    CarregarCategorias();
-  }, []);
+  const categoriaGrid = useCategoriaQuery();
+  const categoriaCampo = useNovaCategoria();
 
   const fecharModal = () => {
     setCategoriaEditando(null);
@@ -47,68 +44,10 @@ const handleChange = (e) => {
   });
 };
 
-  /* ===================== CARREGAR ===================== */
-  const CarregarCategorias = async () => {
-    setCarregando(true);
-    try{
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      
-      const { data: usuario, error } = await supabase
-        .from("USUARIO")
-        .select("ID_AUTH_FK")
-        .eq("ID_AUTH_FK", user.id)
-        .single();
-
-      if (error) return;
-
-      const { data, error: errorCategorias } = await supabase
-        .from("CATEGORIA")
-        .select("ID, NOME, TIPO")
-        .eq("ID_USUARIO_FK", usuario.ID_AUTH_FK)
-        .order("NOME", { ascending: true });
-
-      if (!errorCategorias) setCategorias(data || []);
-    }finally {
-      setCarregando(false);
-    }
-  };
-
-  /* ===================== CADASTRAR ===================== */
-  const CadastrarCategoria = async ({ NOME, TIPO }) => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const { data: usuario } = await supabase
-      .from("USUARIO")
-      .select("ID_AUTH_FK")
-      .eq("ID_AUTH_FK", user.id)
-      .single();
-
-    await supabase.from("CATEGORIA").insert({
-      NOME,
-      TIPO,
-      ID_USUARIO_FK: usuario.ID_AUTH_FK,
-    });
-
-    await CarregarCategorias();
-  };
-
-  /* ===================== ALTERAR ===================== */
-  const AlterarCategoria = async ({ ID, NOME, TIPO }) => {
-    await supabase
-      .from("CATEGORIA")
-      .update({ NOME, TIPO })
-      .eq("ID", ID);
-
-    await CarregarCategorias();
-  };
-
-  /* ===================== EXCLUIR ===================== */
   const excluirCategoria = async (ID) => {
-    await supabase.from("CATEGORIA").delete().eq("ID", ID);
+    await categoriaCampo.excluir(ID);
     fecharModal();
-    await CarregarCategorias();
+    categoriaGrid.carregar();
   };
 
   /* ===================== FORM ===================== */
@@ -119,12 +58,10 @@ const handleChange = (e) => {
     return;
   }
 
-  if (categoriaEditando.ID)
-    await AlterarCategoria(categoriaEditando);
-  else
-    await CadastrarCategoria(categoriaEditando);
+  await categoriaCampo.salvar(categoriaEditando);
 
   fecharModal();
+  categoriaGrid.carregar();
 };
 
   /* ===================== JSX ===================== */
@@ -148,7 +85,7 @@ const handleChange = (e) => {
             </div>
           </div>        
         </div>
-            {carregando ?
+            {categoriaGrid.carregando ?
               (
                 <div className="carregando-Categoria">
                   <Riple
@@ -158,7 +95,7 @@ const handleChange = (e) => {
                 </div>
               ) : (
                 <div className="lista-categorias scroll-custom">
-                  {categorias.map(cat => (
+                  {categoriaGrid.categorias.map(cat => (
                     <div
                       key={cat.ID}
                       className="item-categoria"                      
