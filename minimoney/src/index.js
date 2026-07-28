@@ -10,6 +10,8 @@ import Categorias from './pages/Home/Categorias/page';
 import NovaTransacao from './pages/Home/NovaTransacao/page';
 import SemConexao from './pages/SemConexao/page';
 import Dashboard from './pages/Home/DashBoard/page';
+import Conta from './pages/Home/Contas/page';
+
 import { PrivateRoute } from './Components/Private/PrivateRoute';
 import { AuthProvider } from './context/AuthContext'; 
 import { ThemeProvider } from './context/ThemeContext';
@@ -32,6 +34,7 @@ root.render(
               <Route path="categorias" element={<Categorias />} />
               <Route path="novatransacao" element={<NovaTransacao />} />
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="conta" element={<Conta/>} />
             </Route>
 
             <Route path="/sem-conexao" element={<SemConexao/>}/>

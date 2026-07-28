@@ -30,6 +30,11 @@ function NavBar(){
     setMenuAberto(false);
   }
 
+  const Conta = () => {
+    navigate("/home/conta");
+    setMenuAberto(false);
+  }
+
   const Sair = async () =>{
     const { error } = await supabase.auth.signOut()
     if (!error) {
@@ -84,6 +89,11 @@ function NavBar(){
           <div className="menu" onClick={Categorias}>
             <CiBoxList className="icone" />
             <h1>Categorias</h1>
+          </div>
+
+          <div className="menu" onClick={Conta}>
+            <CiBoxList className="icone" />
+            <h1>Conta</h1>
           </div>
 
           <div className="menu menu-LightDark">
