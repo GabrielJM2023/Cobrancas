@@ -10,6 +10,7 @@ import { useDashboardFilters } from "../../../hooks/useDashboardFilters";
 import { useCategorias } from "../../../hooks/useCategorias";
 import { useTransacaoQuery } from "../../../hooks/useTransacaoQuery";
 import { useNovaTransacao } from "../../../hooks/useNovaTransacao";
+import { useConta } from "../../../hooks/useConta"
 
 const formatarMoeda = (valor) =>
   new Intl.NumberFormat("pt-BR", {
@@ -32,6 +33,7 @@ function NovaTransacao() {
   const [busca, setBusca] = useState("");
   const categoriasFiltro = useCategorias(filtros.tipo);
   const categoriasFormulario = useCategorias(selecionada?.TIPO);
+  const contaFormuladrio = useConta();
   const transacaoGrid = useTransacaoQuery(filtros);
   const transacaoCampo = useNovaTransacao();
 
@@ -60,6 +62,8 @@ function NovaTransacao() {
       DESCRICAO: "",
       PARCELA: 1,
       ID_CATEGORIA_FK: "",
+      ID_CONTA_ORIG_FK: "",
+      ID_CONTA_DEST_FK: "",
     });
     setMensagemErro("");
   };
@@ -74,7 +78,7 @@ function NovaTransacao() {
 
     setSelecionada((anterior) => {
       if (name === "TIPO") {
-        return { ...anterior, TIPO: value, ID_CATEGORIA_FK: "" };
+        return { ...anterior, TIPO: value, ID_CATEGORIA_FK: "", ID_CONTA_ORIG_FK: "", ID_CONTA_DEST_FK: "", PARCELA: 1 };
       }
 
       return { ...anterior, [name]: value };
@@ -105,6 +109,38 @@ function NovaTransacao() {
     if (selecionada.PARCELA > 99) {
       setMensagemErro("A parcela deve ser no máximo 99");
       return;
+    }
+
+    if (selecionada.TIPO === "E") {
+      if (!selecionada.ID_CONTA_DEST_FK) {
+        setMensagemErro("Selecione a conta de destino");
+        return;
+      }
+
+    }
+
+    if (selecionada.TIPO === "S") {
+      if (!selecionada.ID_CONTA_ORIG_FK) {
+        setMensagemErro("Selecione a conta de origem");
+        return;
+      }
+    }
+
+    if (selecionada.TIPO === "T") {
+      if (!selecionada.ID_CONTA_ORIG_FK) {
+        setMensagemErro("Selecione a conta de origem");
+        return;
+      }
+
+      if (!selecionada.ID_CONTA_DEST_FK) {
+        setMensagemErro("Selecione a conta de destino");
+        return;
+      }
+
+      if (selecionada.ID_CONTA_ORIG_FK === selecionada.ID_CONTA_DEST_FK ) {
+        setMensagemErro("A conta de origem deve ser diferente da conta de destino.");
+        return;
+      }
     }
 
     await transacaoCampo.salvar(selecionada);
@@ -197,8 +233,9 @@ function NovaTransacao() {
               }}
             >
               <option value="">Todos</option>
-              <option value="E">Receitas</option>
-              <option value="S">Despesas</option>
+              <option value="E">Entrada</option>
+              <option value="S">Saída</option>
+              <option value="T">Transferência</option>
             </select>
           </div>
 
@@ -282,8 +319,9 @@ function NovaTransacao() {
               <div className="campo">
                 <label htmlFor="tipo">Tipo</label>
                 <select id="tipo" name="TIPO" value={selecionada.TIPO} onChange={handleChange}>
-                  <option value="S">Gasto</option>
-                  <option value="E">Receita</option>
+                  <option value="S">Saída</option>
+                  <option value="E">Entrada</option>
+                  <option value="T">Transferência</option>
                 </select>
               </div>
 
@@ -299,6 +337,42 @@ function NovaTransacao() {
                   {categoriasFormulario.map((categoria) => (
                     <option key={categoria.ID} value={categoria.ID}>
                       {categoria.NOME}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="form-linha">
+              <div className="campo">
+                <label htmlFor="conta_origem">Conta Origem</label>
+                <select
+                  id="conta_origem"
+                  name="ID_CONTA_ORIG_FK"
+                  value={selecionada.ID_CONTA_ORIG_FK}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecione</option>
+                  {contaFormuladrio.map((conta) => (
+                    <option key={conta.ID} value={conta.ID}>
+                      {conta.NOME}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="campo">
+                <label htmlFor="conta_destino">Conta Destino</label>
+                <select
+                  id="conta_destino"
+                  name="ID_CONTA_DEST_FK"
+                  value={selecionada.ID_CONTA_DEST_FK}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecione</option>
+                  {contaFormuladrio.map((conta) => (
+                    <option key={conta.ID} value={conta.ID}>
+                      {conta.NOME}
                     </option>
                   ))}
                 </select>

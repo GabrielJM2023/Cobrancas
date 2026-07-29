@@ -6,7 +6,6 @@ export function useNovaConta() {
 
   const salvar = async ({ ID, NOME, ATIVO }) => {
     if (!userId) return;
-
     if (ID) {
       await supabase
         .from("CONTA")

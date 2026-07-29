@@ -59,7 +59,7 @@ const handleChange = (e) => {
     setMensagemErro("O nome da Conta é obrigatório");
     return;
   }
-
+  
   await ContaCampo.salvar(ContaEditando);
 
   fecharModal();
