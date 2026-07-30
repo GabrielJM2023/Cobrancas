@@ -32,6 +32,7 @@ function NovaTransacao() {
   const [pErro, setMensagemErro] = useState("");
   const [busca, setBusca] = useState("");
   const categoriasFiltro = useCategorias(filtros.tipo);
+  const contaFiltro = useConta();  
   const categoriasFormulario = useCategorias(selecionada?.TIPO);
   const contaFormuladrio = useConta();
   const transacaoGrid = useTransacaoQuery(filtros);
@@ -250,6 +251,22 @@ function NovaTransacao() {
               {categoriasFiltro.map((categoria) => (
                 <option key={categoria.ID} value={categoria.ID}>
                   {categoria.NOME}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="campo-filtro">
+            <label htmlFor="conta-filtro">Contas</label>
+            <select
+              id="conta-filtro"
+              value={filtros.conta || ""}
+              onChange={(e) => filtros.setConta(e.target.value)}
+            >
+              <option value="">Todas</option>
+              {contaFiltro.map((conta) => (
+                <option key={conta.ID} value={conta.ID}>
+                  {conta.NOME}
                 </option>
               ))}
             </select>

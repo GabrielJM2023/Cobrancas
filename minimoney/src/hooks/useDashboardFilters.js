@@ -6,6 +6,7 @@ export function useDashboardFilters() {
   const [dataFim, setDataFim] = useState('');
   const [tipo, setTipo] = useState(null);
   const [categoria, setCategoria] = useState(null);
+  const [conta, setConta] = useState(null);
 
   const aplicarPeriodo = (p) => {
     const hoje = new Date();
@@ -23,7 +24,7 @@ export function useDashboardFilters() {
         inicio.setDate(fim.getDate() - 30);
         break;
 
-      default:
+        default:
         return;
     }
 
@@ -40,6 +41,7 @@ export function useDashboardFilters() {
     dataInicio, setDataInicio,
     dataFim, setDataFim,
     tipo, setTipo,
-    categoria, setCategoria
+    categoria, setCategoria,
+    conta, setConta
   };
 }

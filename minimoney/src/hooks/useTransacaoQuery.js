@@ -10,8 +10,9 @@ export function useTransacaoQuery(filtros) {
     dataInicio: filtros.dataInicio,
     dataFim: filtros.dataFim,
     tipo: filtros.tipo,
-    categoria: filtros.categoria
-  }), [filtros.dataInicio, filtros.dataFim, filtros.tipo, filtros.categoria]);
+    categoria: filtros.categoria,
+    conta: filtros.conta
+  }), [filtros.dataInicio, filtros.dataFim, filtros.tipo, filtros.categoria, filtros.conta]);
 
   const carregar = useCallback(async () => {
     setCarregando(true);
@@ -20,9 +21,7 @@ export function useTransacaoQuery(filtros) {
       return;
     } 
     
-    try{
-      
-
+    try{    
       let query = supabase
         .from("TRANSACAO")
         .select(`
@@ -33,7 +32,9 @@ export function useTransacaoQuery(filtros) {
           DESCRICAO,
           PARCELA,
           ID_CATEGORIA_FK,
-          CATEGORIA:ID_CATEGORIA_FK ( NOME )
+          CATEGORIA:ID_CATEGORIA_FK ( NOME ),
+          CONTA_ORIGEM:CONTA!ID_CONTA_ORIG_FK ( NOME ),
+          CONTA_DESTINO:CONTA!ID_CONTA_DEST_FK ( NOME )
         `)
         .eq("ID_USUARIO_FK", userId)
         .order("DATA", { ascending: false });
@@ -52,6 +53,12 @@ export function useTransacaoQuery(filtros) {
       
       if (filtrosMemo.dataFim) {
         query = query.lte("DATA", filtrosMemo.dataFim);
+      }
+
+      if (filtrosMemo.conta) {
+        query = query.or(
+          `ID_CONTA_ORIG_FK.eq.${filtrosMemo.conta},ID_CONTA_DEST_FK.eq.${filtrosMemo.conta}`
+        );
       }
       
       const { data, error } = await query;
