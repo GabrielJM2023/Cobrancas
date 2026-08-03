@@ -32,6 +32,8 @@ export function useTransacaoQuery(filtros) {
           DESCRICAO,
           PARCELA,
           ID_CATEGORIA_FK,
+          ID_CONTA_ORIG_FK,
+          ID_CONTA_DEST_FK,
           CATEGORIA:ID_CATEGORIA_FK ( NOME ),
           CONTA_ORIGEM:CONTA!ID_CONTA_ORIG_FK ( NOME ),
           CONTA_DESTINO:CONTA!ID_CONTA_DEST_FK ( NOME )

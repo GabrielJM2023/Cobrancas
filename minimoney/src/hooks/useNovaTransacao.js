@@ -12,9 +12,9 @@ export function useNovaTransacao() {
   
   const salvar = async (transacao) => {
     if (!userID) return;
-
-    const { ID, CATEGORIA, ...dados } = transacao;
-    if (ID) {
+    
+    const { ID, CATEGORIA, CONTA_ORIGEM, CONTA_DESTINO, ...dados } = transacao;
+    if (ID) {        
       await supabase
         .from("TRANSACAO")
         .update(dados)

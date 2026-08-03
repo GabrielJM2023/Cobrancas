@@ -32,9 +32,8 @@ function NovaTransacao() {
   const [pErro, setMensagemErro] = useState("");
   const [busca, setBusca] = useState("");
   const categoriasFiltro = useCategorias(filtros.tipo);
-  const contaFiltro = useConta();  
+  const contas = useConta();  
   const categoriasFormulario = useCategorias(selecionada?.TIPO);
-  const contaFormuladrio = useConta();
   const transacaoGrid = useTransacaoQuery(filtros);
   const transacaoCampo = useNovaTransacao();
 
@@ -75,14 +74,22 @@ function NovaTransacao() {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target;    
+    let novoValor = value;
 
+    if (
+      name === "ID_CATEGORIA_FK" ||
+      name === "ID_CONTA_ORIG_FK" ||
+      name === "ID_CONTA_DEST_FK"
+    ) {
+      novoValor = value === "" ? null : Number(value);
+    }
     setSelecionada((anterior) => {
       if (name === "TIPO") {
         return { ...anterior, TIPO: value, ID_CATEGORIA_FK: "", ID_CONTA_ORIG_FK: "", ID_CONTA_DEST_FK: "", PARCELA: 1 };
       }
 
-      return { ...anterior, [name]: value };
+      return { ...anterior, [name]: novoValor };
     });
   };
 
@@ -117,7 +124,6 @@ function NovaTransacao() {
         setMensagemErro("Selecione a conta de destino");
         return;
       }
-
     }
 
     if (selecionada.TIPO === "S") {
@@ -142,6 +148,19 @@ function NovaTransacao() {
         setMensagemErro("A conta de origem deve ser diferente da conta de destino.");
         return;
       }
+    }
+
+    switch (selecionada.TIPO) {
+      case "E":
+        selecionada.ID_CONTA_ORIG_FK = null;
+        break;
+
+      case "S":
+        selecionada.ID_CONTA_DEST_FK = null;
+        break;
+
+      default:
+        break;
     }
 
     await transacaoCampo.salvar(selecionada);
@@ -264,7 +283,7 @@ function NovaTransacao() {
               onChange={(e) => filtros.setConta(e.target.value)}
             >
               <option value="">Todas</option>
-              {contaFiltro.map((conta) => (
+              {contas.map((conta) => (
                 <option key={conta.ID} value={conta.ID}>
                   {conta.NOME}
                 </option>
@@ -370,7 +389,7 @@ function NovaTransacao() {
                   onChange={handleChange}
                 >
                   <option value="">Selecione</option>
-                  {contaFormuladrio.map((conta) => (
+                  {contas.map((conta) => (
                     <option key={conta.ID} value={conta.ID}>
                       {conta.NOME}
                     </option>
@@ -387,7 +406,7 @@ function NovaTransacao() {
                   onChange={handleChange}
                 >
                   <option value="">Selecione</option>
-                  {contaFormuladrio.map((conta) => (
+                  {contas.map((conta) => (
                     <option key={conta.ID} value={conta.ID}>
                       {conta.NOME}
                     </option>

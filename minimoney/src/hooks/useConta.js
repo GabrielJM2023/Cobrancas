@@ -18,7 +18,7 @@ export function useConta() {
       const { data, error } = await query;
 
       if (error) throw error;
-
+      
       setConta(data || []);
     };
 
