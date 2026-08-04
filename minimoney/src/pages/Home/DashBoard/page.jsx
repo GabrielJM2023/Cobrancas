@@ -78,82 +78,20 @@ function Dashboard() {
   return (
     <div className="Card-DashBoard">
       <main className="dashboard-card" aria-labelledby="titulo-dashboard">
-        <header className="dashboard-header">
-          <h1 id="titulo-dashboard">Visão geral</h1>
-          <p>Acompanhe o resultado das suas finanças.</p>
-        </header>
+        <div className="dashboard-cabecalho">
+          <header className="dashboard-header">
+            <h1 id="titulo-dashboard">Visão geral</h1>
+            <p>Acompanhe o resultado das suas finanças.</p>
+          </header>
 
-        <section className="dashboard-filtros" aria-label="Filtros do dashboard">
-          <div className="dashboard-campo-filtro">
-            <label htmlFor="periodo-dashboard">Período</label>
-            <select
-              id="periodo-dashboard"
-              value={filtros.periodo}
-              onChange={(e) => filtros.setPeriodo(e.target.value)}
-            >
-              <option value="mes_atual">Este mês</option>
-              <option value="ultimos_30_dias">Últimos 30 dias</option>
-            </select>
-          </div>
-
-          <div className="dashboard-campo-filtro">
-            <label htmlFor="data-inicial-dashboard">Data inicial</label>
-            <input
-              id="data-inicial-dashboard"
-              type="date"
-              value={filtros.dataInicio}
-              onChange={(e) => {
-                filtros.setPeriodo("personalizado");
-                filtros.setDataInicio(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="dashboard-campo-filtro">
-            <label htmlFor="data-final-dashboard">Data final</label>
-            <input
-              id="data-final-dashboard"
-              type="date"
-              value={filtros.dataFim}
-              onChange={(e) => {
-                filtros.setPeriodo("personalizado");
-                filtros.setDataFim(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="dashboard-campo-filtro">
-            <label htmlFor="tipo-dashboard">Tipo</label>
-            <select
-              id="tipo-dashboard"
-              value={filtros.tipo || ""}
-              onChange={(e) => {
-                filtros.setTipo(e.target.value || null);
-                filtros.setCategoria("");
-              }}
-            >
-              <option value="">Todos</option>
-              <option value="E">Receitas</option>
-              <option value="S">Despesas</option>
-            </select>
-          </div>
-
-          <div className="dashboard-campo-filtro">
-            <label htmlFor="categoria-dashboard">Categoria</label>
-            <select
-              id="categoria-dashboard"
-              value={filtros.categoria || ""}
-              onChange={(e) => filtros.setCategoria(e.target.value)}
-            >
-              <option value="">Todas</option>
-              {categorias.map((categoria) => (
-                <option key={categoria.ID} value={categoria.ID}>
-                  {categoria.NOME}
-                </option>
-              ))}
-            </select>
-          </div>
-        </section>
+          <section className="dashboard-filtros" aria-label="Filtros do dashboard">
+            <div className="dashboard-campo-filtro">
+              <input
+                type="month"
+              />
+            </div>          
+          </section>
+        </div>
 
         <section className="dashboard-resumo" aria-label="Resumo financeiro">
           <CardResumo

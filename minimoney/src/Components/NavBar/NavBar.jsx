@@ -6,6 +6,7 @@ import { VscGraph } from "react-icons/vsc";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
 import { FaDoorOpen, FaBars } from "react-icons/fa";
+import { MdAccountBalance } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseCliente';
 import  LightDark from '../../Components/LightDark/LitghtDark';
@@ -92,7 +93,7 @@ function NavBar(){
           </div>
 
           <div className="menu" onClick={Conta}>
-            <CiBoxList className="icone" />
+            <MdAccountBalance className="icone" />
             <h1>Conta</h1>
           </div>
 
