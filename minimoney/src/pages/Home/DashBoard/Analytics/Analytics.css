@@ -1,0 +1,21 @@
+.Analytics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    min-width: 0;
+}
+
+.Analytics > * {
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .Analytics {
+        grid-template-columns: 1fr;
+    }
+
+    .Analytics > :first-child,
+    .Analytics > :nth-child(3) {
+        grid-column: auto;
+    }
+}

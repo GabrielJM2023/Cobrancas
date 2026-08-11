@@ -2,6 +2,10 @@
   display:flex;
   justify-content:center;
   width:100%;
+  margin-left: 280px;
+  min-height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
 }
 
 .Conta-card{

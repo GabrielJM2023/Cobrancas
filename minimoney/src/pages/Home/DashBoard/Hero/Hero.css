@@ -1,0 +1,25 @@
+.Hero {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    min-width: 0;
+}
+
+.Hero > :first-child {
+    grid-column: span 2;
+}
+
+.Hero > * {
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .Hero {
+        grid-template-columns: 1fr;
+    }
+
+    .Hero > :first-child,
+    .Hero > :nth-child(3) {
+        grid-column: auto;
+    }
+}

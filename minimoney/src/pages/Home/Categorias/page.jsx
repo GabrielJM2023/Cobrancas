@@ -146,6 +146,7 @@ const handleChange = (e) => {
                   >
                     <option value="S">Gasto</option>
                     <option value="E">Receita</option>
+                    <option value="T">Transferência</option>
                   </select>
                 
                 <p className="mensagemErro">
