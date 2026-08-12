@@ -28,16 +28,18 @@ function GraficoAnualPatrimonio() {
     <Card className="custom-card">
       <div className="chart-header">
         <h3>Evolução do Patrimônio</h3>
-        <select
-            value={ano}
-            onChange={(e) => setAno(Number(e.target.value))}
-        >
-            {anos.map((item) => (
-                <option key={item} value={item}>
-                    {item}
-                </option>
-            ))}
-        </select>
+        <div className="chart-filters">
+          <select
+              value={ano}
+              onChange={(e) => setAno(Number(e.target.value))}
+          >
+              {anos.map((item) => (
+                  <option key={item} value={item}>
+                      {item}
+                  </option>
+              ))}
+          </select>
+        </div>
       </div>
 
       <div className="chart-body">

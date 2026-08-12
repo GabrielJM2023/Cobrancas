@@ -6,7 +6,6 @@
   min-height: 100vh;
   padding: 24px;
   box-sizing: border-box;
-  
 }
 
 .categorias-card{
@@ -223,6 +222,9 @@ model select:focus {
 }
 
 @media(max-width:768px){
+  .Card-Categorias{    
+    margin-left:0;
+  }
   .categorias-header{
     display: flex;
     flex-direction: column;

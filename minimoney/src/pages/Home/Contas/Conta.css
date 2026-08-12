@@ -232,6 +232,9 @@ model select:focus {
 }
 
 @media(max-width:768px){
+  .Card-Conta{    
+    margin-left:0;
+  }
   .Conta-header{
     display: flex;
     flex-direction: column;
