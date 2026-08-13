@@ -18,7 +18,6 @@ export function useMinhaConta() {
         .select("*")
         .eq("ID_USUARIO_FK", userID)
       
-        console.log("Contas:", data);
       if (error) {
         console.error(error);
         setDados([]);

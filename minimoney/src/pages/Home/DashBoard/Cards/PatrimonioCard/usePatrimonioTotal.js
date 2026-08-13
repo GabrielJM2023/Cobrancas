@@ -16,8 +16,6 @@ export function usePatrimonioTotal() {
         .eq("ID_USUARIO_FK", userID)
         .single();
 
-      console.log(data);
-      console.log(error);
       if (!data) {
         setPatrimonio([]);
       } else {

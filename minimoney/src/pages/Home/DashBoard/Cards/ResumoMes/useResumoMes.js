@@ -13,7 +13,6 @@ export function useResumoMes(ano, mes) {
 
     async function carregar() {
       setLoading(true);
-      console.log("Carregando resumo do mês para o usuário:", userID, "Ano:", ano, "Mês:", mes);
       const { data, error } = await supabase.rpc(
         "GET_RESUMO_MES",
         {

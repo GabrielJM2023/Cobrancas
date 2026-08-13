@@ -21,7 +21,6 @@ export function useGastoCategoria(ano, mes) {
           p_mes: mes
         });
       
-      console.log("Dados do fluxo de caixa:", data);
       if (error) {
         console.error(error);
         setDados([]);

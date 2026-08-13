@@ -20,7 +20,6 @@ export function useFluxoCaixa(ano) {
           p_ano: ano,
         }
       );
-      console.log("Dados do fluxo de caixa:", data);
       if (error) {
         console.error(error);
         setDados([]);

@@ -1,6 +1,6 @@
 .custom-card{
   border-radius:20px;
   backdrop-filter:blur(16px);
-  padding:2rem;
+  padding:1rem;
   border:1px solid var(--color-border);
 }
