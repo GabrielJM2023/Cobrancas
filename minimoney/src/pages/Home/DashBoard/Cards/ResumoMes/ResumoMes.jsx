@@ -6,7 +6,6 @@ import { useState } from 'react';
 import {
     Pie,
     PieChart,
-    Tooltip,
     ResponsiveContainer,
     Cell,
     Sector

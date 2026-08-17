@@ -10,7 +10,7 @@ export function usePatrimonioTotal() {
     if (!userID) return;
     
     const carregar = async () => {      
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("vw_patrimonio")
         .select("*")
         .eq("ID_USUARIO_FK", userID)

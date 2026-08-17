@@ -355,6 +355,7 @@
 
 @media (max-width: 768px) {
   .Card-NovaTransacao {
+    margin-left: 0; 
     align-items: flex-start;
     padding: 4.75rem 1rem 1rem;
     box-sizing: border-box;

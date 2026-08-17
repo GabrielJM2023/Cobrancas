@@ -234,6 +234,36 @@ label {
   font-size:1rem;
 }
 
+select {
+    gap: 8px;
+  min-width: 90px;
+  padding: 0 10px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  background: var(--color-card-background);
+  color: var(--color-text);
+
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  outline: none;
+}
+
+select:hover {
+    border-color: var(--color-confirmation);
+}
+
+select:focus {
+    border-color: var(--color-confirmation);
+}
+
+select option {
+    background: var(--color-card-background);
+    color: var(--color-text);
+}
 
 @media (max-width:768px){
   .input-wrapper input{

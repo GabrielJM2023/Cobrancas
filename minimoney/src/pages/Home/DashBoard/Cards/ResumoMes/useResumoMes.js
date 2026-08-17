@@ -21,7 +21,7 @@ export function useResumoMes(ano, mes) {
           p_mes: mes,
         }
       );
-      console.log("Dados do resumo do mês:", data);
+      
       if (error) {
         console.error(error);
         setDados([]);
