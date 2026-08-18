@@ -1,9 +1,11 @@
 import "./MinhaConta.css";
 import Card from '../../../../../Components/Card/Card'
 import { useMinhaConta } from './useMinhaConta';
+import { useValores } from '../../../../../context/ValoresContext';
 
 function MinhaConta() {   
-   const { dados } = useMinhaConta();    
+   const { dados } = useMinhaConta();
+    const { valoresVisiveis } = useValores();    
     
   return (
     <Card className="custom-card">
@@ -30,9 +32,13 @@ function MinhaConta() {
                                         negativo ? "negativo" : "positivo"
                                     }`}
                                 >
-                                    R$ {Math.abs(patrimonio).toLocaleString("pt-BR", {
-                                        minimumFractionDigits: 2
-                                    })}
+                                    {valoresVisiveis ? (
+                                        `R$ ${Math.abs(patrimonio).toLocaleString("pt-BR", {
+                                            minimumFractionDigits: 2
+                                        })}`
+                                    ) : (
+                                        "••••••••"
+                                    )}
                                 </span>
                             </div>
 

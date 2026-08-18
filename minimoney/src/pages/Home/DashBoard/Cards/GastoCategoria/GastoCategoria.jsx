@@ -2,6 +2,7 @@ import "./GastoCategoria.css";
 import { useState } from 'react';
 import Card from '../../../../../Components/Card/Card'
 import { useGastoCategoria } from './useGastoCategoria';
+import { useValores } from '../../../../../context/ValoresContext';
 
 function GastoCategoria() {   
     const anoAtual = new Date().getFullYear();
@@ -13,7 +14,7 @@ function GastoCategoria() {
     const mesAtual = new Date().getMonth() + 1;
     const [mes, setMes] = useState(mesAtual);
     const { dados } = useGastoCategoria(ano, mes);    
-    
+    const { valoresVisiveis } = useValores();
   return (
     <Card className="custom-card">
         <div className="chart-header">
@@ -68,9 +69,13 @@ function GastoCategoria() {
                         </div>
 
                         <div className="categoria-valor">
-                            R$ {Number(item.valor).toLocaleString("pt-BR", {
-                                minimumFractionDigits: 2
-                            })}
+                            {valoresVisiveis ? (
+                                `R$ ${Number(item.valor).toLocaleString("pt-BR", {
+                                    minimumFractionDigits: 2
+                                })}`
+                            ) : (
+                                "••••••••"
+                            )}
                         </div>
 
                     </div>

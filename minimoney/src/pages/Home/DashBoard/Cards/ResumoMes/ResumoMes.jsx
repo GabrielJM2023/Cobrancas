@@ -2,6 +2,7 @@ import "./ResumoMes.css";
 import Card from '../../../../../Components/Card/Card'
 import { useResumoMes } from './useResumoMes';
 import { useState } from 'react';
+import { useValores } from '../../../../../context/ValoresContext';
 
 import {
     Pie,
@@ -19,6 +20,8 @@ function ResumoMes() {
     for (let ano = anoAtual +2 ; ano >= 2020; ano--) {
         anos.push(ano);
     }
+    
+    const { valoresVisiveis } = useValores();  
 
     const mesAtual = new Date().getMonth() + 1;
     const [mes, setMes] = useState(mesAtual);
@@ -47,8 +50,8 @@ function ResumoMes() {
             payload
         } = props;
 
-        const valor = Number(payload.VALOR);
-        const tipo = nomesTipo[payload.TIPO_TRANSACAO];
+    const valor = Number(payload.VALOR);
+    const tipo = nomesTipo[payload.TIPO_TRANSACAO];
         return (
             <g>
                 <text
@@ -69,9 +72,13 @@ function ResumoMes() {
                     fill="var(--color-text)"
                     fontSize={14}
                 >
-                    R$ {valor.toLocaleString("pt-BR", {
-                        minimumFractionDigits: 2
-                    })}
+                    {valoresVisiveis ? (
+                        `R$ ${valor.toLocaleString("pt-BR", {
+                            minimumFractionDigits: 2
+                        })}`
+                    ) : (
+                        "••••••••"
+                    )}
                 </text>
 
                 <Sector

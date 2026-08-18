@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Card from '../../../../../Components/Card/Card'
 import { useFluxoCaixa } from './useFluxoCaixa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useValores } from '../../../../../context/ValoresContext';
 
 function FluxoCaixa() {   
     const anoAtual = new Date().getFullYear();
@@ -18,20 +19,36 @@ function FluxoCaixa() {
     const dadosGrafico = dados.reduce((acc, item) => {
     let mes = acc.find((x) => x.MES === item.MES);
 
-    if (!mes) {
-        mes = {
-            MES: item.MES,
-            Entrada: 0,
-            Saida: 0
-        };
+        if (!mes) {
+            mes = {
+                MES: item.MES,
+                Entrada: 0,
+                Saida: 0
+            };
 
-        acc.push(mes);
-    }
+            acc.push(mes);
+        }
 
-    mes[item.TIPO] = Math.abs(Number(item.VALOR));
+        mes[item.TIPO] = Math.abs(Number(item.VALOR));
 
-    return acc;
-}, []); 
+        return acc;
+    }, []); 
+
+    const { valoresVisiveis } = useValores();
+    const dadosGraficoFormatados = dadosGrafico.map((item) => ({
+        ...item,
+        Entrada: valoresVisiveis ? item.Entrada : 0,
+        Saida: valoresVisiveis ? item.Saida : 0
+    }));
+    const formatarValor = (valor) => {
+        if (!valoresVisiveis) {
+            return "••••••";
+        }
+
+        return `R$ ${Number(valor).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2
+        })}`;
+    };
   return (
     <Card className="custom-card">
       <div className="chart-header">
@@ -52,15 +69,23 @@ function FluxoCaixa() {
 
         <div className="chart-body">
             <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={dadosGrafico}>
+                <BarChart data={dadosGraficoFormatados}>
 
                     <CartesianGrid strokeDasharray="3 3" />
 
                     <XAxis dataKey="MES" />
 
-                    <YAxis />
+                    <YAxis
+                        tickFormatter={(valor) =>
+                            valoresVisiveis
+                                ? `R$ ${Number(valor).toLocaleString("pt-BR")}`
+                                : "••••"
+                        }
+                    />
 
-                    <Tooltip />
+                    <Tooltip
+                        formatter={(valor) => formatarValor(valor)}
+                    />
 
                     <Legend />
 
