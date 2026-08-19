@@ -239,15 +239,36 @@ model select:focus {
   .item-categoria h3{
     font-size:1rem;
   }
+
   .badge{
     width: 30px;
     font-size: 0.75rem;
     padding:4px 10px;
   }
+  
   .modal{
     width: 240px;
+    padding-top:0;
+    padding-left:1rem;
+    padding-right:1rem;
+    padding-bottom:1rem;
   }
   .botoes-Categoria{
     display: flex;
+  }
+  .categorias-card{
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+  }
+
+  .botoes-Categoria button{
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .botoes-Categoria {
+    flex-wrap: wrap;
+    gap:5px;
   }
 }

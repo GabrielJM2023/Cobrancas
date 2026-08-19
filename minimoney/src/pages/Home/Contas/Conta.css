@@ -232,8 +232,9 @@ model select:focus {
 }
 
 @media(max-width:768px){
-  .Card-Conta{        
-    margin-left:0;
+  .Card-Conta{    
+    margin:0;
+    padding:1rem;
   }
   
   .Conta-header{
@@ -258,7 +259,9 @@ model select:focus {
   .modal{
     width: 240px;
   }
+  
   .botoes-Conta{
-    display: flex;
+    flex-wrap: wrap;
+    gap:5px;
   }
 }

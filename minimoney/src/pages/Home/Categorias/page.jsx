@@ -154,25 +154,22 @@ const handleChange = (e) => {
                 </p>
 
                 <div className="botoes-Categoria">
+                  {categoriaEditando.ID && (
+                      <Button
+                          children="Excluir"
+                          onClick={() => excluirCategoria(categoriaEditando.ID)}
+                      />
+                  )}
 
-                    {categoriaEditando.ID && (
+                  <Button
+                      children="Cancelar"
+                      onClick={fecharModal}
+                  />
 
-                        <Button
-                            children="Excluir"
-                            onClick={() => excluirCategoria(categoriaEditando.ID)}
-                        />
-
-                    )}
-
-                    <Button
-                        children="Cancelar"
-                        onClick={fecharModal}
-                    />
-
-                    <Button
-                        children="Salvar"
-                        onClick={salvarCategoria}
-                    />
+                  <Button
+                      children="Salvar"
+                      onClick={salvarCategoria}
+                  />
 
                 </div>
 

@@ -10,7 +10,7 @@ function PatrimonioCard() {
   return (
     <Card className="custom-card PatrimonioCard">
       <div>
-        <p>
+        <p className="card-title">
           {valoresVisiveis ? (
             Number(patrimonio?.patrimonio ?? 0).toLocaleString("pt-BR", {
               style: "currency",
