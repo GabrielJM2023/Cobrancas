@@ -9,7 +9,6 @@ import { FaDoorOpen, FaBars } from "react-icons/fa";
 import { MdAccountBalance } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseCliente';
-import  LightDark from '../../Components/LightDark/LitghtDark';
 import { useState } from "react";
 
 function NavBar(){
@@ -95,10 +94,6 @@ function NavBar(){
           <div className="menu" onClick={Conta}>
             <MdAccountBalance className="icone" />
             <h1>Conta</h1>
-          </div>
-
-          <div className="menu menu-LightDark">
-            <LightDark />
           </div>
 
           <div className="menu menu-sair" onClick={Sair}>
