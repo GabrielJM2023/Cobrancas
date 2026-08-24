@@ -35,7 +35,7 @@ function NovaTransacao() {
   const contas = useConta();  
   const categoriasFormulario = useCategorias(selecionada?.TIPO);
   const transacaoGrid = useTransacaoQuery(filtros);
-  const transacaoCampo = useNovaTransacao();
+  const { transacaoCampo, loading } = useNovaTransacao();
 
   const transacoesVisiveis = useMemo(() => {
     const termo = busca.trim().toLocaleLowerCase("pt-BR");
@@ -480,9 +480,15 @@ function NovaTransacao() {
             {pErro && <p className="mensagemErro">{pErro}</p>}
 
             <div className="botoes-transacao">
-              {selecionada.ID && <Button onClick={excluirTransacao}>Excluir</Button>}
-              <Button onClick={fecharModal}>Cancelar</Button>
-              <Button onClick={salvarTransacao}>Salvar</Button>
+              {selecionada.ID && <Button onClick={excluirTransacao} disabled={loading}>
+                {loading ? "Excluindo..." : "Excluir"}
+              </Button>}
+              <Button onClick={fecharModal} disabled={loading}>
+                Cancelar
+              </Button>
+              <Button onClick={salvarTransacao} disabled={loading}>
+                {loading ? "Salvando..." : "Salvar"}
+              </Button>
             </div>
           </section>
         </div>

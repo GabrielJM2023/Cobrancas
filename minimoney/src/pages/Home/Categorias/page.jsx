@@ -12,7 +12,7 @@ function Categorias() {
   const [categoriaEditando, setCategoriaEditando] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const categoriaGrid = useCategoriaQuery();
-  const categoriaCampo = useNovaCategoria();
+  const { categoriaCampo, loading } = useNovaCategoria();
 
   const fecharModal = () => {
     setCategoriaEditando(null);
@@ -158,17 +158,20 @@ const handleChange = (e) => {
                       <Button
                           children="Excluir"
                           onClick={() => excluirCategoria(categoriaEditando.ID)}
+                          disabled={loading}
                       />
                   )}
 
                   <Button
                       children="Cancelar"
                       onClick={fecharModal}
+                      disabled={loading}
                   />
 
                   <Button
                       children="Salvar"
                       onClick={salvarCategoria}
+                      disabled={loading}
                   />
 
                 </div>

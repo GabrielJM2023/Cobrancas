@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabaseCliente";
 import { useUserId } from "./useUserID";
+import { useState } from "react";
 
 const adicionarMeses = (data, meses) => {
   const d = new Date(data);
@@ -7,12 +8,15 @@ const adicionarMeses = (data, meses) => {
   return d.toISOString().split("T")[0];
 };
 
-export function useNovaTransacao() {
+export function useNovaTransacao() {  
+  const [loading, setLoading] = useState(false);
+
   const userID = useUserId();  
   
   const salvar = async (transacao) => {
     if (!userID) return;
     
+    setLoading(true);
     const { ID, CATEGORIA, CONTA_ORIGEM, CONTA_DESTINO, ...dados } = transacao;
     if (ID) {        
       await supabase
@@ -41,17 +45,22 @@ export function useNovaTransacao() {
         }
       }
     };
+    
+    setLoading(false);
   }
 
-  const excluir = async (id) => {
+  const excluir = async (id) => {    
+    setLoading(true);
     await supabase
       .from("TRANSACAO")
       .delete()
       .eq("ID", id);
+    setLoading(false);
   };
 
   return {
     salvar,
     excluir,
+    loading,
   }; 
 }

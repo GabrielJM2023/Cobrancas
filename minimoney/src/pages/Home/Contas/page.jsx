@@ -12,7 +12,7 @@ function Conta() {
   const [ContaEditando, setContaEditando] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const ContaGrid = useContaQuery();
-  const ContaCampo = useNovaConta();
+  const { ContaCampo, loading } = useNovaConta();
 
   const fecharModal = () => {
     setContaEditando(null);
@@ -158,15 +158,18 @@ const handleChange = (e) => {
                         <Button
                             children="Excluir"
                             onClick={() => excluirConta(ContaEditando.ID)}
+                            disabled={loading}
                         />
                     )}
                     <Button
                         children="Cancelar"
                         onClick={fecharModal}
+                        disabled={loading}
                     />
                     <Button
                         children="Salvar"
                         onClick={salvarConta}
+                        disabled={loading}
                     />
                 </div>
             </div>
