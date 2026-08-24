@@ -9,31 +9,37 @@ export function useNovaCategoria() {
   const salvar = async ({ ID, NOME, TIPO }) => {
     if (!userId) return;
     setLoading(true);
-    if (ID) {
+    try{
+      if (ID) {
+        await supabase
+          .from("CATEGORIA")
+          .update({ NOME, TIPO })
+          .eq("ID", ID);
+        return;
+      }
+
       await supabase
         .from("CATEGORIA")
-        .update({ NOME, TIPO })
-        .eq("ID", ID);
-      return;
+        .insert({
+          NOME,
+          TIPO,
+          ID_USUARIO_FK: userId,
+        });
+    } finally {
+      setLoading(false);
     }
-
-    await supabase
-      .from("CATEGORIA")
-      .insert({
-        NOME,
-        TIPO,
-        ID_USUARIO_FK: userId,
-      });
-    setLoading(false);
   };
 
   const excluir = async (id) => {
     setLoading(true);
+    try{
     await supabase
       .from("CATEGORIA")
       .delete()
       .eq("ID", id);
-    setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return { salvar, excluir, loading };

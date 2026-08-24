@@ -12,7 +12,7 @@ function Conta() {
   const [ContaEditando, setContaEditando] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const ContaGrid = useContaQuery();
-  const { ContaCampo, loading } = useNovaConta();
+  const { salvar, excluir, loading } = useNovaConta();
 
   const fecharModal = () => {
     setContaEditando(null);
@@ -47,7 +47,7 @@ const handleChange = (e) => {
 };
 
   const excluirConta = async (ID) => {
-    await ContaCampo.excluir(ID);
+    await excluir(ID);
     fecharModal();
     ContaGrid.carregar();
   };
@@ -60,7 +60,7 @@ const handleChange = (e) => {
     return;
   }
   
-  await ContaCampo.salvar(ContaEditando);
+  await salvar(ContaEditando);
 
   fecharModal();
   ContaGrid.carregar();

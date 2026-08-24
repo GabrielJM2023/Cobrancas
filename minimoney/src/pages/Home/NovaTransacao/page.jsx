@@ -35,7 +35,7 @@ function NovaTransacao() {
   const contas = useConta();  
   const categoriasFormulario = useCategorias(selecionada?.TIPO);
   const transacaoGrid = useTransacaoQuery(filtros);
-  const { transacaoCampo, loading } = useNovaTransacao();
+  const { salvar, excluir, loading } = useNovaTransacao();
 
   const transacoesVisiveis = useMemo(() => {
     const termo = busca.trim().toLocaleLowerCase("pt-BR");
@@ -163,13 +163,13 @@ function NovaTransacao() {
         break;
     }
 
-    await transacaoCampo.salvar(selecionada);
+    await salvar(selecionada);
     fecharModal();
     transacaoGrid.carregar();
   };
 
   const excluirTransacao = async () => {
-    await transacaoCampo.excluir(selecionada.ID);
+    await excluir(selecionada.ID);
     fecharModal();
     transacaoGrid.carregar();
   };

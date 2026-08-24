@@ -12,7 +12,7 @@ function Categorias() {
   const [categoriaEditando, setCategoriaEditando] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const categoriaGrid = useCategoriaQuery();
-  const { categoriaCampo, loading } = useNovaCategoria();
+  const { salvar, excluir, loading } = useNovaCategoria();
 
   const fecharModal = () => {
     setCategoriaEditando(null);
@@ -45,7 +45,7 @@ const handleChange = (e) => {
 };
 
   const excluirCategoria = async (ID) => {
-    await categoriaCampo.excluir(ID);
+    await excluir(ID);
     fecharModal();
     categoriaGrid.carregar();
   };
@@ -58,7 +58,7 @@ const handleChange = (e) => {
     return;
   }
 
-  await categoriaCampo.salvar(categoriaEditando);
+  await salvar(categoriaEditando);
 
   fecharModal();
   categoriaGrid.carregar();

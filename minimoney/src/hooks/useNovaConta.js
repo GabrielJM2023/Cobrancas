@@ -8,33 +8,49 @@ export function useNovaConta() {
 
   const salvar = async ({ ID, NOME, ATIVO }) => {
     if (!userId) return;
-    if (ID) {
+
+    setLoading(true);
+
+    try {
+      if (ID) {
+        await supabase
+          .from("CONTA")
+          .update({ NOME, ATIVO })
+          .eq("ID", ID);
+
+        return;
+      }
+
       await supabase
         .from("CONTA")
-        .update({ NOME, ATIVO })
-        .eq("ID", ID);
-      return;
-    }
+        .insert({
+          NOME,
+          ATIVO,
+          ID_USUARIO_FK: userId,
+        });
 
-    setLoading(true);    
-    await supabase
-      .from("CONTA")
-      .insert({
-        NOME,
-        ATIVO,
-        ID_USUARIO_FK: userId,
-      });
-    setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const excluir = async (id) => {
     setLoading(true);
-    await supabase
-      .from("CONTA")
-      .delete()
-      .eq("ID", id);
-    setLoading(false);  
+
+    try {
+      await supabase
+        .from("CONTA")
+        .delete()
+        .eq("ID", id);
+
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return { salvar, excluir, loading };
+  return {
+    salvar,
+    excluir,
+    loading,
+  };
 }
