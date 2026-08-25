@@ -59,6 +59,15 @@ function Logar(){
                   />
                 </div>
               </div>
+              <p>
+                <button
+                  type="button"
+                  className="link-esqueceu-senha"
+                  onClick={() => navigate("/esqueci-senha")}
+                >
+                  Esqueci minha senha
+                </button>
+              </p>
               <div className="mensagemErro">
                 {error && <p>{error}</p>}
               </div>

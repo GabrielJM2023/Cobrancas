@@ -66,3 +66,18 @@
   min-height: 48px;
   border-radius: 999px;
 }
+
+.link-esqueceu-senha {
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  color: var(--color-primary);
+
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.link-esqueceu-senha:hover {
+  text-decoration: underline;
+}
