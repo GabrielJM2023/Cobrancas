@@ -12,6 +12,7 @@ import SemConexao from './pages/SemConexao/page';
 import Dashboard from './pages/Home/DashBoard/page';
 import Conta from './pages/Home/Contas/page';
 import EsqueciSenha from './pages/Login/EsqueciSenha';
+import NovaSenha from './pages/Login/NovaSenha';
 
 import { PrivateRoute } from './Components/Private/PrivateRoute';
 import { AuthProvider } from './context/AuthContext'; 
@@ -33,7 +34,7 @@ root.render(
                   <Route path="/Login" element={<Login/>}/>        
                   <Route path="/ConfirmarEmail" element={<ConfirmarEmail/>}/>
                   <Route path="/esqueci-senha" element={<EsqueciSenha/>}/>
-
+                  <Route path="/nova-senha" element={<NovaSenha/>}/>
                   <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>}>
                     <Route path="categorias" element={<Categorias />} />
                     <Route path="novatransacao" element={<NovaTransacao />} />
