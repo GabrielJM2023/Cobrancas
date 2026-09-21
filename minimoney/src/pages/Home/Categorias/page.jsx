@@ -7,6 +7,12 @@ import { IoMdAdd } from "react-icons/io";
 import { useCategoriaQuery } from "../../../hooks/useCategoriaQuery";
 import { useNovaCategoria } from "../../../hooks/useNovaCategoria";
 
+const tiposCategoria = {
+  E: { nome: "Receita", classe: "receita" },
+  S: { nome: "Gasto", classe: "gasto" },
+  T: { nome: "Transferência", classe: "transferencia" },
+};
+
 function Categorias() {
   const [pErro, setMensagemErro] = useState("");
   const [categoriaEditando, setCategoriaEditando] = useState(null);
@@ -103,14 +109,10 @@ const handleChange = (e) => {
                       <h3>{cat.NOME}</h3>
                       <span
                         className={`badge ${
-                                    cat.TIPO === "E"
-                                      ? "receita"
-                                      : "gasto"
-                              }`}
+                          tiposCategoria[cat.TIPO]?.classe || "transferencia"
+                        }`}
                       >
-                        {cat.TIPO === "E"
-                                ? "Receita"
-                                : "Gasto"}
+                        {tiposCategoria[cat.TIPO]?.nome || "Transferência"}
                       </span>
                       <FaFilePen className="editar-categoria" onClick={() => editarCategoria(cat)}/>
                     </div>

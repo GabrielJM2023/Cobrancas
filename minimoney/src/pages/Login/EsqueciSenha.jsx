@@ -67,7 +67,7 @@ function EsqueciSenha() {
             {sucesso && (
               <div className="mensagemSucesso">
                 <p>
-                  E-mail enviado! Verifique sua caixa de entrada.
+                  Se houver uma conta com este e-mail, enviamos um link para redefinir a senha.
                 </p>
               </div>
             )}
@@ -76,7 +76,7 @@ function EsqueciSenha() {
 
               <Button
                 type="button"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/Login")}
               >
                 Voltar
               </Button>

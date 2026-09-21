@@ -26,6 +26,12 @@ const formatarData = (data) => {
   );
 };
 
+const tiposTransacao = {
+  E: { nome: "Receita", classe: "receita" },
+  S: { nome: "Gasto", classe: "gasto" },
+  T: { nome: "Transferência", classe: "transferencia" },
+};
+
 function NovaTransacao() {
   const filtros = useDashboardFilters();
   const [selecionada, setSelecionada] = useState(null);
@@ -307,21 +313,27 @@ function NovaTransacao() {
               >
                 <span className="transacao-principal">
                   <strong>{transacao.DESCRICAO || "Sem descrição"}</strong>
-                  <small>{transacao.CATEGORIA?.NOME || "Sem categoria"}</small>
+                  <small>
+                    {transacao.TIPO === "T"
+                      ? `${transacao.CONTA_ORIGEM?.NOME || "Sem origem"} → ${
+                          transacao.CONTA_DESTINO?.NOME || "Sem destino"
+                        }`
+                      : transacao.CATEGORIA?.NOME || "Sem categoria"}
+                  </small>
                 </span>
 
                 <span className="transacao-detalhes">
                   <span
                     className={`badge-transacao ${
-                      transacao.TIPO === "S" ? "gasto" : "receita"
+                      tiposTransacao[transacao.TIPO]?.classe || "transferencia"
                     }`}
                   >
-                    {transacao.TIPO === "S" ? "Gasto" : "Receita"}
+                    {tiposTransacao[transacao.TIPO]?.nome || "Transferência"}
                   </span>
                   <span className="data-transacao">{formatarData(transacao.DATA)}</span>
                   <strong
                     className={`valor-transacao ${
-                      transacao.TIPO === "S" ? "gasto" : "receita"
+                      tiposTransacao[transacao.TIPO]?.classe || "transferencia"
                     }`}
                   >
                     {formatarMoeda(transacao.VALOR)}

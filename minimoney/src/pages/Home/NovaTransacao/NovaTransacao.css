@@ -243,6 +243,14 @@
   background: #ff4d4d22;
 }
 
+.transferencia {
+  color: #4f80ff;
+}
+
+.badge-transacao.transferencia {
+  background: #4f80ff22;
+}
+
 .data-transacao {
   font-size: 0.9rem;
   text-align: center;

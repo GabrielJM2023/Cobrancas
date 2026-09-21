@@ -11,6 +11,7 @@ import NovaTransacao from './pages/Home/NovaTransacao/page';
 import SemConexao from './pages/SemConexao/page';
 import Dashboard from './pages/Home/DashBoard/page';
 import Conta from './pages/Home/Contas/page';
+import Perfil from './pages/Home/Perfil/perfil';
 import EsqueciSenha from './pages/Login/EsqueciSenha';
 import NovaSenha from './pages/Login/NovaSenha';
 
@@ -40,6 +41,7 @@ root.render(
                     <Route path="novatransacao" element={<NovaTransacao />} />
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="conta" element={<Conta/>} />
+                    <Route path="perfil" element={<Perfil/>} />
                   </Route>
 
                   <Route path="/sem-conexao" element={<SemConexao/>}/>

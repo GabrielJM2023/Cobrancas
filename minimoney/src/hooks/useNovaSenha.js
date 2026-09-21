@@ -1,42 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseCliente";
+import { useAuth } from "../context/AuthContext";
 
 export function useNovaSenha() {
   const navigate = useNavigate();
+  const {
+    user,
+    loading: carregandoAutenticacao,
+    isPasswordRecovery,
+    clearPasswordRecovery,
+  } = useAuth();
 
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [recuperacao, setRecuperacao] = useState(false);
-
-  useEffect(() => {
-    const detectarRecuperacao = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (session) {
-        setRecuperacao(true);
-      }
-    };
-
-    detectarRecuperacao();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") {
-        setRecuperacao(true);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+  const recuperacao = Boolean(user && isPasswordRecovery);
 
   const alterarSenha = async () => {
     setError(null);
@@ -68,7 +49,11 @@ export function useNovaSenha() {
         return;
       }
 
-      navigate("/");
+      clearPasswordRecovery();
+      await supabase.auth.signOut();
+      navigate("/Login", { replace: true });
+    } catch (erro) {
+      setError("N\u00e3o foi poss\u00edvel alterar a senha. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -83,5 +68,6 @@ export function useNovaSenha() {
     loading,
     error,
     recuperacao,
+    carregandoAutenticacao,
   };
 }

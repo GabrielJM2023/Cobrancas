@@ -1,0 +1,87 @@
+.Perfil {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  margin-left: 280px;
+  padding: 24px;
+}
+
+.perfil-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  width: min(100%, 920px);
+  height: fit-content;
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+}
+
+.perfil-cabecalho,
+.perfil-mensagem {
+  grid-column: 1 / -1;
+}
+
+.perfil-cabecalho h1,
+.perfil-cabecalho p,
+.perfil-formulario h2,
+.perfil-ajuda {
+  margin: 0;
+}
+
+.perfil-cabecalho h1 {
+  font-size: 2rem;
+}
+
+.perfil-cabecalho p,
+.perfil-ajuda {
+  margin-top: 0.35rem;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.perfil-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.perfil-formulario .custom-button {
+  margin: 0;
+}
+
+.perfil-mensagem {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.perfil-mensagem.erro {
+  color: var(--color-negation);
+}
+
+.perfil-mensagem.sucesso {
+  color: var(--color-confirmation);
+}
+
+@media (max-width: 768px) {
+  .Perfil {
+    min-height: calc(100dvh - 4rem);
+    margin-left: 0;
+    padding: 4.75rem 1rem 1rem;
+  }
+
+  .perfil-card {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+}

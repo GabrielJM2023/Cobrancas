@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../../Components/Button/button";
+import { useNavigate } from "react-router-dom";
 
 import { FaLock } from "react-icons/fa";
 
@@ -8,6 +9,7 @@ import { useNovaSenha } from "../../hooks/useNovaSenha";
 import "./Login.css";
 
 function NovaSenha() {
+  const navigate = useNavigate();
   const {
     novaSenha,
     setNovaSenha,
@@ -17,6 +19,7 @@ function NovaSenha() {
     loading,
     error,
     recuperacao,
+    carregandoAutenticacao,
   } = useNovaSenha();
 
   const handleSubmit = async (e) => {
@@ -24,6 +27,18 @@ function NovaSenha() {
 
     await alterarSenha();
   };
+
+  if (carregandoAutenticacao) {
+    return (
+      <div className="LoginPage">
+        <div className="card-Login">
+          <div className="card-Central-Login">
+            <p>{"Validando o link de recupera\u00e7\u00e3o..."}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!recuperacao) {
     return (
@@ -38,6 +53,15 @@ function NovaSenha() {
                 O link de recuperação não é válido ou
                 já expirou.
               </p>
+            </div>
+
+            <div className="card-Button login">
+              <Button type="button" onClick={() => navigate("/esqueci-senha")}>
+                Solicitar novo link
+              </Button>
+              <Button type="button" onClick={() => navigate("/Login")}>
+                Ir para login
+              </Button>
             </div>
 
           </div>
@@ -71,6 +95,8 @@ function NovaSenha() {
                   placeholder="Nova senha"
                   value={novaSenha}
                   onChange={(e) => setNovaSenha(e.target.value)}
+                  autoComplete="new-password"
+                  required
                 />
               </div>
             </div>
@@ -88,6 +114,8 @@ function NovaSenha() {
                   onChange={(e) =>
                     setConfirmarSenha(e.target.value)
                   }
+                  autoComplete="new-password"
+                  required
                 />
               </div>
             </div>

@@ -5,7 +5,7 @@ import Teste from './favicon.ico';
 import { VscGraph } from "react-icons/vsc";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
-import { FaDoorOpen, FaBars } from "react-icons/fa";
+import { FaDoorOpen, FaBars, FaRegUserCircle } from "react-icons/fa";
 import { MdAccountBalance } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseCliente';
@@ -32,6 +32,11 @@ function NavBar(){
 
   const Conta = () => {
     navigate("/home/conta");
+    setMenuAberto(false);
+  }
+
+  const Perfil = () => {
+    navigate("/home/perfil");
     setMenuAberto(false);
   }
 
@@ -94,6 +99,11 @@ function NavBar(){
           <div className="menu" onClick={Conta}>
             <MdAccountBalance className="icone" />
             <h1>Conta</h1>
+          </div>
+
+          <div className="menu" onClick={Perfil}>
+            <FaRegUserCircle className="icone" />
+            <h1>Perfil</h1>
           </div>
 
           <div className="menu menu-sair" onClick={Sair}>

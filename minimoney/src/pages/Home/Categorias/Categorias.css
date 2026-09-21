@@ -170,6 +170,11 @@
   background:#ff4d4d22;
 }
 
+.badge.transferencia{
+  color:#4f80ff;
+  background:#4f80ff22;
+}
+
 .item-categoria:hover{
   transform:translateY(-2px);
   border-color:var(--color-primary);
