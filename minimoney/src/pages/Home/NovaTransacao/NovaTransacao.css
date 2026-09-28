@@ -105,6 +105,23 @@
   border-radius: 14px;
 }
 
+.btn-gerar-relatorio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: auto;
+  height: 48px;
+  margin: 0;
+  padding: 0 1rem;
+  border-radius: 14px;
+  letter-spacing: 0.04em;
+}
+
+.btn-gerar-relatorio .transacao-icone {
+  font-size: 1.1rem;
+}
+
 .transacao-icone {
   color: var(--color-text);
   font-size: 1.5rem;
@@ -386,6 +403,18 @@
     width: 100%;
     min-width: 0;
   }
+
+  .btn-gerar-relatorio {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border-radius: 14px;
+}
 
   .transacoes-filtros {
     grid-template-columns: repeat(2, minmax(0, 1fr));

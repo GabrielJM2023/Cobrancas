@@ -18,6 +18,7 @@ export function useTransacaoQuery(filtros) {
     setCarregando(true);
     if (!userId){
       setTransacao([]);
+      setCarregando(false);
       return;
     } 
     
@@ -76,4 +77,4 @@ export function useTransacaoQuery(filtros) {
   }, [carregar]);
 
     return { transacoes, carregar, carregando };
-}    
+}

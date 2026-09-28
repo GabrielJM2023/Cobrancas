@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import "./NovaTransacao.css";
 import Button from "../../../Components/Button/button";
 import { NumericFormat } from "react-number-format";
-import { FaFilePen } from "react-icons/fa6";
+import { FaFilePen, FaRegFileLines } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { Riple } from "react-loading-indicators";
 
@@ -11,6 +11,8 @@ import { useCategorias } from "../../../hooks/useCategorias";
 import { useTransacaoQuery } from "../../../hooks/useTransacaoQuery";
 import { useNovaTransacao } from "../../../hooks/useNovaTransacao";
 import { useConta } from "../../../hooks/useConta"
+import ModalRelatorioTransacoes from "../../../Components/ModalRelatorioTransacoes/ModalRelatorioTransacoes";
+import { gerarRelatorioTransacoes } from "../../../utils/gerarRelatorioTransacoes";
 
 const formatarMoeda = (valor) =>
   new Intl.NumberFormat("pt-BR", {
@@ -37,6 +39,7 @@ function NovaTransacao() {
   const [selecionada, setSelecionada] = useState(null);
   const [pErro, setMensagemErro] = useState("");
   const [busca, setBusca] = useState("");
+  const [modalRelatorioAberto, setModalRelatorioAberto] = useState(false);
   const categoriasFiltro = useCategorias(filtros.tipo);
   const contas = useConta();  
   const categoriasFormulario = useCategorias(selecionada?.TIPO);
@@ -53,6 +56,22 @@ function NovaTransacao() {
         .some((valor) => valor.toLocaleLowerCase("pt-BR").includes(termo))
     );
   }, [busca, transacaoGrid.transacoes]);
+
+  const relatorio = useMemo(() => {
+    const categoriaSelecionada = categoriasFiltro.find(
+      (categoria) => String(categoria.ID) === String(filtros.categoria)
+    )?.NOME;
+    const contaSelecionada = contas.find(
+      (conta) => String(conta.ID) === String(filtros.conta)
+    )?.NOME;
+
+    return gerarRelatorioTransacoes({
+      transacoes: transacaoGrid.transacoes,
+      filtros,
+      categoriaSelecionada,
+      contaSelecionada,
+    });
+  }, [categoriasFiltro, contas, filtros, transacaoGrid.transacoes]);
 
   const fecharModal = () => {
     setSelecionada(null);
@@ -200,6 +219,15 @@ function NovaTransacao() {
             </div>
 
             <Button
+              onClick={() => setModalRelatorioAberto(true)}
+              className="btn-gerar-relatorio"
+              aria-label="Gerar relatório de transações"
+            >
+              <FaRegFileLines className="transacao-icone" />
+              <span>Relatório</span>
+            </Button>
+
+            <Button
               onClick={incluirTransacao}
               className="btn-nova-transacao"
               aria-label="Nova transação"
@@ -296,6 +324,12 @@ function NovaTransacao() {
               ))}
             </select>
           </div>
+          
+          <ModalRelatorioTransacoes
+            aberto={modalRelatorioAberto}
+            onFechar={() => setModalRelatorioAberto(false)}
+            relatorio={relatorio}
+          />
         </div>
 
         {transacaoGrid.carregando ? (
@@ -504,7 +538,7 @@ function NovaTransacao() {
             </div>
           </section>
         </div>
-      )}
+      )}      
     </div>
   );
 }
