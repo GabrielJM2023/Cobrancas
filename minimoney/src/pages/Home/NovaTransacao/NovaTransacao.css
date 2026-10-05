@@ -160,6 +160,13 @@
   text-transform: uppercase;
 }
 
+.ajuda-campo {
+  color: var(--color-text);
+  font-size: 0.78rem;
+  line-height: 1.2;
+  opacity: 0.72;
+}
+
 .transacoes-filtros input,
 .transacoes-filtros select,
 .transacoes-modal input,

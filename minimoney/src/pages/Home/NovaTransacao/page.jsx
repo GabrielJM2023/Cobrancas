@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import "./NovaTransacao.css";
 import Button from "../../../Components/Button/button";
-import { NumericFormat } from "react-number-format";
 import { FaFilePen, FaRegFileLines } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { Riple } from "react-loading-indicators";
@@ -19,6 +18,8 @@ const formatarMoeda = (valor) =>
     style: "currency",
     currency: "BRL",
   }).format(Number(valor) || 0);
+
+const paraCentavos = (valor) => Math.round((Number(valor) || 0) * 100);
 
 const formatarData = (data) => {
   if (!data) return "Sem data";
@@ -116,6 +117,60 @@ function NovaTransacao() {
 
       return { ...anterior, [name]: novoValor };
     });
+  };
+
+  const definirValorEmCentavos = (centavos) => {
+    setSelecionada((anterior) => ({
+      ...anterior,
+      VALOR: centavos / 100,
+    }));
+  };
+
+  const atualizarValorEmCentavos = (atualizarCentavos) => {
+    setSelecionada((anterior) => ({
+      ...anterior,
+      VALOR: atualizarCentavos(paraCentavos(anterior.VALOR)) / 100,
+    }));
+  };
+
+  const handleValorKeyDown = (event) => {
+    if (/^\d$/.test(event.key)) {
+      event.preventDefault();
+      atualizarValorEmCentavos((centavos) => centavos * 10 + Number(event.key));
+      return;
+    }
+
+    if (event.key === "Backspace") {
+      event.preventDefault();
+      atualizarValorEmCentavos((centavos) => Math.floor(centavos / 10));
+      return;
+    }
+
+    if (
+      ![
+        "Tab",
+        "Enter",
+        "Escape",
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End",
+      ].includes(event.key) &&
+      !(event.ctrlKey || event.metaKey)
+    ) {
+      event.preventDefault();
+    }
+  };
+
+  const handleValorPaste = (event) => {
+    event.preventDefault();
+    const digitos = event.clipboardData.getData("text").replace(/\D/g, "");
+    definirValorEmCentavos(Number(digitos) || 0);
+  };
+
+  const handleValorChange = (event) => {
+    const digitos = event.target.value.replace(/\D/g, "");
+    definirValorEmCentavos(Number(digitos) || 0);
   };
 
   const salvarTransacao = async () => {
@@ -464,22 +519,19 @@ function NovaTransacao() {
             <div className="form-linha form-linha-tres">
               <div className="campo">
                 <label htmlFor="valor">Valor da parcela</label>
-                <NumericFormat
+                <input
                   id="valor"
-                  value={selecionada.VALOR}
-                  thousandSeparator="."
-                  decimalSeparator=","
-                  prefix="R$ "
-                  decimalScale={2}
-                  fixedDecimalScale
-                  allowNegative={false}
-                  onValueChange={(values) =>
-                    setSelecionada((anterior) => ({
-                      ...anterior,
-                      VALOR: values.floatValue || 0,
-                    }))
-                  }
+                  type="text"
+                  inputMode="numeric"
+                  value={formatarMoeda(selecionada.VALOR)}
+                  aria-describedby="ajuda-valor"
+                  onChange={handleValorChange}
+                  onKeyDown={handleValorKeyDown}
+                  onPaste={handleValorPaste}
                 />
+                <small id="ajuda-valor" className="ajuda-campo">
+                  Digite os números da direita para a esquerda.
+                </small>
               </div>
 
               <div className="campo">
