@@ -4,8 +4,9 @@ import Card from '../../../../../Components/Card/Card'
 import { useFluxoCaixa } from './useFluxoCaixa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useValores } from '../../../../../context/ValoresContext';
+import { Riple } from "react-loading-indicators";
 
-function FluxoCaixa() {   
+function FluxoCaixa({ pUserId }) {   
     const anoAtual = new Date().getFullYear();
     const [ano, setAno] = useState(anoAtual);
     
@@ -14,7 +15,7 @@ function FluxoCaixa() {
         anos.push(ano);
     }
 
-    const { dados } = useFluxoCaixa(ano); 
+    const { dados, carregando } = useFluxoCaixa(ano, { pUserId });
 
     const dadosGrafico = dados.reduce((acc, item) => {
     let mes = acc.find((x) => x.MES === item.MES);
@@ -68,42 +69,40 @@ function FluxoCaixa() {
       </div>
 
         <div className="chart-body">
+        {carregando ? (
+          <div className="carregando-NovaTransacao">
+            <Riple color="#2f9e9e" size="large" />
+          </div>
+        ) : (
             <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={dadosGraficoFormatados}>
-
-                    <CartesianGrid strokeDasharray="3 3" />
-
-                    <XAxis dataKey="MES" />
-
-                    <YAxis
-                        tickFormatter={(valor) =>
-                            valoresVisiveis
-                                ? `R$ ${Number(valor).toLocaleString("pt-BR")}`
-                                : "••••"
-                        }
-                    />
-
-                    <Tooltip
-                        formatter={(valor) => formatarValor(valor)}
-                    />
-
-                    <Legend />
-
-                    <Bar
-                        dataKey="Entrada"
-                        fill="#22c55e"
-                        radius={[6, 6, 0, 0]}
-                    />
-
-                    <Bar
-                        dataKey="Saida"
-                        fill="#ef4444"
-                        radius={[6, 6, 0, 0]}
-                    />
-
-                </BarChart>
+            <BarChart data={dadosGraficoFormatados}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="MES" />
+                <YAxis
+                    tickFormatter={(valor) =>
+                        valoresVisiveis
+                            ? `R$ ${Number(valor).toLocaleString("pt-BR")}`
+                            : "••••"
+                    }
+                />
+                <Tooltip
+                    formatter={(valor) => formatarValor(valor)}
+                />
+                <Legend />
+                <Bar
+                    dataKey="Entrada"
+                    fill="#22c55e"
+                    radius={[6, 6, 0, 0]}
+                />
+                <Bar
+                    dataKey="Saida"
+                    fill="#ef4444"
+                    radius={[6, 6, 0, 0]}
+                />
+            </BarChart>
             </ResponsiveContainer>
-        </div>
+        )}
+      </div>
     </Card>
   );
 }

@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import { supabase } from '../../../../../lib/supabaseCliente';
-import { useUserId } from '../../../../../hooks/useUserID';
 
-export function usePatrimonioAnual(ano) {
-  const userID = useUserId();
-
+export function usePatrimonioAnual(ano, { pUserId }) {
   const [dados, setDados] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    if (!userID) return;
+    console.log("usePatrimonioAnual pUserId:", pUserId);
+    setCarregando(true);
+    if (!pUserId) {
+      setDados([]);
+      setCarregando(false);
+      return;
+    }
 
     async function carregar() {
-      setLoading(true);
       const { data, error } = await supabase.rpc(
         "GET_PATRIMONIO_ANUAL",
         {
-          p_id_usuario: userID,
+          p_id_usuario: pUserId,
           p_ano: ano,
         }
       );
@@ -28,14 +30,14 @@ export function usePatrimonioAnual(ano) {
         setDados(data ?? []);
       }
 
-      setLoading(false);
+      setCarregando(false);
     }
 
     carregar();
-  }, [userID, ano]);
+  }, [pUserId, ano]);
 
   return {
     dados,
-    loading,
+    carregando,
   };
 }

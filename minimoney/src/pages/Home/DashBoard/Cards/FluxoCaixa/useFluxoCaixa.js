@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { supabase } from '../../../../../lib/supabaseCliente';
-import { useUserId } from '../../../../../hooks/useUserID';
 
-export function useFluxoCaixa(ano) {
-  const userID = useUserId();
-
+export function useFluxoCaixa(ano, { pUserId }) {
   const [dados, setDados] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    if (!userID) return;
+     if (!pUserId) {
+        setDados([]);
+        setCarregando(false);
+        return;
+    }
 
     async function carregar() {
-      setLoading(true);
       const { data, error } = await supabase.rpc(
         "GET_FLUXO_CAIXA_ANUAL",
         {
-          p_id_usuario: userID,
+          p_id_usuario: pUserId,
           p_ano: ano,
         }
       );
@@ -27,14 +27,14 @@ export function useFluxoCaixa(ano) {
         setDados(data ?? []);
       }
 
-      setLoading(false);
+      setCarregando(false);
     }
 
     carregar();
-  }, [userID, ano]);
+  }, [pUserId, ano]);
 
   return {
     dados,
-    loading,
+    carregando,
   };
 }

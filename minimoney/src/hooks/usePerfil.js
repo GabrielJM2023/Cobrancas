@@ -51,7 +51,7 @@ export function usePerfil() {
     const nomeAtualizado = nome.trim();
     setErro("");
     setSucesso("");
-
+    console.log('Salvando nome:', nomeAtualizado);
     if (nomeAtualizado.length < 3) {
       setErro("O nome deve ter pelo menos 3 caracteres.");
       return false;
@@ -68,7 +68,8 @@ export function usePerfil() {
       const { error: usuarioError } = await supabase
         .from("USUARIO")
         .update({ NOME: nomeAtualizado })
-        .eq("ID_AUTH_FK", user.id);
+        .eq("ID_AUTH_FK", user.id)
+        .select("ID_AUTH_FK, NOME");
 
       if (usuarioError) {
         setErro("Não foi possível atualizar o nome. Tente novamente.");

@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import { supabase } from '../../../../../lib/supabaseCliente';
-import { useUserId } from '../../../../../hooks/useUserID';
 
-export function useMinhaConta() {
-  const userID = useUserId();
-
+export function useMinhaConta({ pUserId }) {
   const [dados, setDados] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    if (!userID) return;
-
+    setCarregando(true);
+    if (!pUserId) {
+      setDados([]);
+      setCarregando(false);
+      return;
+    }
+    
     async function carregar() {
-      setLoading(true);
+      setCarregando(true);
       const { data, error } = await supabase
         .from("VW_PATRIMONIO_CONTA")
         .select("*")
-        .eq("ID_USUARIO_FK", userID)
+        .eq("ID_USUARIO_FK", pUserId)
       
       if (error) {
         console.error(error);
@@ -25,14 +27,14 @@ export function useMinhaConta() {
         setDados(data ?? []);
       }
 
-      setLoading(false);
+      setCarregando(false);
     }
 
     carregar();
-  }, [userID]);
+  }, [pUserId]);
 
   return {
     dados,
-    loading,
+    carregando,
   };
 }

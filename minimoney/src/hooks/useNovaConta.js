@@ -1,5 +1,5 @@
 import { supabase } from "../lib/supabaseCliente";
-import { useUserId } from "./useUserID";
+import { useUserId } from "../context/AuthContext";
 import { useState } from "react";
 
 export function useNovaConta() {

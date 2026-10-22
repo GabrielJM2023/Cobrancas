@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { supabase } from "../lib/supabaseCliente";
-import { useUserId } from "./useUserID";
+import { useUserId } from "../context/AuthContext";
 
 export function useTransacaoQuery(filtros) {
   const [transacoes, setTransacao] = useState([]);

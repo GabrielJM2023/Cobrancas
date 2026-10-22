@@ -3,8 +3,9 @@ import { useState } from 'react';
 import Card from '../../../../../Components/Card/Card'
 import { useGastoCategoria } from './useGastoCategoria';
 import { useValores } from '../../../../../context/ValoresContext';
+import { Riple } from "react-loading-indicators";
 
-function GastoCategoria() {   
+function GastoCategoria({ pUserId }) {   
     const anoAtual = new Date().getFullYear();
     const [ano, setAno] = useState(anoAtual);
     const anos = [];
@@ -13,7 +14,7 @@ function GastoCategoria() {
     }
     const mesAtual = new Date().getMonth() + 1;
     const [mes, setMes] = useState(mesAtual);
-    const { dados } = useGastoCategoria(ano, mes);    
+    const { dados, carregando } = useGastoCategoria(ano, mes, { pUserId });    
     const { valoresVisiveis } = useValores();
   return (
     <Card className="custom-card">
@@ -51,14 +52,19 @@ function GastoCategoria() {
         </div>
 
         <div className="categorias-body">
+            
             <div className="categorias-lista">
-                {dados.map((item) => (
+              {carregando ? (
+                <div className="carregando">
+                    <Riple color="#2f9e9e" size="large" />
+                </div>
+              ) : (
+                dados.map((item) => (
                     <div className="categoria-item" key={item.categoria}>
                         <div className="categoria-header">
                             <span>{item.categoria}</span>
                             <span>{item.percentual}%</span>
                         </div>
-
                         <div className="categoria-barra">
                             <div
                                 className="categoria-barra-preenchida"
@@ -77,9 +83,9 @@ function GastoCategoria() {
                                 "••••••••"
                             )}
                         </div>
-
                     </div>
-                ))}
+                ))
+              )}
             </div>
         </div>
     </Card>

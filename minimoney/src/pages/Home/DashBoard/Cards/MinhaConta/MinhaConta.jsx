@@ -2,9 +2,10 @@ import "./MinhaConta.css";
 import Card from '../../../../../Components/Card/Card'
 import { useMinhaConta } from './useMinhaConta';
 import { useValores } from '../../../../../context/ValoresContext';
+import { Riple } from "react-loading-indicators";
 
-function MinhaConta() {   
-   const { dados } = useMinhaConta();
+function MinhaConta({ pUserId }) {   
+   const { dados, carregando } = useMinhaConta({ pUserId });
     const { valoresVisiveis } = useValores();    
     
   return (
@@ -15,36 +16,42 @@ function MinhaConta() {
 
         <div className="contas-body">
             <div className="contas-lista">
-                {dados.map((item) => {
-                    const patrimonio = Number(item.PATRIMONIO);
-                    const negativo = patrimonio < 0;
+                {carregando ? (
+                    <div className="carregando">
+                        <Riple color="#2f9e9e" size="large" />
+                    </div>
+                ) : (
+                    dados.map((item) => {
+                        const patrimonio = Number(item.PATRIMONIO);
+                        const negativo = patrimonio < 0;
 
-                    return (
-                        <div className="contas-item" key={item.ID_CONTA_FK}>
+                        return (
+                            <div className="contas-item" key={item.ID_CONTA_FK}>
 
-                            <div className="contas-header">
-                                <span className="contas-nome">
-                                    {item.CONTA}
-                                </span>
+                                <div className="contas-header">
+                                    <span className="contas-nome">
+                                        {item.CONTA}
+                                    </span>
 
-                                <span
-                                    className={`contas-valor ${
-                                        negativo ? "negativo" : "positivo"
-                                    }`}
-                                >
-                                    {valoresVisiveis ? (
-                                        `R$ ${Math.abs(patrimonio).toLocaleString("pt-BR", {
-                                            minimumFractionDigits: 2
-                                        })}`
-                                    ) : (
-                                        "••••••••"
-                                    )}
-                                </span>
+                                    <span
+                                        className={`contas-valor ${
+                                            negativo ? "negativo" : "positivo"
+                                        }`}
+                                    >
+                                        {valoresVisiveis ? (
+                                            `R$ ${Math.abs(patrimonio).toLocaleString("pt-BR", {
+                                                minimumFractionDigits: 2
+                                            })}`
+                                        ) : (
+                                            "••••••••"
+                                        )}
+                                    </span>
+                                </div>
+
                             </div>
-
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                )}
             </div>
         </div>
     </Card>

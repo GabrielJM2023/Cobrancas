@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
 import { supabase } from '../../../../../lib/supabaseCliente';
-import { useUserId } from '../../../../../hooks/useUserID';
 
-export function useResumoMes(ano, mes) {
-  const userID = useUserId();
-
+export function useResumoMes(ano, mes, { pUserId }) {
   const [dados, setDados] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!userID) return;
+    if (!pUserId) return;
 
     async function carregar() {
       setLoading(true);
       const { data, error } = await supabase.rpc(
         "GET_RESUMO_MES",
         {
-          p_id_usuario: userID,
+          p_id_usuario: pUserId,
           p_ano: ano,
           p_mes: mes,
         }
@@ -33,7 +30,7 @@ export function useResumoMes(ano, mes) {
     }
 
     carregar();
-  }, [userID, ano, mes]);
+  }, [pUserId, ano, mes]);
 
   return {
     dados,

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseCliente";
-import { useUserId } from "./useUserID";
+import { useUserId } from "../context/AuthContext";
 
 export function useContaQuery() {
   const [Conta, setConta] = useState([]);

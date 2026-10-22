@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Card from '../../../../../Components/Card/Card'
 import { usePatrimonioAnual } from './usePatrimonioAnual';
 import { useValores } from '../../../../../context/ValoresContext';
+import { Riple } from "react-loading-indicators";
 
 import {
   LineChart,
@@ -14,10 +15,10 @@ import {
 } from 'recharts';
 import { ResponsiveContainer } from 'recharts';
 
-function GraficoAnualPatrimonio() {   
+function GraficoAnualPatrimonio({ pUserId }) {   
     const anoAtual = new Date().getFullYear();
     const [ano, setAno] = useState(anoAtual);
-    const { dados } = usePatrimonioAnual(ano);
+    const { dados, carregando } = usePatrimonioAnual(ano, { pUserId });
     const { valoresVisiveis } = useValores();
 
     const anos = [];
@@ -57,6 +58,11 @@ function GraficoAnualPatrimonio() {
       </div>
 
       <div className="chart-body">
+        {carregando ? (
+          <div className="carregando">
+            <Riple color="#2f9e9e" size="large" />
+          </div>
+        ) : (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={dadosGraficoFormatados}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -83,8 +89,9 @@ function GraficoAnualPatrimonio() {
                 dataKey="PATRIMONIO"
                 strokeWidth={3}
               />
-          </LineChart>
-        </ResponsiveContainer>
+            </LineChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </Card>
   );

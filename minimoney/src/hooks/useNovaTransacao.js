@@ -1,5 +1,5 @@
 import { supabase } from "../lib/supabaseCliente";
-import { useUserId } from "./useUserID";
+import { useUserId } from "../context/AuthContext";
 import { useState } from "react";
 
 const adicionarMeses = (data, meses) => {
@@ -10,11 +10,9 @@ const adicionarMeses = (data, meses) => {
 
 export function useNovaTransacao() {  
   const [loading, setLoading] = useState(false);
-
-  const userID = useUserId();  
-  
+  const userId = useUserId();  
   const salvar = async (transacao) => {
-    if (!userID) return;
+    if (!userId) return;
     
     setLoading(true);
     const { ID, CATEGORIA, CONTA_ORIGEM, CONTA_DESTINO, ...dados } = transacao;
@@ -28,7 +26,7 @@ export function useNovaTransacao() {
         .from("TRANSACAO")
         .insert({
           ...dados,
-          ID_USUARIO_FK: userID,
+          ID_USUARIO_FK: userId,
         });
       if (dados.PARCELA > 1) {
         for (let i = 1; i < dados.PARCELA; i++) {
@@ -40,7 +38,7 @@ export function useNovaTransacao() {
               DATA: novaData,
               PARCELA: 1,
               DESCRICAO: `${dados.DESCRICAO} (Parcela ${i + 1}/${dados.PARCELA})`,              
-              ID_USUARIO_FK: userID,
+              ID_USUARIO_FK: userId,
           });
         }
       }

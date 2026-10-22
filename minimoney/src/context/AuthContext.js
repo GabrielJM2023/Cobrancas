@@ -18,6 +18,9 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isPasswordRecovery, setIsPasswordRecovery] = useState(getRecoveryState);
+  const userId = user?.id ?? null;
+  const [perfil, setPerfil] = useState(null);
+  const [perfilLoading, setPerfilLoading] = useState(true);
 
   const clearPasswordRecovery = () => {
     sessionStorage.removeItem(RECOVERY_STORAGE_KEY);
@@ -52,15 +55,49 @@ export function AuthProvider({ children }) {
       }
     });
 
+    async function carregarPerfil(userId) {
+      if (!userId) {
+        setPerfil(null);
+        setPerfilLoading(false);
+        return;
+      }
+
+      setPerfilLoading(true);
+
+      const { data, error } = await supabase
+        .from("USUARIO")
+        .select("NOME")
+        .eq("ID_AUTH_FK", userId)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Erro ao carregar perfil:", error);
+        setPerfil(null);
+      } else {
+        setPerfil(data);
+      }
+
+      setPerfilLoading(false);
+    }
+
+    carregarPerfil(userId);
     return () => {
       ativo = false;
       listener.subscription.unsubscribe();
     };
-  }, []);
+  }, [userId]);
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, isPasswordRecovery, clearPasswordRecovery }}
+      value={{
+        user,
+        userId,
+        loading,
+        isPasswordRecovery,
+        clearPasswordRecovery,
+        perfil,
+        perfilLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -74,4 +111,9 @@ export function useAuth() {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
+}
+
+export function useUserId() {
+  const { userId } = useAuth();
+  return userId;
 }

@@ -12,7 +12,7 @@ import {
     Sector
 } from 'recharts';
 
-function ResumoMes() {   
+function ResumoMes({ pUserId }) {   
     const anoAtual = new Date().getFullYear();
     const [ano, setAno] = useState(anoAtual);
     
@@ -25,7 +25,7 @@ function ResumoMes() {
 
     const mesAtual = new Date().getMonth() + 1;
     const [mes, setMes] = useState(mesAtual);
-    const { dados } = useResumoMes(ano, mes);
+    const { dados } = useResumoMes(ano, mes, { pUserId });
     const [activeIndex, setActiveIndex] = useState(0);
     const coresTipo = {
         E: "#22c55e",
