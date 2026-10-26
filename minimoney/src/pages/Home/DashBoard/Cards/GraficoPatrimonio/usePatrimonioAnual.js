@@ -6,7 +6,6 @@ export function usePatrimonioAnual(ano, { pUserId }) {
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    console.log("usePatrimonioAnual pUserId:", pUserId);
     setCarregando(true);
     if (!pUserId) {
       setDados([]);
@@ -24,7 +23,6 @@ export function usePatrimonioAnual(ano, { pUserId }) {
       );
 
       if (error) {
-        console.error(error);
         setDados([]);
       } else {
         setDados(data ?? []);
