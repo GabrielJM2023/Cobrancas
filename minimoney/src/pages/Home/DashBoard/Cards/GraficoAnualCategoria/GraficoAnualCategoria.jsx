@@ -176,17 +176,20 @@ function GraficoAnualCategoria({ pUserId }) {
                   formatarValor(valor),
                   categoria
                 ]}
+                active={categoriaSelecionada !== null}
                 filterNull
                 content={({ active, payload, label }) => {
-                  if (!active || !payload?.length) {
+                  if (
+                    categoriaSelecionada === null ||
+                    !active ||
+                    !payload?.length
+                  ) {
                     return null;
                   }
 
-                  const dadosFiltrados = categoriaSelecionada
-                    ? payload.filter(
-                        (item) => item.dataKey === categoriaSelecionada
-                      )
-                    : payload;
+                  const dadosFiltrados = payload.filter(
+                    (item) => item.dataKey === categoriaSelecionada
+                  );
 
                   if (!dadosFiltrados.length) {
                     return null;
@@ -240,7 +243,7 @@ function GraficoAnualCategoria({ pUserId }) {
                 const selecionada =
                   categoriaSelecionada === categoria;
 
-                const outraSelecionada =
+                const outraSelecionada =  
                   categoriaSelecionada !== null && !selecionada;
 
                 return (
@@ -255,10 +258,12 @@ function GraficoAnualCategoria({ pUserId }) {
                     dot={selecionada}
                     activeDot={{
                       r: 6,
-                      onClick: () => selecionarCategoria(categoria)
+                      onClick: () => {
+                        selecionarCategoria(categoria);
+                      }
                     }}
-                    connectNulls={false}
                     onClick={() => selecionarCategoria(categoria)}
+                    connectNulls={false}
                     style={{ cursor: "pointer" }}
                     isAnimationActive={false}
                   />
